@@ -1,0 +1,156 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SolucionBase.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%: Page.Title %></title>
+
+    <!-- AdminLTE 3 -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" />
+    <link rel="stylesheet" href="dist/css/custom.css" />
+    <link href="SiteMaster.css" rel="stylesheet" />
+    <%--<webopt: runat="server" Path="~/Site/css" />--%>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <form id="form1" runat="server">
+        <div class="wrapper">
+
+            <!-- Navbar -->
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #00bcd4;">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars text-white"></i></a>
+                    </li>
+                </ul>
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link btn btn-sm btn-default" data-toggle="dropdown" href="#">
+                            <asp:Literal ID="LTR_NavRightButtonName" runat="server"></asp:Literal></a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class=" dropdown-header">
+                                <asp:Literal ID="LTR_NavRightName" runat="server"></asp:Literal>
+                                <br>
+                                <p class="small">
+                                    <asp:Literal ID="LTR_NavRightCargo" runat="server"></asp:Literal>
+                                </p>
+                                <p class="small">
+                                    <asp:Literal ID="LTR_NavRightDestino" runat="server"></asp:Literal>
+                                </p>
+                                <p class="small">
+                                    Nivel:
+                                    <asp:Literal ID="LTR_NavRightNivel" runat="server"></asp:Literal>
+                                </p>
+                            </span>
+                            <br>
+                            <br>
+                            <div class="dropdown-divider"></div>
+                            <span class="dropdown-header text-right">
+                                <asp:HyperLink ID="HL_Cerrar" runat="server" CssClass="btn btn-sm btn-default" NavigateUrl="~/CerrarSesion.aspx">Cerrar Sesión</asp:HyperLink>
+                            </span>
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <asp:HyperLink ID="LK_Logo" NavigateUrl="~/Default" runat="server" class="brand-link">
+                    <span class="brand-text">
+                        <asp:Literal ID="LTR_TitleSystem" runat="server"></asp:Literal></span>
+                </asp:HyperLink>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- User Panel -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column">
+                        <div class="info">
+
+                            <p class="d-block small">
+                                <asp:Literal ID="LTR_SideName" runat="server"></asp:Literal>
+                                <br />
+                                <asp:Literal ID="LTR_SideCargo" runat="server"></asp:Literal>
+                                <br />
+                                <asp:Literal ID="LTR_SideDestino" runat="server"></asp:Literal>
+                                <br />
+                                NIVEL:
+                                <asp:Literal ID="LTR_SideNivel" runat="server"></asp:Literal>
+                            </p>
+                        </div>
+                        <div class="sidebar-footer">
+                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                                <li class="nav-item ">
+                                    <asp:HyperLink runat="server" CssClass="nav-link cerrarSesionMenu" NavigateUrl="~/CerrarSesion.aspx">
+                                        <i class="nav-icon fa fa-lock"></i>
+                                        <p>Cerrar sesión</p>
+                                    </asp:HyperLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                            <asp:Literal ID="LTR_Sidebar" runat="server"></asp:Literal>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Content Wrapper -->
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>
+                                    <asp:Literal ID="LTR_PageTitle" runat="server" /></h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <asp:Literal ID="LRT_Breadcrumb" runat="server"></asp:Literal>
+                               <%--<li class="breadcrumb-item active">Dashboard</li>--%>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-block">
+                    <asp:Literal ID="LTL_NombreSistema" runat="server"></asp:Literal>
+                    &copy;
+                     <asp:Literal ID="LTL_anio" runat="server"></asp:Literal>
+                    <%--<img src="https://newton.mseg.gba.gov.ar/recursosweb/institucional_sda/pie_info_resp.png" width="372" height="46" />--%>
+                    <br />
+                    <small class="text-info">DESAROOLADOR DIEGO RODRIGUEZ</small>
+                </div>               
+            </footer>
+        </div>
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" />
+        <script src="plugins/jquery/jquery.min.js"></script>
+        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="dist/js/adminlte.min.js"></script>
+    </form>
+</body>
+</html>
+

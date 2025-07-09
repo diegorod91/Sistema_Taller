@@ -1,0 +1,25 @@
+﻿<permisos>
+  <navigation>
+    <page title="Dashboard" icon="fa fa-th-large" href="~/Default.aspx"></page>
+    <pages title="Ejemplos" icon="fa fa-th-large">
+      <page title="ABM" icon="fa fa-th" href="~/ejemplos/abm/index.aspx"></page>
+      <pages title="Controles" icon="fa fa-th">
+        <page title="Select2" icon="fa fa-circle-o" href="~/ejemplos/controles/Select2.aspx"></page>
+        <page title="Autocomplete" icon="fa fa-circle-o" href="~/ejemplos/controles/Autocomplete.aspx"></page>
+        <page title="Multiselect" icon="fa fa-circle-o" href="~/ejemplos/controles/MultiSelect.aspx"></page>
+        <page title="ReCaptcha" icon="fa fa-circle-o" href="~/ejemplos/controles/ReCaptcha.aspx"></page>
+      </pages>
+      <pages title="Graficos" icon="fa fa-th">
+        <page title="Tortas" icon="fa fa-circle-o" href="~/ejemplos/graficos/pie.aspx"></page>
+        <page title="Barras y Columnas" icon="fa fa-circle-o" href="~/ejemplos/graficos/column.aspx"></page>
+      </pages>
+      <page title="Errores" icon="fa fa-th" href="~/ejemplos/errores/index.aspx"></page>
+      <page title="Notificaciones" icon="fa fa-th" href="~/ejemplos/notificacion/index.aspx"></page>
+      <page title="Consulta Dinamica" icon="fa fa-th" href="~/ejemplos/consulta/consultadinamica.aspx"></page>
+
+    </pages>
+  </navigation>
+  <notnavigation>
+    <page title="CerraSesion" icon="" href="~/CerrarSesion.aspx"></page>
+  </notnavigation>
+</permisos>

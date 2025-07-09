@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="" title=""  description="">
+    <siteMapNode url="CerrarSesion.aspx" title="Logo Sistema"  description="title" />
+    <siteMapNode url="ejemplos/abm/EmpresasDataSet.aspx" title="Empresas DataSet"  description="start" />
+    <siteMapNode url="ejemplos/abm/EmpresaObjetos.aspx" title="Empresas Objeto"  />
+    <siteMapNode url="ejemplos/controles/Autocomplete.aspx" title="Controles"  />
+    <siteMapNode url="ejemplos/graficos/pie.aspx" title="Graficos"  />
+    <siteMapNode url="ejemplos/testeo/testeo.aspx" title="Testeo"  />
+  </siteMapNode>
+</siteMap>
