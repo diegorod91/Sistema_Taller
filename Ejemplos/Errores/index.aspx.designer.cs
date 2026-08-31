@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace WebApplication.Ejemplos.Errores
+namespace SolucionBase.Ejemplos.Errores
 {
 
 

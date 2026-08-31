@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MultiSelect.aspx.cs" Inherits="WebApplication.Ejemplos.Controles.MultiSelect" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MultiSelect.aspx.cs" Inherits="SolucionBase.Ejemplos.Controles.MultiSelect" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
       <link rel="stylesheet" href="../../bower_components/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">

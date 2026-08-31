@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace WebApplication.Ejemplos.Abm
+namespace SolucionBase.Ejemplos.Abm
 {
 
 
@@ -85,15 +85,6 @@ namespace WebApplication.Ejemplos.Abm
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-
-        /// <summary>
-        /// Control Grilla.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        //protected global::System.Web.UI.WebControls.CustomGridView Grilla;
 
         /// <summary>
         /// Control idAfectado.

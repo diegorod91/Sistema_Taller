@@ -24,6 +24,14 @@ namespace SolucionBase
             //LTR_SideDestino.Text = user.NombreDependencia.ToUpper();
             LTR_SideNivel.Text = "Rodriguez Diego";
 
+            string title = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"].ToString();
+            this.Page.Title = title;
+            LTL_NombreSistema.Text = title;
+            LTR_TitleSystem.Text = title;
+            LTL_anio.Text = DateTime.Today.Year.ToString();
+
+            this.SetearSidebar(10);
+
 
         }
 
@@ -61,13 +69,7 @@ namespace SolucionBase
 
         protected void CPH1_Init(object sender, EventArgs e)
         {
-            this.SetearSidebar(10);
-            string title = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"].ToString();
-            this.Page.Title = title;
-            LTL_NombreSistema.Text = title;
-            LTL_anio.Text = DateTime.Today.Year.ToString();
-
-
+                   
 
             
             //if (Session["Usuario"] != null)
@@ -130,33 +132,32 @@ namespace SolucionBase
                     //armo el menu
                     string style = nodo.GetAttribute("class") != null ? nodo.GetAttribute("class") : "";
                     string activo = SoyActivo(nodo) ? "active" : "";
-                    string clase = "";
+                    string clase = " class=\"nav-item \"";
                     if (style != "" || activo != "")
-                    { clase = " class='" + style + " " + activo + "'"; }
+                    { clase = " class='nav-item " + style + " '"; }
 
                     stringMenu += "<li" + clase + ">";
-                    stringMenu += "<a href=\"" + this.ResolveUrl(nodo.GetAttribute("href")) + "\">";
-                    stringMenu += "<i class='" + nodo.GetAttribute("icon") + "'></i>";
-                    stringMenu += "<span>" + nodo.GetAttribute("title") + "</span>";
+                    stringMenu += "<a class=\"nav-link  " + activo + " \" href=\"" + this.ResolveUrl(nodo.GetAttribute("href")) + "\">";
+                    stringMenu += "<i class=' nav-icon " + nodo.GetAttribute("icon") + "'></i>";
+                    stringMenu += "<p>" + nodo.GetAttribute("title") + "</p>";
                     stringMenu += "</a>";
                     stringMenu += "</li>";
                 }
                 else
                 {
                     string activo = HijoActivo(nodo) ? "active" : "";
-                    string clase = " class=' treeview " + " " + activo + "'";
+                    string clase = HijoActivo(nodo) ? " class=' nav-item  menu-is-opening menu-open'" : " class=' nav-item '";
 
                     //armo ul submenu
                     stringMenu += "<li" + clase + ">";
-                    stringMenu += "<a href=\"#\">";
-                    stringMenu += "<i class='" + nodo.GetAttribute("icon") + "'></i>";
-                    stringMenu += "<span>" + nodo.GetAttribute("title") + "</span>";
-                    stringMenu += "<span class=\"pull -right-container\">";
-                    stringMenu += "<i class=\"fa fa-angle-left pull-right\"></i>";
-                    stringMenu += "</span>";
+                    stringMenu += "<a class=\"nav-link  " + activo + "\" href=\"#\">";
+                    stringMenu += "<i class='nav-icon " + nodo.GetAttribute("icon") + "'></i>";
+                    stringMenu += "<p>" + nodo.GetAttribute("title");
+                    stringMenu += "<i class=\"fas fa-angle-left right\"></i>";
+                    stringMenu += "</p>";
                     stringMenu += "</a>";
 
-                    stringMenu += "<ul class='treeview-menu'>";
+                    stringMenu += "<ul class='nav nav-treeview'>";
                     ProcesarNodoPadre(nodo, ref stringMenu);
                     stringMenu += "</ul>";
                     stringMenu += "</li>";

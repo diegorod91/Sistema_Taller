@@ -1,25 +1,33 @@
 ﻿<permisos>
   <navigation>
-    <page title="Dashboard" icon="fa fa-th-large" href="~/Default.aspx"></page>
-    <pages title="Ejemplos" icon="fa fa-th-large">
-      <page title="ABM" icon="fa fa-th" href="~/ejemplos/abm/index.aspx"></page>
-      <pages title="Controles" icon="fa fa-th">
-        <page title="Select2" icon="fa fa-circle-o" href="~/ejemplos/controles/Select2.aspx"></page>
-        <page title="Autocomplete" icon="fa fa-circle-o" href="~/ejemplos/controles/Autocomplete.aspx"></page>
-        <page title="Multiselect" icon="fa fa-circle-o" href="~/ejemplos/controles/MultiSelect.aspx"></page>
-        <page title="ReCaptcha" icon="fa fa-circle-o" href="~/ejemplos/controles/ReCaptcha.aspx"></page>
-      </pages>
-      <pages title="Graficos" icon="fa fa-th">
-        <page title="Tortas" icon="fa fa-circle-o" href="~/ejemplos/graficos/pie.aspx"></page>
-        <page title="Barras y Columnas" icon="fa fa-circle-o" href="~/ejemplos/graficos/column.aspx"></page>
-      </pages>
-      <page title="Errores" icon="fa fa-th" href="~/ejemplos/errores/index.aspx"></page>
-      <page title="Notificaciones" icon="fa fa-th" href="~/ejemplos/notificacion/index.aspx"></page>
-      <page title="Consulta Dinamica" icon="fa fa-th" href="~/ejemplos/consulta/consultadinamica.aspx"></page>
+    <page title="Inicio" icon="fas fa-home" href="~/Default.aspx" />
+    <page title="Producto"  href="~/Productos.aspx" />
+    <page title="Ventas" icon="fas fa-money-check-alt"  href="~/Ventas.aspx" />
+    <page title="Stock" icon="fas fa-store" href="~/Stock.aspx" />
 
+    <pages title="Ejemplos" icon="fas fa-list-ul">
+      <page title="ABM" icon="fas fa-th" href="~/ejemplos/abm/index.aspx" />
+
+      <pages title="Controles" icon="fas fa-sliders-h">
+        <page title="Select2" icon="far fa-circle" href="~/ejemplos/controles/Select2.aspx" />
+        <page title="Autocomplete" icon="far fa-circle" href="~/ejemplos/controles/Autocomplete.aspx" />
+        <page title="Multiselect" icon="far fa-circle" href="~/ejemplos/controles/Multiselect.aspx" />
+        <page title="ReCaptcha" icon="far fa-circle" href="~/ejemplos/controles/ReCaptcha.aspx" />
+      </pages>
+
+      <pages title="Graficos" icon="fas fa-chart-pie">
+        <page title="Tortas" icon="far fa-circle" href="~/ejemplos/graficos/pie.aspx" />
+        <page title="Barras y Columnas" icon="far fa-circle" href="~/ejemplos/graficos/barras.aspx" />
+      </pages>
+
+      <page title="Errores" icon="fas fa-exclamation-triangle" href="~/ejemplos/errores/index.aspx" />
+      <page title="Notificaciones" icon="fas fa-bell" href="~/ejemplos/notificacion/index.aspx" />
+      <page title="Consulta Dinamica" icon="fas fa-search" href="~/ejemplos/consulta/consulta.aspx" />
     </pages>
+
   </navigation>
-  <notnavigation>
-    <page title="CerraSesion" icon="" href="~/CerrarSesion.aspx"></page>
-  </notnavigation>
+
+  <navigation>
+    <page title="CerrarSesion" icon="fas fa-sign-out-alt" href="~/CerrarSesion.aspx" />
+  </navigation>
 </permisos>

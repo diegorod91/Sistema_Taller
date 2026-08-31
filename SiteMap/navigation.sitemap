@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
   <siteMapNode>
+    <siteMapNode title="Dashboard" url="~/Default.aspx" icon="fas fa-home" />
     <siteMapNode url="CerrarSesion.aspx" title="Logo Sistema"  description="title" />
     <siteMapNode url="ejemplos/abm/EmpresasDataSet.aspx" title="Empresas DataSet"  description="start" />
     <siteMapNode url="ejemplos/abm/EmpresaObjetos.aspx" title="Empresas Objeto"  />

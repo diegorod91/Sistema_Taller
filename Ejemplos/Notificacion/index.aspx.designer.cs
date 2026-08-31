@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace WebApplication.Ejemplos.Notificacion
+namespace SolucionBase.Ejemplos.Notificacion
 {
 
 

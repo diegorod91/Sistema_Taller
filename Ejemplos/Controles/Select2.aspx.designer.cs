@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace WebApplication.Ejemplos.Controles
+namespace SolucionBase.Ejemplos.Controles
 {
 
 

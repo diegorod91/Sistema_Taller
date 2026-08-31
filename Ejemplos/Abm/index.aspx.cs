@@ -1,24 +1,24 @@
-﻿////using BOL.Entidades;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-//using System.Web.UI;
-//using System.Web.UI.WebControls;
-//using Utilities;
-//using Utilities.UI;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
-//namespace WebApplication.Ejemplos.Abm
-//{
-//	public partial class index : System.Web.UI.Page
-//	{
-//		protected void Page_Load(object sender, EventArgs e)
-//		{
-//			if (!IsPostBack)
-//			{
-//				ActualizarGrilla();
-//			}
-//		}
+
+namespace SolucionBase.Ejemplos.Abm
+{
+    public partial class index : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+
+            }
+        }
+    }
+}
 
 //		protected void btnAlta_Click(object sender, EventArgs e)
 //		{

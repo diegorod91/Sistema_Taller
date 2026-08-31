@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Select2.aspx.cs" Inherits="WebApplication.Ejemplos.Controles.Select2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Select2.aspx.cs" Inherits="SolucionBase.Ejemplos.Controles.Select2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="../../bower_components/select2/dist/css/select2.css" rel="stylesheet" />
