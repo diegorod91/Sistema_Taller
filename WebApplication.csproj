@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SolucionBase</RootNamespace>
     <AssemblyName>SolucionBase</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44337</IISExpressSSLPort>
@@ -50,9 +50,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -1877,6 +1877,7 @@
     <Content Include="bower_components\summernote\summernote.min.js.LICENSE.txt" />
     <Content Include="bower_components\toastr\toastr.min.css" />
     <Content Include="bower_components\toastr\toastr.min.js" />
+    <Content Include="Catalogo\ABMCatalogo.aspx" />
     <Content Include="CerrarSesion.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />
@@ -2499,6 +2500,7 @@
     <Content Include="bower_components\summernote\summernote.min.js.map" />
     <Content Include="Productos.aspx" />
     <Content Include="Stock.aspx" />
+    <Content Include="Taller\NuevaOrden.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
@@ -4648,6 +4650,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogo\ABMCatalogo.aspx.cs">
+      <DependentUpon>ABMCatalogo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogo\ABMCatalogo.aspx.designer.cs">
+      <DependentUpon>ABMCatalogo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CerrarSesion.aspx.cs">
       <DependentUpon>CerrarSesion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4674,6 +4683,7 @@
     </Compile>
     <Compile Include="Ejemplos\Abm\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Ejemplos\Abm\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -4744,6 +4754,13 @@
     <Compile Include="Stock.aspx.designer.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Taller\NuevaOrden.aspx.cs">
+      <DependentUpon>NuevaOrden.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Taller\NuevaOrden.aspx.designer.cs">
+      <DependentUpon>NuevaOrden.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Ventas.aspx.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4759,7 +4776,9 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Clientes\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
@@ -4770,6 +4789,20 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BOL\BOL.csproj">
+      <Project>{e641bac8-6f62-4b4c-9a5b-e7c937526a10}</Project>
+      <Name>BOL</Name>
+    </ProjectReference>
+    <ProjectReference Include="Utilities.UI\Utilities.UI.csproj">
+      <Project>{0929ac93-9903-4c3b-8ae3-c536a7c9ff97}</Project>
+      <Name>Utilities.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Utilities\Utilities.csproj">
+      <Project>{0b9c0268-4eb7-4efa-80db-bdb574625193}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

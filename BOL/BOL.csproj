@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net4.8.1</TargetFramework>
@@ -18,16 +18,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controladora\" />
-    <Folder Include="Entidades\Extensiones\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="5.0.0" />
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.Security" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

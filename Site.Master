@@ -29,6 +29,8 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" />
+        
         <div class="wrapper">
 
             <!-- Navbar -->
@@ -156,7 +158,6 @@
             </footer>
         </div>
 
-        <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" />
         <script src="plugins/jquery/jquery.min.js"></script>
         <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="dist/js/adminlte.min.js"></script>

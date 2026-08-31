@@ -1,8 +1,8 @@
 ﻿<permisos>
   <navigation>
     <page title="Inicio" icon="fas fa-home" href="~/Default.aspx" />
-    <page title="Producto"  href="~/Productos.aspx" />
-    <page title="Ventas" icon="fas fa-money-check-alt"  href="~/Ventas.aspx" />
+    <page title="Catalogo" icon="fas fa-cog"  href="~/Catalogo/ABMCatalogo.aspx" />
+    <page title="Taller" icon="fas fa-tools"  href="~/Taller/NuevaOrden.aspx" />
     <page title="Stock" icon="fas fa-store" href="~/Stock.aspx" />
 
     <pages title="Ejemplos" icon="fas fa-list-ul">
