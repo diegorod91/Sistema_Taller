@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace SolucionBase.Catalogo
 {
     public partial class ABMCatalogo : System.Web.UI.Page
@@ -25,6 +26,7 @@ namespace SolucionBase.Catalogo
 
         private void CargarDesplegablesFiltro()
         {
+            ddlModalCategoria.Fill(BOL.Entidades.Categoria.ge)
             //using (var db = new TallerDbContext())
             //{
             //    ddlFiltroCategoria.DataSource = db.Categorias.ToList();

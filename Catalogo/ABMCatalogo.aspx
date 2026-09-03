@@ -1,27 +1,44 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ABMCatalogo.aspx.cs" Inherits="SolucionBase.Catalogo.ABMCatalogo" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <style>
+        >
+        /* 1. Fondo claro y texto oscuro para TODAS las pestañas inactivas */
+        .nav-tabs .nav-link:not(.active) {
+            background-color: #f8f9fa; /* Fondo gris claro */
+            color: #333333; /* Texto oscuro bien visible */
+            border-color: #dee2e6; /* Borde definido */
+        }
+
+        /* 2. Efecto al pasar el mouse por encima (Hover) */
+        .nav-tabs .nav-link:not(.active):hover {
+            background-color: #e2e6ea; /* Color de fondo al pasar el cursor */
+            color: #0d6efd; /* Color del texto/ícono al pasar el cursor */
+        }
+
+        /* 3. Estilo para la pestaña que SÍ está activa */
+        .nav-tabs .nav-link.active {
+            background-color: #ffffff;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid">
-        
+
         <!-- TARJETA PRINCIPAL CON PESTAÑAS -->
         <div class="card card-primary card-outline card-tabs">
             <div class="card-header p-0 pt-1 border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" id="tab-modelos-link" data-toggle="pill" href="#tab-modelos" role="tab">
-                            <i class="fas fa-mobile-alt mr-1"></i> Modelos
-                        </a>
+                        <a class="nav-link active" href="#"><i class="bi bi-phone"></i>Modelos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-marcas-link" data-toggle="pill" href="#tab-marcas" role="tab">
-                            <i class="fas fa-tags mr-1"></i> Marcas
-                        </a>
+                        <a class="nav-link" href="#"><i class="bi bi-tag"></i>Marcas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-categorias-link" data-toggle="pill" href="#tab-categorias" role="tab">
-                            <i class="fas fa-list mr-1"></i> Categorías
-                        </a>
+                        <a class="nav-link" href="#"><i class="bi bi-grid"></i>Categorías</a>
                     </li>
                 </ul>
             </div>
@@ -30,7 +47,7 @@
                 <asp:UpdatePanel ID="upCatalogo" runat="server">
                     <ContentTemplate>
                         <div class="tab-content" id="custom-tabs-two-tabContent">
-                            
+
                             <!-- PESTAÑA 1: MODELOS -->
                             <div class="tab-pane fade show active" id="tab-modelos" role="tabpanel">
                                 <div class="row mb-3">
@@ -129,7 +146,7 @@
                         </div>
                         <div class="modal-body">
                             <asp:HiddenField ID="hfModeloId" runat="server" Value="0" />
-                            
+
                             <div class="form-group">
                                 <label>Categoría</label>
                                 <asp:DropDownList ID="ddlModalCategoria" runat="server" CssClass="form-control" />

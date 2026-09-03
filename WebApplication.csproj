@@ -2507,6 +2507,7 @@
     <Content Include="webfonts\fa-solid-900.svg" />
     <Content Include="Ejemplos\Abm\EmpresaH.ashx" />
     <Content Include="Ejemplos\Abm\pruebaH.ashx" />
+    <Content Include="ConectionString.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
     <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
