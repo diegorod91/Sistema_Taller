@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Archivos de configuración con datos sensibles (NO SE SUBIRÁN)
 connectionStrings.config
 **/App.config
+/ConectionString.config
