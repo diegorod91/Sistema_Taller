@@ -12,14 +12,16 @@ namespace BOL.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class Modelo
+    public partial class DetalleMovimiento
     {
         public int Id { get; set; }
-        public int IdMarca { get; set; }
-        public Nullable<int> Idcategoria { get; set; }
-        public string Nombre { get; set; }
-        public string NroModeloTecnico { get; set; }
+        public int IdRegistroMovimiento { get; set; }
+        public int IdServicioProducto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioAplicado { get; set; }
+        public decimal Subtotal { get; set; }
     
-        public virtual Marca Marca { get; set; }
+        public virtual Registro_Movimientos Registro_Movimientos { get; set; }
+        public virtual Servicio_Repuesto Servicio_Repuesto { get; set; }
     }
 }

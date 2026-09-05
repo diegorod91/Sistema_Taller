@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Utilities;
 
 
 namespace SolucionBase.Catalogo
@@ -26,28 +27,20 @@ namespace SolucionBase.Catalogo
 
         private void CargarDesplegablesFiltro()
         {
-            ddlModalCategoria.Fill(BOL.Entidades.Categoria.ge)
-            //using (var db = new TallerDbContext())
-            //{
-            //    ddlFiltroCategoria.DataSource = db.Categorias.ToList();
-            //    ddlFiltroCategoria.DataTextField = "Nombre";
-            //    ddlFiltroCategoria.DataValueField = "Id";
-            //    ddlFiltroCategoria.DataBind();
-            //    ddlFiltroCategoria.Items.Insert(0, new ListItem("-- Todas --", "0"));
-            //
-            //    ddlFiltroMarca.DataSource = db.Marcas.ToList();
-            //    ddlFiltroMarca.DataTextField = "Nombre";
-            //    ddlFiltroMarca.DataValueField = "Id";
-            //    ddlFiltroMarca.DataBind();
-            //    ddlFiltroMarca.Items.Insert(0, new ListItem("-- Todas --", "0"));
-            //}
+            //DDL_Categoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
+            DDL_FiltroCategoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
+            DDL_FiltroMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
+
         }
 
         private void CargarGridModelos()
         {
-            //int idCat = Convert.ToInt32(ddlFiltroCategoria.SelectedValue);
-            //int idMarca = Convert.ToInt32(ddlFiltroMarca.SelectedValue);
+            int idCat = Convert.ToInt32(DDL_FiltroCategoria.SelectedValue);
+            int idMarca = Convert.ToInt32(DDL_FiltroMarca.SelectedValue);
 
+            List<Modelo> modelo = Modelo.GetAllModelos();
+            gvModelos.DataSource = modelo.ToList();
+            gvModelos.DataBind();
             //using (var db = new TallerDbContext())
             //{
             //    var query = db.Modelos.Include("Marca").Include("Categoria").AsQueryable();
@@ -60,8 +53,8 @@ namespace SolucionBase.Catalogo
             //}
         }
 
-        protected void ddlFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
-        protected void ddlFiltroMarca_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
+        protected void DDL_FiltroCategoria_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
+        protected void DDL_FiltroMarca_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
 
         protected void btnNuevoModelo_Click(object sender, EventArgs e)
         {
@@ -76,23 +69,34 @@ namespace SolucionBase.Catalogo
 
         private void CargarDesplegablesModal()
         {
-            //using (var db = new TallerDbContext())
-            //{
-            //    ddlModalCategoria.DataSource = db.Categorias.ToList();
-            //    ddlModalCategoria.DataTextField = "Nombre";
-            //    ddlModalCategoria.DataValueField = "Id";
-            //    ddlModalCategoria.DataBind();
-            //
-            //    ddlModalMarca.DataSource = db.Marcas.ToList();
-            //    ddlModalMarca.DataTextField = "Nombre";
-            //    ddlModalMarca.DataValueField = "Id";
-            //    ddlModalMarca.DataBind();
-            //}
+            DDL_Categoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
+            DDL_Marca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
+
         }
 
         protected void btnGuardarModelo_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(hfModeloId.Value);
+            string nombre = txtModalNombre.Text.Trim();
+            string tecnico = txtModalTecnico.Text.Trim();
+            int idCategoria = Convert.ToInt32(DDL_Categoria.SelectedValue);
+            int idMarca = Convert.ToInt32(DDL_Marca.SelectedValue);
+
+            Modelo model = id == 0 ? new BOL.Entidades.Modelo() : Modelo.GetAllModelos().FirstOrDefault(m => m.Id == id);
+            model.Nombre = nombre; 
+            model.NroModeloTecnico = tecnico;
+            model.Idcategoria = idCategoria;
+            model.IdMarca = idMarca;
+            LoginXML usuario = Session["UsuarioActual"] as LoginXML;
+
+            if(id == 0)
+            {
+                model.Modelo_Save(usuario);
+            }
+            else
+            {
+                model.Update_Save(usuario);
+            }
 
             //using (var db = new TallerDbContext())
             //{

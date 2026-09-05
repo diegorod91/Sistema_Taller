@@ -53,12 +53,12 @@
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label>Filtrar Categoría:</label>
-                                        <asp:DropDownList ID="ddlFiltroCategoria" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroCategoria_SelectedIndexChanged">
+                                        <asp:DropDownList ID="DDL_FiltroCategoria" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroCategoria_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Filtrar Marca:</label>
-                                        <asp:DropDownList ID="ddlFiltroMarca" runat="server" CssClass="form-select form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroMarca_SelectedIndexChanged">
+                                        <asp:DropDownList ID="DDL_FiltroMarca" runat="server" CssClass="form-select form-control" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroMarca_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-md-6 text-right d-flex align-items-end justify-content-end">
@@ -149,11 +149,11 @@
 
                             <div class="form-group">
                                 <label>Categoría</label>
-                                <asp:DropDownList ID="ddlModalCategoria" runat="server" CssClass="form-control" />
+                                <asp:DropDownList ID="DDL_Categoria" runat="server" CssClass="form-control" />
                             </div>
                             <div class="form-group">
                                 <label>Marca</label>
-                                <asp:DropDownList ID="ddlModalMarca" runat="server" CssClass="form-control" />
+                                <asp:DropDownList ID="DDL_Marca" runat="server" CssClass="form-control" />
                             </div>
                             <div class="form-group">
                                 <label>Nombre del Modelo</label>

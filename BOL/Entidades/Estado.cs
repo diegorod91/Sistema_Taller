@@ -12,28 +12,18 @@ namespace BOL.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class Registro_Movimientos
+    public partial class Estado
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Registro_Movimientos()
+        public Estado()
         {
-            this.DetalleMovimiento = new HashSet<DetalleMovimiento>();
+            this.Registro_Movimientos = new HashSet<Registro_Movimientos>();
         }
     
         public int Id { get; set; }
-        public int IdCliente { get; set; }
-        public int IdModelo { get; set; }
-        public string Observaciones { get; set; }
-        public int IdTipoOperacion { get; set; }
-        public System.DateTime FechaIngreso { get; set; }
-        public Nullable<System.DateTime> FechaEntrega { get; set; }
-        public Nullable<decimal> Total { get; set; }
-        public int IdEstado { get; set; }
+        public string Nombre { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleMovimiento> DetalleMovimiento { get; set; }
-        public virtual Estado Estado { get; set; }
-        public virtual TipoOperacion TipoOperacion { get; set; }
+        public virtual ICollection<Registro_Movimientos> Registro_Movimientos { get; set; }
     }
 }

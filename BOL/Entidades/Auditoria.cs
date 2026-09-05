@@ -12,14 +12,14 @@ namespace BOL.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class Modelo
+    public partial class Auditoria
     {
         public int Id { get; set; }
-        public int IdMarca { get; set; }
-        public Nullable<int> Idcategoria { get; set; }
-        public string Nombre { get; set; }
-        public string NroModeloTecnico { get; set; }
-    
-        public virtual Marca Marca { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public string Transaccion { get; set; }
+        public string Usuario { get; set; }
+        public string Tabla { get; set; }
+        public Nullable<int> IdAfectado { get; set; }
+        public string Original { get; set; }
     }
 }

@@ -7,12 +7,11 @@ using BOL.Controladoras;
 
 namespace BOL.Entidades
 {
-    public partial class Categoria
+    public partial class Marca
     {
-
-        public static List<Categoria> GetAllCategorias()
+        public static List<Marca> GetAllMarcas()
         {
-            return CCategoria.GetAllCategorias();
+            return CMarca.GetAllMarcas();
         }
     }
 }

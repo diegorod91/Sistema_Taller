@@ -24,22 +24,22 @@ namespace SolucionBase.Catalogo
         protected global::System.Web.UI.UpdatePanel upCatalogo;
 
         /// <summary>
-        /// Control ddlFiltroCategoria.
+        /// Control DDL_FiltroCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroCategoria;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_FiltroCategoria;
 
         /// <summary>
-        /// Control ddlFiltroMarca.
+        /// Control DDL_FiltroMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroMarca;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_FiltroMarca;
 
         /// <summary>
         /// Control btnNuevoModelo.
@@ -123,22 +123,22 @@ namespace SolucionBase.Catalogo
         protected global::System.Web.UI.WebControls.HiddenField hfModeloId;
 
         /// <summary>
-        /// Control ddlModalCategoria.
+        /// Control DDL_Categoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModalCategoria;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Categoria;
 
         /// <summary>
-        /// Control ddlModalMarca.
+        /// Control DDL_Marca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModalMarca;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Marca;
 
         /// <summary>
         /// Control txtModalNombre.

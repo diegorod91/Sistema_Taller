@@ -24,6 +24,7 @@ namespace SolucionBase
             //LTR_SideDestino.Text = user.NombreDependencia.ToUpper();
             LTR_SideNivel.Text = "Rodriguez Diego";
 
+            Session["Usuario"] = "Rodriguez Diego";
             string title = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"].ToString();
             this.Page.Title = title;
             LTL_NombreSistema.Text = title;
