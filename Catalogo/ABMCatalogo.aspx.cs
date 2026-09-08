@@ -41,16 +41,7 @@ namespace SolucionBase.Catalogo
             List<Modelo> modelo = Modelo.GetAllModelos();
             gvModelos.DataSource = modelo.ToList();
             gvModelos.DataBind();
-            //using (var db = new TallerDbContext())
-            //{
-            //    var query = db.Modelos.Include("Marca").Include("Categoria").AsQueryable();
-            //
-            //    if (idCat > 0) query = query.Where(m => m.IdCategoria == idCat);
-            //    if (idMarca > 0) query = query.Where(m => m.IdMarca == idMarca);
-            //
-            //    gvModelos.DataSource = query.ToList();
-            //    gvModelos.DataBind();
-            //}
+
         }
 
         protected void DDL_FiltroCategoria_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
@@ -83,13 +74,13 @@ namespace SolucionBase.Catalogo
             int idMarca = Convert.ToInt32(DDL_Marca.SelectedValue);
 
             Modelo model = id == 0 ? new BOL.Entidades.Modelo() : Modelo.GetAllModelos().FirstOrDefault(m => m.Id == id);
-            model.Nombre = nombre; 
+            model.Nombre = nombre;
             model.NroModeloTecnico = tecnico;
             model.Idcategoria = idCategoria;
             model.IdMarca = idMarca;
             LoginXML usuario = Session["UsuarioActual"] as LoginXML;
 
-            if(id == 0)
+            if (id == 0)
             {
                 model.Modelo_Save(usuario);
             }
@@ -97,20 +88,6 @@ namespace SolucionBase.Catalogo
             {
                 model.Update_Save(usuario);
             }
-
-            //using (var db = new TallerDbContext())
-            //{
-            //    Modelo modelo = id == 0 ? new Modelo() : db.Modelos.Find(id);
-            //
-            //    modelo.Nombre = txtModalNombre.Text.Trim();
-            //    modelo.NumeroModeloTecnico = txtModalTecnico.Text.Trim();
-            //    modelo.IdCategoria = Convert.ToInt32(ddlModalCategoria.SelectedValue);
-            //    modelo.IdMarca = Convert.ToInt32(ddlModalMarca.SelectedValue);
-            //
-            //    if (id == 0) db.Modelos.Add(modelo);
-            //
-            //    db.SaveChanges();
-            //}
 
             CargarGridModelos();
             ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalModelo();", true);
@@ -122,30 +99,91 @@ namespace SolucionBase.Catalogo
 
             if (e.CommandName == "Editar")
             {
-                //using (var db = new TallerDbContext())
-                //{
-                //    var m = db.Modelos.Find(id);
-                //    if (m != null)
-                //    {
-                //        hfModeloId.Value = m.Id.ToString();
-                //        txtModalNombre.Text = m.Nombre;
-                //        txtModalTecnico.Text = m.NumeroModeloTecnico;
+                Modelo updatemodelo = Modelo.GetModeloById(id);
+                hfModeloId.Value = updatemodelo.Id.ToString();
+                txtModalNombre.Text = updatemodelo.Nombre;
+                txtModalTecnico.Text = updatemodelo.NroModeloTecnico;
                 //
-                //        CargarDesplegablesModal();
-                //        ddlModalCategoria.SelectedValue = m.IdCategoria.ToString();
-                //        ddlModalMarca.SelectedValue = m.IdMarca.ToString();
-                //
-                //        ltrTituloModal.Text = "Editar Modelo";
-                //        ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalModelo();", true);
+                CargarDesplegablesModal();
+                DDL_Categoria.SelectedValue = updatemodelo.Idcategoria.ToString();
+                DDL_Marca.SelectedValue = updatemodelo.IdMarca.ToString();
+
+                ltrTituloModal.Text = "Editar Modelo";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalModelo();", true);
                 //    }
                 //}
             }   //
         }
 
-        private void CargarGridMarcas() { /* Cargar gvMarcas */ }
-        private void CargarGridCategorias() { /* Cargar gvCategorias */ }
-        protected void btnNuevaMarca_Click(object sender, EventArgs e) { }
-        protected void btnNuevaCategoria_Click(object sender, EventArgs e) { }
+        private void CargarGridMarcas()
+        {
+            List<Marca> listaMarcas = Marca.GetAllMarcas();
+            gvMarcas.DataSource = listaMarcas;
+            gvMarcas.DataBind();
+        }
+        private void CargarGridCategorias()
+        {
+            /* Cargar gvCategorias */
+            List<Categoria> listaCategorias = Categoria.GetAllCategorias();
+            gvCategorias.DataSource = listaCategorias;
+            gvCategorias.DataBind();
+        }
+        protected void btnNuevaMarca_Click(object sender, EventArgs e)
+        {
+            hfTabActiva.Value = "#tab-marcas";
+            ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalMarca();", true);
+        }
+        protected void btnNuevaCategoria_Click(object sender, EventArgs e)
+        {
+            hfTabActiva.Value = "#tab-categorias";
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalCategoria();", true);
+        }
+
+        protected void BTN_AltaMarca_Click(object sender, EventArgs e)
+        {
+            Marca nuevaMarca = new Marca();
+            nuevaMarca.Nombre = TB_Marca.Text.Trim();
+
+            //Verificar si la marca ya existe
+            bool marcaExistente = Marca.GetAllMarcas().Any(m => m.Nombre.Equals(nuevaMarca.Nombre, StringComparison.OrdinalIgnoreCase));
+            if (marcaExistente)
+            {
+                this.MostrarMensajeValidacion("La marca ya existe. Por favor, ingrese un nombre diferente.");
+            }
+            else
+            {
+                LoginXML usuario = Session["UsuarioActual"] as LoginXML;
+                nuevaMarca.Marca_Save(usuario);
+                CargarGridMarcas();
+                TB_Marca.Text = string.Empty;
+                this.Notificar(Notification.SUCCESS, "", "Marca agregada correctamente.");
+                ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalMarca();", true);
+            }
+
+
+        }
+
+        protected void BTN_AltaCategoria_Click(object sender, EventArgs e)
+        {
+            Categoria nuevaCategoria = new Categoria();
+            nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
+            //verificar si la categoria ya existe
+            bool categoriaExistente = Categoria.GetAllCategorias().Any(c => c.Nombre.Equals(nuevaCategoria.Nombre, StringComparison.OrdinalIgnoreCase));
+            if (categoriaExistente)
+            {
+                this.MostrarMensajeValidacion("La categoría ya existe. Por favor, ingrese un nombre diferente.");
+            }
+            else
+            {
+                LoginXML usuario = Session["UsuarioActual"] as LoginXML;
+                nuevaCategoria.Categoria_Save(usuario);
+                CargarGridCategorias();
+                TB_Categoria.Text = string.Empty;
+                this.Notificar(Notification.SUCCESS, "", "Categoría agregada correctamente.");
+                ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalCategoria();", true);
+            }
+        }
     }
 }
 

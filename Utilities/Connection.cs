@@ -13,38 +13,39 @@ namespace Utilities
         public static string GetConnection(string workstationID = "")
         {
             string conexionDB = "";
+
+
             switch (System.Configuration.ConfigurationManager.AppSettings["SystemState"].ToString())
             {
-                case "D": conexionDB = ConnectionTools.GetConnectionString("solucionbase", "10.62.1.64", "sa", "sql", true); break;
-                case "T": conexionDB = ConnectionTools.GetConnectionString("solucionbase", "10.62.1.64", "sa", "sql", true); break;
-                case "P": conexionDB = ConnectionTools.GetConnectionString("solucionbase", "10.62.1.64", "sa", "sql", true); break;
+                //case "D": conexionDB = ConnectionTools.GetConnectionString("RAE", "10.62.1.64\\desarrollo", "sa", "sql", true); break;
+                case "D": conexionDB = ConnectionTools.GetConnectionString("Taller", "DESKTOP-KMTVQUV"); break;
+                //case "T": conexionDB = ConnectionTools.GetConnectionString("RAE", "10.62.1.64\\testeo", "sa", "SQL01*", true); break;
+                case "T": conexionDB = ConnectionTools.GetConnectionString("Taller", "DESKTOP-KMTVQUV"); break;
+                //case "P": conexionDB = ConnectionTools.GetConnectionString("RAE", "urano", "sa", "sql", true); break;
+                case "P": conexionDB = ConnectionTools.GetConnectionString("Taller", "DESKTOP-KMTVQUV"); break;
+
             }
             return conexionDB;
+
         }
     }
+}
 
-    public static class ConnectionTools
+
+public static class ConnectionTools
+{
+    public static string GetConnectionString(
+    string initialCatalog = "",
+    string dataSource = "")
     {
-        public static string GetConnectionString(
-            string initialCatalog = "",
-            string dataSource = "",
-            string userId = "",
-            string password = "",
-            bool persistSecurity = true, string workstationID = "")
+        string connString = new System.Data.SqlClient.SqlConnectionStringBuilder
         {
-
-            string connString = new System.Data.SqlClient.SqlConnectionStringBuilder
-            {
-                InitialCatalog = initialCatalog,
-                DataSource = dataSource,
-                PersistSecurityInfo = persistSecurity,
-                UserID = userId,
-                Password = password,
-                WorkstationID = workstationID,
-                ConnectTimeout = 60,
-                ApplicationName = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"]
-            }.ConnectionString;
-            return String.Format(connString);
-        }
+            InitialCatalog = initialCatalog,
+            DataSource = dataSource,
+            IntegratedSecurity = true,
+            ConnectTimeout = 60,
+            ApplicationName = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"]
+        }.ConnectionString;
+        return String.Format(connString);
     }
 }

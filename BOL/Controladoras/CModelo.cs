@@ -14,11 +14,18 @@ namespace BOL.Controladoras
     {
         internal static List<Modelo> GetAllModelos()
         {
-          var response = (from o in DAO.Current.Modelo.Include("Marca").Include("CAtegoria")
+          var response = (from o in DAO.Current.Modelo.Include("Marca").Include("Categoria")
                        select o).ToList();
 
             return response;
                          
+        }
+
+        internal static Modelo GetModeloById(int idmodelo)
+        {
+            return (from o in DAO.Current.Modelo
+                    where o.Id == idmodelo
+                    select o).FirstOrDefault();
         }
 
         internal static int Modelo_Save(Modelo modelo,LoginXML usuario)

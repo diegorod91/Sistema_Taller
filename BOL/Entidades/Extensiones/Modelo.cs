@@ -15,6 +15,11 @@ namespace BOL.Entidades
             return CModelo.GetAllModelos();
         }
 
+        public static Modelo GetModeloById(int id)
+        {
+            return CModelo.GetModeloById(id);
+        }
+
         public int Modelo_Save(LoginXML usuario)
         {
             return CModelo.Modelo_Save(this,usuario );

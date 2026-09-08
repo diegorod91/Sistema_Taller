@@ -128,6 +128,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Modelo_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="Idcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Modelo_Marca">
           <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
           <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
@@ -176,6 +188,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Categoria_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Marca_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
         <Function Name="Modelo_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
@@ -203,6 +223,10 @@
           <AssociationSet Name="FK_Detalle_ServicioProducto" Association="Self.FK_Detalle_ServicioProducto">
             <End Role="Servicio_Repuesto" EntitySet="Servicio_Repuesto" />
             <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Categoria" Association="Self.FK_Modelo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Modelo" EntitySet="Modelo" />
           </AssociationSet>
           <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
             <End Role="Marca" EntitySet="Marca" />
@@ -243,6 +267,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Modelo" Relationship="Model.FK_Modelo_Categoria" FromRole="Categoria" ToRole="Modelo" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -297,6 +322,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NroModeloTecnico" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Marca" Relationship="Self.FK_Modelo_Marca" FromRole="Modelo" ToRole="Marca" />
+          <NavigationProperty Name="Categoria" Relationship="Model.FK_Modelo_Categoria" FromRole="Modelo" ToRole="Categoria" />
         </EntityType>
         <EntityType Name="Registro_Movimientos">
           <Key>
@@ -452,7 +478,31 @@
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RethrowError" />
+          <AssociationSet Name="FK_Modelo_Categoria" Association="Model.FK_Modelo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <FunctionImport Name="Categoria_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Marca_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <Association Name="FK_Modelo_Categoria">
+          <End Type="Model.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="Model.Modelo" Role="Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="Idcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -569,6 +619,8 @@
           <FunctionImportMapping FunctionImportName="Modelo_Save" FunctionName="Model.Store.Modelo_Save" />
           <FunctionImportMapping FunctionImportName="Modelo_Update" FunctionName="Model.Store.Modelo_Update" />
           <FunctionImportMapping FunctionImportName="RethrowError" FunctionName="Model.Store.RethrowError" />
+          <FunctionImportMapping FunctionImportName="Categoria_Save" FunctionName="Model.Store.Categoria_Save" />
+          <FunctionImportMapping FunctionImportName="Marca_Save" FunctionName="Model.Store.Marca_Save" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -590,6 +642,26 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Auditoria" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Categoria" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Cliente" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DetalleMovimiento" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Estado" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Marca" Width="1.5" PointX="5.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Modelo" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Registro_Movimientos" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Servicio_Repuesto" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoOperacion" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Registro_Movimientos_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Detalle_Registro" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Detalle_ServicioProducto" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Registro_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Modelo_Marca" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Registro_Movimientos_TipoOperacion" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Modelo_Categoria" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

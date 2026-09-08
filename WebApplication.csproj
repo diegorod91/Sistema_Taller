@@ -1885,6 +1885,7 @@
     <Content Include="bower_components\toastr\toastr.min.css" />
     <Content Include="bower_components\toastr\toastr.min.js" />
     <Content Include="Catalogo\ABMCatalogo.aspx" />
+    <Content Include="Catalogo\Catalogo.js" />
     <Content Include="CerrarSesion.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />

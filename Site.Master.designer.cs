@@ -60,6 +60,15 @@ namespace SolucionBase
         protected global::System.Web.UI.WebControls.Literal LTR_NavRightName;
 
         /// <summary>
+        /// Control LTR_NavRightNivel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LTR_NavRightNivel;
+
+        /// <summary>
         /// Control LTR_NavRightCargo.
         /// </summary>
         /// <remarks>
@@ -76,15 +85,6 @@ namespace SolucionBase
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal LTR_NavRightDestino;
-
-        /// <summary>
-        /// Control LTR_NavRightNivel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LTR_NavRightNivel;
 
         /// <summary>
         /// Control HL_Cerrar.

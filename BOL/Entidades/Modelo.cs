@@ -21,5 +21,6 @@ namespace BOL.Entidades
         public string NroModeloTecnico { get; set; }
     
         public virtual Marca Marca { get; set; }
+        public virtual Categoria Categoria { get; set; }
     }
 }

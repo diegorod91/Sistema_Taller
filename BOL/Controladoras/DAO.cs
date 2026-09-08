@@ -35,11 +35,12 @@ namespace BOL.Controladoras
         private static EDM CreateEDM(string workstationID = "")
         {
             EDM _bd = new EDM();
-            _bd.Database.Connection.ConnectionString = Connection.GetConnection(workstationID);
+
             _bd.Database.CommandTimeout = _bd.Database.Connection.ConnectionTimeout;
             _bd.Configuration.ProxyCreationEnabled = false;
             _bd.Configuration.LazyLoadingEnabled = false;
             _bd.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+
             return _bd;
         }
 
@@ -50,9 +51,16 @@ namespace BOL.Controladoras
         {
             if (edm.Database.Connection.State.Equals(ConnectionState.Open))
             {
-                edm.Database.Connection.Close();
+                if (edm.Database.CurrentTransaction == null)
+                {
+                    edm.Database.Connection.Close();
+                    edm.Database.Connection.Open();
+                }
             }
-            edm.Database.Connection.Open();
+            else
+            {
+                edm.Database.Connection.Open();
+            }
         }
 
         public static void BeginTransaction(this EDM edm)
@@ -62,7 +70,10 @@ namespace BOL.Controladoras
                 edm.Database.BeginTransaction();
             }
         }
-
+        public static bool ExistCurrentTransaction(this EDM edm)
+        {
+            return (edm.Database.CurrentTransaction != null);
+        }
         public static void CommitTransaction(this EDM edm)
         {
             if (edm.Database.CurrentTransaction != null)
@@ -90,5 +101,6 @@ namespace BOL.Controladoras
                 edm.Database.Connection.Close();
             }
         }
+
     }
 }
