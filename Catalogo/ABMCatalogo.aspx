@@ -31,28 +31,29 @@
             <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="tab-modelos-tab" data-toggle="tab" href="#tab-modelos" role="tab" aria-controls="tab-modelos" aria-selected="true">
+                        <a class="nav-link active" id="tab-modelos-tab" data-toggle="tab" href="#tab-modelos" role="tab" onclick="guardarTab('#tab-modelos');">
                             <i class="fas fa-mobile-alt mr-1"></i>Modelos
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-marcas-tab" data-toggle="tab" href="#tab-marcas" role="tab" aria-controls="tab-marcas" aria-selected="false">
+                        <a class="nav-link" id="tab-marcas-tab" data-toggle="tab" href="#tab-marcas" role="tab" onclick="guardarTab('#tab-marcas');">
                             <i class="fas fa-tag mr-1"></i>Marcas
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-categorias-tab" data-toggle="tab" href="#tab-categorias" role="tab" aria-controls="tab-categorias" aria-selected="false">
+                        <a class="nav-link" id="tab-categorias-tab" data-toggle="tab" href="#tab-categorias" role="tab" onclick="guardarTab('#tab-categorias');">
                             <i class="fas fa-th-large mr-1"></i>Categorías
                         </a>
                     </li>
                 </ul>
             </div>
 
+            <asp:HiddenField ID="hfTabActiva" runat="server" Value="#tab-modelos" />
+                        
             <div class="card-body">
                 <asp:UpdatePanel ID="upCatalogo" runat="server">
                     <ContentTemplate>
                         <!-- Campo oculto para recordar la pestaña activa -->
-                        <asp:HiddenField ID="hfTabActiva" runat="server" Value="#tab-modelos" />
                         <div class="tab-content" id="custom-tabs-two-tabContent">
 
                             <!-- PESTAÑA 1: MODELOS -->
@@ -92,10 +93,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="120px" ItemStyle-CssClass="text-center">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-info">
+                                                    <asp:LinkButton ID="btnEditar" runat="server" ToolTip="Editar" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-info">
                                                         <i class="fas fa-edit"></i>
                                                     </asp:LinkButton>
-                                                    <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Desea eliminar este modelo?');">
+                                                    <asp:LinkButton ID="btnEliminar" runat="server" ToolTip="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Desea eliminar este modelo?');">
                                                         <i class="fas fa-trash"></i>
                                                     </asp:LinkButton>
                                                 </ItemTemplate>
@@ -113,10 +114,20 @@
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <asp:GridView ID="gvMarcas" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-striped" DataKeyNames="Id">
+                                    <asp:GridView ID="gvMarcas" runat="server" AutoGenerateColumns="False" OnRowCommand="gvMarcas_RowCommand" CssClass="table table-bordered table-striped" DataKeyNames="Id">
                                         <Columns>
                                             <asp:BoundField DataField="Id" HeaderText="#" />
                                             <asp:BoundField DataField="Nombre" HeaderText="Marca" />
+                                            <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="120px" ItemStyle-CssClass="text-center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnEditar" runat="server" ToolTip="Editar" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-info">
+                                                     <i class="fas fa-edit"></i>
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton ID="btnEliminar" runat="server" ToolTip="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Desea eliminar esta Marca?');">
+                                                     <i class="fas fa-trash"></i>
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -130,10 +141,20 @@
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <asp:GridView ID="gvCategorias" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-striped" DataKeyNames="Id">
+                                    <asp:GridView ID="gvCategorias" runat="server" AutoGenerateColumns="False" OnRowCommand="gvCategorias_RowCommand" CssClass="table table-bordered table-striped" DataKeyNames="Id">
                                         <Columns>
                                             <asp:BoundField DataField="Id" HeaderText="#" />
                                             <asp:BoundField DataField="Nombre" HeaderText="Categoría" />
+                                            <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="120px" ItemStyle-CssClass="text-center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnEditar" runat="server" ToolTip="Editar" CommandName="Editar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-info">
+                                                         <i class="fas fa-edit"></i>
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton ID="btnEliminar" runat="server" ToolTip="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Desea eliminar esta categoria?');">
+                                                         <i class="fas fa-trash"></i>
+                                                    </asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -259,24 +280,43 @@
     </div>
 
     <script type="text/javascript" src="Catalogo.js"> </script>
+    <script type="text/javascript" src="Catalogo.js"></script>
     <script>
-        function guardarTab(tabId) {
+        // Función global para guardar y aplicar el Tab
+        function cambiarYGuardarTab(tabId) {
+            // 1. Guardar en el HiddenField de C#
             $('#<%= hfTabActiva.ClientID %>').val(tabId);
+
+            // 2. Cambiar clases activas en Bootstrap
+            $('.nav-tabs .nav-link').removeClass('active');
+            $('.tab-pane').removeClass('show active');
+
+            $('.nav-tabs a[href="' + tabId + '"]').addClass('active');
+            $(tabId).addClass('show active');
         }
 
-        // Restaura la pestaña activa guardada en el HiddenField
+        // Función que restaura el tab grabado en el HiddenField
         function restaurarTabActiva() {
             var tabActiva = $('#<%= hfTabActiva.ClientID %>').val();
-            if (tabActiva) {
-                $('.nav-tabs a[href="' + tabActiva + '"]').tab('show');
+            if (tabActiva && tabActiva !== '') {
+                cambiarYGuardarTab(tabActiva);
+            } else {
+                // Por defecto si está vacío, activar Modelos
+                cambiarYGuardarTab('#tab-modelos');
             }
         }
 
-        // Se ejecuta automáticamente en la carga inicial y tras cada PostBack de UpdatePanel
+        // Escuchar cambios de pestaña hechos con click por el usuario
         $(document).ready(function () {
-            restaurarTabActiva();
-        });
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var targetTab = $(e.target).attr("href"); // Obtiene '#tab-marcas', etc.
+                $('#<%= hfTabActiva.ClientID %>').val(targetTab);
+    });
 
+    restaurarTabActiva();
+});
+
+        // Re-aplicar restauración tras cada respuesta AJAX de UpdatePanel
         var prm = Sys.WebForms.PageRequestManager.getInstance();
         if (prm) {
             prm.add_endRequest(function () {

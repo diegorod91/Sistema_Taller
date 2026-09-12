@@ -78,7 +78,7 @@ namespace SolucionBase.Catalogo
             model.NroModeloTecnico = tecnico;
             model.Idcategoria = idCategoria;
             model.IdMarca = idMarca;
-            LoginXML usuario = Session["UsuarioActual"] as LoginXML;
+            LoginXML usuario = Session["Usuario"] as LoginXML;
 
             if (id == 0)
             {
@@ -153,9 +153,12 @@ namespace SolucionBase.Catalogo
             }
             else
             {
-                LoginXML usuario = Session["UsuarioActual"] as LoginXML;
+                LoginXML usuario = Session["Usuario"] as LoginXML;
                 nuevaMarca.Marca_Save(usuario);
                 CargarGridMarcas();
+                CargarDesplegablesFiltro();
+                CargarDesplegablesModal();
+
                 TB_Marca.Text = string.Empty;
                 this.Notificar(Notification.SUCCESS, "", "Marca agregada correctamente.");
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalMarca();", true);
@@ -167,7 +170,9 @@ namespace SolucionBase.Catalogo
         protected void BTN_AltaCategoria_Click(object sender, EventArgs e)
         {
             Categoria nuevaCategoria = new Categoria();
+            nuevaCategoria.Id = 0;
             nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
+            nuevaCategoria.Modelo = null; //← PARA EVITAR REFERENCIA CIRCULAR
             //verificar si la categoria ya existe
             bool categoriaExistente = Categoria.GetAllCategorias().Any(c => c.Nombre.Equals(nuevaCategoria.Nombre, StringComparison.OrdinalIgnoreCase));
             if (categoriaExistente)
@@ -176,14 +181,58 @@ namespace SolucionBase.Catalogo
             }
             else
             {
-                LoginXML usuario = Session["UsuarioActual"] as LoginXML;
-                nuevaCategoria.Categoria_Save(usuario);
+                LoginXML usuario = Session["Usuario"] as LoginXML;
+                //var NCat = nuevaCategoria.Serialize()
+                ;
+                int rta = nuevaCategoria.Categoria_Save(usuario);
                 CargarGridCategorias();
+                CargarDesplegablesFiltro();
+                CargarDesplegablesModal();
+
+
                 TB_Categoria.Text = string.Empty;
                 this.Notificar(Notification.SUCCESS, "", "Categoría agregada correctamente.");
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalCategoria();", true);
             }
         }
+
+        protected void gvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            hfTabActiva.Value = "#tab-marcas";
+            int idMarca = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "Editar")
+            {
+                Marca updateMarca = Marca.GetMarcaById(idMarca);
+                hfModeloId.Value = updateMarca.Id.ToString();
+                txtModalNombre.Text = updateMarca.Nombre;
+                //
+                CargarDesplegablesModal();
+                DDL_Marca.SelectedValue = updateMarca.Id.ToString();
+
+                ltrTituloModal.Text = "Editar Marca";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalMarca();", true);
+
+            }
+        }
+        protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            hfTabActiva.Value = "#tab-categorias";
+            int idCategoria = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "Editar")
+            {
+                Categoria updateCategoria = Categoria.GetCategoriaById(idCategoria);
+                hfModeloId.Value = updateCategoria.Id.ToString();
+                txtModalNombre.Text = updateCategoria.Nombre;
+                //
+                CargarDesplegablesModal();
+                DDL_Marca.SelectedValue = updateCategoria.Id.ToString();
+
+                ltrTituloModal.Text = "Editar Marca";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalCategoria();", true);
+
+            }
+        }
     }
 }
-

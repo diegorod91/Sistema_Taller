@@ -20,6 +20,15 @@ namespace BOL.Controladoras
             return response;
         }
 
+        internal static Categoria GetCategoriaById(int idCategoria)
+        {
+            var response = (from o in DAO.Current.Categoria
+                            where o.Id == idCategoria
+                            select o).FirstOrDefault(); 
+
+            return response;
+        }
+
         internal static int Save_Categoria(Categoria categoria,LoginXML usuario)
         {
             int response = DAO.Current.Categoria_Save(categoria.Serialize(), usuario.Serialize()).FirstOrDefault().Value;

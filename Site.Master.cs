@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
+using Utilities;
+using Utilities.UI;
 
 namespace SolucionBase
 {
@@ -12,59 +14,70 @@ namespace SolucionBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LTR_NavRightButtonName.Text = "Rodriguez Diego";
+
+
+            LoginXML usuario = new LoginXML();
+            usuario.Nomyape = "Rodriguez Diego";
+            usuario.Documento = "12345678";
+            usuario.DescNivelAcceso = "Desarrollador";
+            usuario.NivelAcceso = 10;
+            usuario.IdUsuario = 1;
+
+
+            LTR_NavRightButtonName.Text = usuario.Nomyape;
             LTR_NavRightCargo.Text = "Desarrollador";
             //LTR_NavRightDestino.Text = user.NombreDependencia;
-            //LTR_NavRightNivel.Text = user.DescNivelAcceso;
-            LTR_NavRightName.Text = "Rodriguez Diego";
-            LTR_NavRightNivel.Text = "Desarrollador";
+            LTR_NavRightNivel.Text = usuario.DescNivelAcceso;
+            LTR_NavRightName.Text = usuario.Nomyape;
+            LTR_NavRightNivel.Text = usuario.DescNivelAcceso;
 
-            LTR_SideName.Text = "Rodriguez Diego";
-            LTR_SideCargo.Text = "Rodriguez Diego";
+            LTR_SideName.Text = usuario.Nomyape;
+            LTR_SideCargo.Text = usuario.DescNivelAcceso;
             //LTR_SideDestino.Text = user.NombreDependencia.ToUpper();
-            LTR_SideNivel.Text = "Rodriguez Diego";
+            LTR_SideNivel.Text = "Desarrollador";
 
-            Session["Usuario"] = "Rodriguez Diego";
+            Session["Usuario"] = usuario;
+            
             string title = System.Configuration.ConfigurationManager.AppSettings["ApplicationName"].ToString();
             this.Page.Title = title;
             LTL_NombreSistema.Text = title;
             LTR_TitleSystem.Text = title;
             LTL_anio.Text = DateTime.Today.Year.ToString();
 
-            this.SetearSidebar(10);
+            this.SetearSidebar(usuario.NivelAcceso.ToString().ToInt());
 
 
         }
 
         protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
         {
-            //ErrorModule error = new ErrorModule();
-            //List<CustomExcepcion> listExc = new List<CustomExcepcion>();
-            //Exception exc = e.Exception;
-            //while (exc != null)
-            //{
-            //    if (!exc.GetType().Equals(typeof(HttpUnhandledException)))
-            //    {
-            //        error.ProcessException(ref exc);
-            //        if (exc is FunctException) { ScriptManager1.AsyncPostBackErrorMessage = exc.Message; return; }
-            //        listExc.Add(new CustomExcepcion(exc));
-            //    }
-            //    exc = exc.InnerException;
-            //}
-            //LogError log = new LogError();
-            //try
-            //{
-            //    log = error.WriteFileError(listExc, this.Request);
-            //    error.SendMail(log.NombreError, log.MensajeMail);
-            //}
-            //catch (Exception sql)
-            //{
-            //    error.SendMail("Error al logear el error en la base de datos", sql.Message);
-            //}
-            //finally
-            //{
-            //    ScriptManager1.AsyncPostBackErrorMessage = log.MsjUser;
-            //}
+            ErrorModule error = new ErrorModule();
+            List<CustomExcepcion> listExc = new List<CustomExcepcion>();
+            Exception exc = e.Exception;
+            while (exc != null)
+            {
+                if (!exc.GetType().Equals(typeof(HttpUnhandledException)))
+                {
+                    error.ProcessException(ref exc);
+                    if (exc is FunctException) { ScriptManager1.AsyncPostBackErrorMessage = exc.Message; return; }
+                    listExc.Add(new CustomExcepcion(exc));
+                }
+                exc = exc.InnerException;
+            }
+            LogError log = new LogError();
+            try
+            {
+                log = error.WriteFileError(listExc, this.Request);
+                error.SendMail(log.NombreError, log.MensajeMail);
+            }
+            catch (Exception sql)
+            {
+                error.SendMail("Error al logear el error en la base de datos", sql.Message);
+            }
+            finally
+            {
+                ScriptManager1.AsyncPostBackErrorMessage = log.MsjUser;
+            }
         }
 
 

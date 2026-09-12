@@ -15,6 +15,11 @@ namespace BOL.Entidades
             return CMarca.GetAllMarcas();
         }
 
+        public static Marca GetMarcaById(int idMarca)
+        {
+            return CMarca.GetMarcaById(idMarca);
+        }
+
         public int Marca_Save(LoginXML usuario)
         {
             return CMarca.Save_Marca(this,usuario);

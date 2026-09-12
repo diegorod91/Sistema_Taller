@@ -11,7 +11,8 @@ namespace BOL.Entidades
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Xml.Serialization;
+
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -30,6 +31,7 @@ namespace BOL.Entidades
         public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [XmlIgnore]
         public virtual ICollection<Registro_Movimientos> Registro_Movimientos { get; set; }
     }
 }

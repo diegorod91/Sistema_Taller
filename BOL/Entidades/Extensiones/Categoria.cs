@@ -16,6 +16,11 @@ namespace BOL.Entidades
             return CCategoria.GetAllCategorias();
         }
 
+        public static Categoria GetCategoriaById(int idCategoria)
+        {
+           return CCategoria.GetCategoriaById(idCategoria);
+        }
+
         public int Categoria_Save(LoginXML usuario)
         {
             return CCategoria.Save_Categoria(this,usuario) ;
