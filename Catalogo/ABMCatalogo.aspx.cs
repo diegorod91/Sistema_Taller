@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Utilities;
-
+using Utilities.UI;
 
 namespace SolucionBase.Catalogo
 {
@@ -128,6 +128,13 @@ namespace SolucionBase.Catalogo
             gvCategorias.DataSource = listaCategorias;
             gvCategorias.DataBind();
         }
+
+        //private string ValidarAltaModelo()
+        //{
+            //string mensaje = string.Empty;
+            //mensaje = ControlExtensions.VerificarSelect(DDL_Categoria., "Categoria"); 
+            
+        //}
         protected void btnNuevaMarca_Click(object sender, EventArgs e)
         {
             hfTabActiva.Value = "#tab-marcas";
@@ -142,17 +149,16 @@ namespace SolucionBase.Catalogo
 
         protected void BTN_AltaMarca_Click(object sender, EventArgs e)
         {
-            Marca nuevaMarca = new Marca();
-            nuevaMarca.Nombre = TB_Marca.Text.Trim();
-
-            //Verificar si la marca ya existe
-            bool marcaExistente = Marca.GetAllMarcas().Any(m => m.Nombre.Equals(nuevaMarca.Nombre, StringComparison.OrdinalIgnoreCase));
-            if (marcaExistente)
+            string mensajeValidacion = validarAltaMarca();
+            if (mensajeValidacion != "")
             {
-                this.MostrarMensajeValidacion("La marca ya existe. Por favor, ingrese un nombre diferente.");
+                this.MostrarMensajeValidacion(mensajeValidacion);
             }
             else
             {
+                Marca nuevaMarca = new Marca();
+                nuevaMarca.Nombre = TB_Marca.Text.Trim();
+
                 LoginXML usuario = Session["Usuario"] as LoginXML;
                 nuevaMarca.Marca_Save(usuario);
                 CargarGridMarcas();
@@ -163,27 +169,23 @@ namespace SolucionBase.Catalogo
                 this.Notificar(Notification.SUCCESS, "", "Marca agregada correctamente.");
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalMarca();", true);
             }
-
-
         }
 
         protected void BTN_AltaCategoria_Click(object sender, EventArgs e)
         {
-            Categoria nuevaCategoria = new Categoria();
-            nuevaCategoria.Id = 0;
-            nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
-            nuevaCategoria.Modelo = null; //← PARA EVITAR REFERENCIA CIRCULAR
-            //verificar si la categoria ya existe
-            bool categoriaExistente = Categoria.GetAllCategorias().Any(c => c.Nombre.Equals(nuevaCategoria.Nombre, StringComparison.OrdinalIgnoreCase));
-            if (categoriaExistente)
+            string mensajeValidacion = validarAltaCategoria();
+            if (mensajeValidacion != "")
             {
-                this.MostrarMensajeValidacion("La categoría ya existe. Por favor, ingrese un nombre diferente.");
+                this.MostrarMensajeValidacion(mensajeValidacion);
             }
             else
             {
+                Categoria nuevaCategoria = new Categoria();
+                nuevaCategoria.Id = 0;
+                nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
+                nuevaCategoria.Modelo = null; //← PARA EVITAR REFERENCIA CIRCULAR
+
                 LoginXML usuario = Session["Usuario"] as LoginXML;
-                //var NCat = nuevaCategoria.Serialize()
-                ;
                 int rta = nuevaCategoria.Categoria_Save(usuario);
                 CargarGridCategorias();
                 CargarDesplegablesFiltro();
@@ -233,6 +235,41 @@ namespace SolucionBase.Catalogo
                 ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalCategoria();", true);
 
             }
+        }
+
+        private string validarAltaCategoria()
+        {
+            string mensaje = string.Empty;
+            if (string.IsNullOrWhiteSpace(TB_Categoria.Text))
+            {
+                mensaje += "El nombre de la categoría no puede estar vacío. ";
+            }
+            else
+            {
+                bool categoriaExistente = Categoria.GetAllCategorias().Any(c => c.Nombre.Equals(TB_Categoria.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+                if (categoriaExistente)
+                {
+                    mensaje += "La categoría ya existe. Por favor, ingrese un nombre diferente.";
+                }
+            }
+            return mensaje;
+        }
+        private string validarAltaMarca()
+        {
+            string mensaje = string.Empty;
+            if (string.IsNullOrWhiteSpace(TB_Marca.Text))
+            {
+                mensaje += "El nombre de la marca no puede estar vacío. ";
+            }
+            else
+            {
+                bool marcaExistente = Marca.GetAllMarcas().Any(m => m.Nombre.Equals(TB_Marca.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+                if (marcaExistente)
+                {
+                    mensaje += "La marca ya existe. Por favor, ingrese un nombre diferente.";
+                }
+            }
+            return mensaje;
         }
     }
 }
