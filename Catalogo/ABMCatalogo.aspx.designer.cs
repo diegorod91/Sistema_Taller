@@ -186,13 +186,13 @@ namespace SolucionBase.Catalogo
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Control Literal1.
+        /// Control LTR_ModalMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.WebControls.Literal LTR_ModalMarca;
 
         /// <summary>
         /// Control HF_Marca.
@@ -231,13 +231,13 @@ namespace SolucionBase.Catalogo
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
 
         /// <summary>
-        /// Control Literal2.
+        /// Control LTR_ModalCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
+        protected global::System.Web.UI.WebControls.Literal LTR_ModalCategoria;
 
         /// <summary>
         /// Control HF_Categoria.

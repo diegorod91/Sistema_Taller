@@ -49,7 +49,7 @@
             </div>
 
             <asp:HiddenField ID="hfTabActiva" runat="server" Value="#tab-modelos" />
-                        
+
             <div class="card-body">
                 <asp:UpdatePanel ID="upCatalogo" runat="server">
                     <ContentTemplate>
@@ -221,7 +221,7 @@
                     <ContentTemplate>
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">
-                                <asp:Literal ID="Literal1" runat="server" Text="Nueva Marca"></asp:Literal>
+                                <asp:Literal ID="LTR_ModalMarca" runat="server" Text="Nueva Marca"></asp:Literal>
                             </h5>
                             <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -254,7 +254,7 @@
                     <ContentTemplate>
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title">
-                                <asp:Literal ID="Literal2" runat="server" Text="Nueva Categoria"></asp:Literal>
+                                <asp:Literal ID="LTR_ModalCategoria" runat="server" Text="Nueva Categoria"></asp:Literal>
                             </h5>
                             <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -278,9 +278,9 @@
             </div>
         </div>
     </div>
-
+    <script src="../bower_components/jquery/dist/jquery.min.js" ></script>
     <script type="text/javascript" src="Catalogo.js"> </script>
-    <script type="text/javascript" src="Catalogo.js"></script>
+    <%--<script type="text/javascript" src="Catalogo.js"></script>--%>
     <script>
         // Función global para guardar y aplicar el Tab
         function cambiarYGuardarTab(tabId) {
@@ -311,10 +311,10 @@
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var targetTab = $(e.target).attr("href"); // Obtiene '#tab-marcas', etc.
                 $('#<%= hfTabActiva.ClientID %>').val(targetTab);
-    });
+            });
 
-    restaurarTabActiva();
-});
+            restaurarTabActiva();
+        });
 
         // Re-aplicar restauración tras cada respuesta AJAX de UpdatePanel
         var prm = Sys.WebForms.PageRequestManager.getInstance();

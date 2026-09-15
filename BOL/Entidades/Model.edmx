@@ -192,10 +192,12 @@
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
+        
         <Function Name="Marca_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
+        
         <Function Name="Modelo_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />

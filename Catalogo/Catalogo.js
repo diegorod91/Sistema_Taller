@@ -1,4 +1,10 @@
-﻿function abrirModalModelo() {
+﻿function guardarTab(tabId) {
+    var input = document.getElementById('<%= hfTabActiva.ClientID %>');
+    if (input) {
+        input.value = tabId;
+    }
+}
+function abrirModalModelo() {
     $('#modalModelo').modal('show');
 }
 function cerrarModalModelo() {

@@ -33,5 +33,11 @@ namespace BOL.Controladoras
 
             return response;
         }
+
+        internal static int Update_Marca(Marca marca, LoginXML usuario)
+        {
+           //int response = DAO.Current.Marca_Update(marca.Serialize(), usuario.Serialize()).FirstOrDefault().Value;
+            return 0;
+        }
     }
 }

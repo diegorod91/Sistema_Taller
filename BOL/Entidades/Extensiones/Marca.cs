@@ -24,5 +24,10 @@ namespace BOL.Entidades
         {
             return CMarca.Save_Marca(this,usuario);
         }
+        
+        public int Marca_Update(LoginXML usuario)
+        {
+            return CMarca.Update_Marca(this,usuario);
+        }
     }
 }
