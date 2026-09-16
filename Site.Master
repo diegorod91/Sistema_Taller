@@ -167,6 +167,7 @@
         <script src="<%= ResolveUrl("~/plugins/jquery/jquery.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/plugins/bootstrap/js/bootstrap.bundle.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/dist/js/adminlte.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/bower_components/toastr/toastr.min.js")%>"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#userDropdown').dropdown();

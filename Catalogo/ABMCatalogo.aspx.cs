@@ -16,7 +16,6 @@ namespace SolucionBase.Catalogo
         {
             if (!IsPostBack)
             {
-
                 CargarDesplegablesFiltro();
                 CargarGridModelos();
                 CargarGridMarcas();
@@ -24,13 +23,10 @@ namespace SolucionBase.Catalogo
             }
         }
 
-
         private void CargarDesplegablesFiltro()
         {
-            //DDL_Categoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
             DDL_FiltroCategoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
             DDL_FiltroMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
-
         }
 
         private void CargarGridModelos()
@@ -41,21 +37,17 @@ namespace SolucionBase.Catalogo
             List<Modelo> modelo = Modelo.GetAllModelos();
             gvModelos.DataSource = modelo.ToList();
             gvModelos.DataBind();
-
         }
 
         protected void DDL_FiltroCategoria_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
         protected void DDL_FiltroMarca_SelectedIndexChanged(object sender, EventArgs e) => CargarGridModelos();
 
-        
         private void CargarDesplegablesModal()
         {
             DDL_Categoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
             DDL_Marca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
-
         }
 
-        
         protected void gvModelos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int id = Convert.ToInt32(e.CommandArgument);
@@ -66,16 +58,14 @@ namespace SolucionBase.Catalogo
                 hfModeloId.Value = updatemodelo.Id.ToString();
                 txtModalNombre.Text = updatemodelo.Nombre;
                 txtModalTecnico.Text = updatemodelo.NroModeloTecnico;
-                //
+
                 CargarDesplegablesModal();
                 DDL_Categoria.SelectedValue = updatemodelo.Idcategoria.ToString();
                 DDL_Marca.SelectedValue = updatemodelo.IdMarca.ToString();
 
                 ltrTituloModal.Text = "Editar Modelo";
                 ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalModelo();", true);
-                //    }
-                //}
-            }   //
+            }
         }
 
         private void CargarGridMarcas()
@@ -84,20 +74,13 @@ namespace SolucionBase.Catalogo
             gvMarcas.DataSource = listaMarcas;
             gvMarcas.DataBind();
         }
+
         private void CargarGridCategorias()
         {
-            /* Cargar gvCategorias */
             List<Categoria> listaCategorias = Categoria.GetAllCategorias();
             gvCategorias.DataSource = listaCategorias;
             gvCategorias.DataBind();
         }
-
-        //private string ValidarAltaModelo()
-        //{
-        //string mensaje = string.Empty;
-        //mensaje = ControlExtensions.VerificarSelect(DDL_Categoria., "Categoria"); 
-
-        //}
 
         protected void gvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -107,17 +90,17 @@ namespace SolucionBase.Catalogo
             if (e.CommandName == "Editar")
             {
                 Marca updateMarca = Marca.GetMarcaById(idMarca);
-                hfModeloId.Value = updateMarca.Id.ToString();
-                txtModalNombre.Text = updateMarca.Nombre;
-                //
-                CargarDesplegablesModal();
-                DDL_Marca.SelectedValue = updateMarca.Id.ToString();
+
+                // Asignar al HiddenField de Marcas y a su respectivo TextBox
+                HF_Marca.Value = updateMarca.Id.ToString();
+                TB_Marca.Text = updateMarca.Nombre;
 
                 LTR_ModalMarca.Text = "Editar Marca";
                 string script = "abrirModalMarca(); restaurarTabActiva();";
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopEditMarca", script, true);
             }
         }
+
         protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             hfTabActiva.Value = "#tab-categorias";
@@ -126,23 +109,22 @@ namespace SolucionBase.Catalogo
             if (e.CommandName == "Editar")
             {
                 Categoria updateCategoria = Categoria.GetCategoriaById(idCategoria);
-                hfModeloId.Value = updateCategoria.Id.ToString();
-                txtModalNombre.Text = updateCategoria.Nombre;
-                //
-                CargarDesplegablesModal();
-                DDL_Marca.SelectedValue = updateCategoria.Id.ToString();
+
+                // Asignar al HiddenField de Categorías y a su respectivo TextBox
+                HF_Categoria.Value = updateCategoria.Id.ToString();
+                TB_Categoria.Text = updateCategoria.Nombre;
 
                 LTR_ModalCategoria.Text = "Editar Categoría";
                 string script = "abrirModalCategoria(); restaurarTabActiva();";
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopEditCat", script, true);
-
             }
         }
 
         #region Acciones_Botones
+
         protected void btnGuardarModelo_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(hfModeloId.Value);
+            int id = Convert.ToInt32(string.IsNullOrEmpty(hfModeloId.Value) ? "0" : hfModeloId.Value);
             string nombre = txtModalNombre.Text.Trim();
             string tecnico = txtModalTecnico.Text.Trim();
             int idCategoria = Convert.ToInt32(DDL_Categoria.SelectedValue);
@@ -182,11 +164,19 @@ namespace SolucionBase.Catalogo
         protected void btnNuevaMarca_Click(object sender, EventArgs e)
         {
             hfTabActiva.Value = "#tab-marcas";
+            HF_Marca.Value = "0";
+            TB_Marca.Text = string.Empty;
+            LTR_ModalMarca.Text = "Nueva Marca";
+
             ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalMarca();", true);
         }
+
         protected void btnNuevaCategoria_Click(object sender, EventArgs e)
         {
             hfTabActiva.Value = "#tab-categorias";
+            HF_Categoria.Value = "0";
+            TB_Categoria.Text = string.Empty;
+            LTR_ModalCategoria.Text = "Nueva Categoría";
 
             ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalCategoria();", true);
         }
@@ -201,24 +191,52 @@ namespace SolucionBase.Catalogo
             else
             {
                 LoginXML usuario = Session["Usuario"] as LoginXML;
+                int idMarca = Convert.ToInt32(string.IsNullOrEmpty(HF_Marca.Value) ? "0" : HF_Marca.Value);
 
-                if (HF_Marca.Value != "0")
-
+                if (idMarca != 0)
                 {
-                    Marca updateMarca = new Marca();
+                    // Lógica para Edición
+                    Marca updateMarca = Marca.GetMarcaById(idMarca);
                     updateMarca.Nombre = TB_Marca.Text.Trim();
-                    
-                    
+                    updateMarca.Modelo = null; // Asegúrate de establecer Modelo en null si no lo estás utilizando
+                    int rta = updateMarca.Marca_Update(usuario); // Asegúrate de llamar al método Update de tu BOL
+                    if (rta > 0)
+                    {
+                        this.Notificar(Notification.SUCCESS, "", "Marca actualizada correctamente.");
+                        CargarGridMarcas();
+                        CargarDesplegablesFiltro();
+                        CargarDesplegablesModal();
+
+                        TB_Marca.Text = string.Empty;
+                        HF_Marca.Value = "0";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalMarca();", true);
+                    }
+                    else
+                    {
+                        this.Notificar(Notification.ERROR, "", "Error al actualizar la marca. Por favor, inténtelo de nuevo.");
+                    }
                 }
-                Marca nuevaMarca = new Marca();
-                nuevaMarca.Nombre = TB_Marca.Text.Trim();
-                nuevaMarca.Marca_Save(usuario);
+                else
+                {
+                    // Lógica para Alta
+                    Marca nuevaMarca = new Marca();
+                    nuevaMarca.Nombre = TB_Marca.Text.Trim();
+                    nuevaMarca.Modelo = null; // Asegúrate de establecer Modelo en null si no lo estás utilizando
+                    int rta = nuevaMarca.Marca_Save(usuario);
+                    if (rta <= 0)
+                    {
+                        this.Notificar(Notification.ERROR, "", "Error al agregar la marca. Por favor, inténtelo de nuevo.");
+                        return;
+                    }
+                    this.Notificar(Notification.SUCCESS, "", "Marca agregada correctamente.");
+                }
+
                 CargarGridMarcas();
                 CargarDesplegablesFiltro();
                 CargarDesplegablesModal();
 
                 TB_Marca.Text = string.Empty;
-                this.Notificar(Notification.SUCCESS, "", "Marca agregada correctamente.");
+                HF_Marca.Value = "0";
                 ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalMarca();", true);
             }
         }
@@ -232,38 +250,82 @@ namespace SolucionBase.Catalogo
             }
             else
             {
-                Categoria nuevaCategoria = new Categoria();
-                nuevaCategoria.Id = 0;
-                nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
-                nuevaCategoria.Modelo = null; //← PARA EVITAR REFERENCIA CIRCULAR
-
                 LoginXML usuario = Session["Usuario"] as LoginXML;
-                int rta = nuevaCategoria.Categoria_Save(usuario);
-                CargarGridCategorias();
-                CargarDesplegablesFiltro();
-                CargarDesplegablesModal();
+                int idCategoria = Convert.ToInt32(string.IsNullOrEmpty(HF_Categoria.Value) ? "0" : HF_Categoria.Value);
+
+                if (idCategoria != 0)
+                {
+                    // Lógica para Edición
+                    Categoria updateCategoria = Categoria.GetCategoriaById(idCategoria);
+                    updateCategoria.Nombre = TB_Categoria.Text.Trim();
+                    updateCategoria.Modelo = null;
+                    int rta = updateCategoria.Categoria_Update(usuario); // Asegúrate de llamar al método Update de tu BOL
+                    if (rta > 0)
+                    {
+                        this.Notificar(Notification.SUCCESS, "", "Categoría actualizada correctamente.");
+                        CargarGridCategorias();
+                        CargarDesplegablesFiltro();
+                        CargarDesplegablesModal();
+
+                        TB_Categoria.Text = string.Empty;
+                        HF_Categoria.Value = "0";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalCategoria();", true);
+                    }
+                    else
+                    {
+                        this.Notificar(Notification.ERROR, "", "Error al actualizar la categoría. Por favor, inténtelo de nuevo.");
+                    }
+
+                }
+                else
+                {
+                    // Lógica para Alta
+                    Categoria nuevaCategoria = new Categoria();
+                    nuevaCategoria.Id = 0;
+                    nuevaCategoria.Nombre = TB_Categoria.Text.Trim();
+                    nuevaCategoria.Modelo = null;
+                    int rta = nuevaCategoria.Categoria_Save(usuario);
+                    if (rta > 0)
+                    {
+                        this.Notificar(Notification.SUCCESS, "", "Categoría agregada correctamente.");
+                        CargarGridCategorias();
+                        CargarDesplegablesFiltro();
+                        CargarDesplegablesModal();
+
+                        TB_Categoria.Text = string.Empty;
+                        HF_Categoria.Value = "0";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalCategoria();", true);
+                    }
+                    else
+                    {
+                        this.Notificar(Notification.ERROR, "", "Error al agregar la categoría. Por favor, inténtelo de nuevo.");
+
+                    }
 
 
-                TB_Categoria.Text = string.Empty;
-                this.Notificar(Notification.SUCCESS, "", "Categoría agregada correctamente.");
-                ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalCategoria();", true);
+                }
             }
         }
-
 
         #endregion
 
         #region Validaciones
+
         private string validarAltaCategoria()
         {
             string mensaje = string.Empty;
+            int idCategoria = Convert.ToInt32(string.IsNullOrEmpty(HF_Categoria.Value) ? "0" : HF_Categoria.Value);
+
             if (string.IsNullOrWhiteSpace(TB_Categoria.Text))
             {
                 mensaje += "El nombre de la categoría no puede estar vacío. ";
             }
             else
             {
-                bool categoriaExistente = Categoria.GetAllCategorias().Any(c => c.Nombre.Equals(TB_Categoria.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+                // Al validar, ignoramos la misma categoría si estamos editando (c.Id != idCategoria)
+                bool categoriaExistente = Categoria.GetAllCategorias()
+                    .Any(c => c.Nombre.Equals(TB_Categoria.Text.Trim(), StringComparison.OrdinalIgnoreCase) && c.Id != idCategoria);
+
                 if (categoriaExistente)
                 {
                     mensaje += "La categoría ya existe. Por favor, ingrese un nombre diferente.";
@@ -271,16 +333,22 @@ namespace SolucionBase.Catalogo
             }
             return mensaje;
         }
+
         private string validarAltaMarca()
         {
             string mensaje = string.Empty;
+            int idMarca = Convert.ToInt32(string.IsNullOrEmpty(HF_Marca.Value) ? "0" : HF_Marca.Value);
+
             if (string.IsNullOrWhiteSpace(TB_Marca.Text))
             {
                 mensaje += "El nombre de la marca no puede estar vacío. ";
             }
             else
             {
-                bool marcaExistente = Marca.GetAllMarcas().Any(m => m.Nombre.Equals(TB_Marca.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+                // Al validar, ignoramos la misma marca si estamos editando (m.Id != idMarca)
+                bool marcaExistente = Marca.GetAllMarcas()
+                    .Any(m => m.Nombre.Equals(TB_Marca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && m.Id != idMarca);
+
                 if (marcaExistente)
                 {
                     mensaje += "La marca ya existe. Por favor, ingrese un nombre diferente.";
@@ -288,6 +356,7 @@ namespace SolucionBase.Catalogo
             }
             return mensaje;
         }
+
         #endregion
     }
 }

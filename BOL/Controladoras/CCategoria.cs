@@ -35,5 +35,11 @@ namespace BOL.Controladoras
 
             return response;
         }
+        internal static int Update_Categoria(Categoria categoria,LoginXML usuario)
+        {
+            int response = DAO.Current.Categoria_Update(categoria.Serialize(), usuario.Serialize()).FirstOrDefault().Value;
+
+            return response;
+        }
     }
 }

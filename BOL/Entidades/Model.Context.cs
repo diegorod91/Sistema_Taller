@@ -64,6 +64,32 @@ namespace BOL.Entidades
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Modelo_Update", xMLModeloParameter, xmlUsuarioParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> Marca_Update(string xML, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("xmlUsuario", xmlUsuario) :
+                new ObjectParameter("xmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Marca_Update", xMLParameter, xmlUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> Categoria_Update(string xML, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("xmlUsuario", xmlUsuario) :
+                new ObjectParameter("xmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Categoria_Update", xMLParameter, xmlUsuarioParameter);
+        }
+    
         public virtual int RethrowError()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RethrowError");

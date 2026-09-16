@@ -25,5 +25,10 @@ namespace BOL.Entidades
         {
             return CCategoria.Save_Categoria(this,usuario) ;
         }
+
+        public int Categoria_Update(LoginXML usuario)
+        {
+            return CCategoria.Update_Categoria(this, usuario);
+        }
     }
 }
