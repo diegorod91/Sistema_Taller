@@ -1,0 +1,44 @@
+Código :20260920020636
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Método no encontrado: 'System.Object BOL.Entidades.Modelo.MarcasByIdCategoria(Int32)'.</Message>
+    <Source>SolucionBase</Source>
+    <StackTrace>   en SolucionBase.Taller.NuevaOrden.ddlCategoria_SelectedIndexChanged(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.ListControl.OnSelectedIndexChanged(EventArgs e)
+   en System.Web.UI.Page.RaiseChangedEvents()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>ddlCategoria_SelectedIndexChanged at offset 0 in file:line:column &lt;filename unknown&gt;:0:0
+OnSelectedIndexChanged at offset 139 in file:line:column &lt;filename unknown&gt;:0:0
+RaiseChangedEvents at offset 206 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1831 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20260920020642
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Método no encontrado: 'System.Object BOL.Entidades.Modelo.MarcasByIdCategoria(Int32)'.</Message>
+    <Source>SolucionBase</Source>
+    <StackTrace>   en SolucionBase.Taller.NuevaOrden.ddlCategoria_SelectedIndexChanged(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.ListControl.OnSelectedIndexChanged(EventArgs e)
+   en System.Web.UI.Page.RaiseChangedEvents()
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>ddlCategoria_SelectedIndexChanged at offset 0 in file:line:column &lt;filename unknown&gt;:0:0
+OnSelectedIndexChanged at offset 139 in file:line:column &lt;filename unknown&gt;:0:0
+RaiseChangedEvents at offset 206 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1831 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+

@@ -20,6 +20,16 @@ namespace BOL.Entidades
             return CModelo.GetModeloById(id);
         }
 
+        public static object GetModelosByCategoriaYMarca(int idCategoria, int idMarca)
+        {
+            return CModelo.GetModelosByCategoriaYMarca(idCategoria,idMarca);
+        }
+
+        public static object MarcasByIdCategoria(int idCategoria)
+        {
+            return CModelo.MarcasByIdCategoria(idCategoria);
+        }
+
         public int Modelo_Save(LoginXML usuario)
         {
             return CModelo.Modelo_Save(this,usuario );

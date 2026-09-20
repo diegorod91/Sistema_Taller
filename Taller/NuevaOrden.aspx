@@ -32,6 +32,7 @@
                         </div>
 
                         <!-- SECCIÓN 2: DATOS DEL EQUIPO (CATÁLOGO EN CASCADA) -->
+                        <asp:UpdatePanel ID="UP_Combos" runat="server"></asp:UpdatePanel>
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <h5 class="text-primary border-bottom pb-2 mb-3"><i class="fas fa-mobile-alt mr-1"></i>2. Selección del Equipo</h5>

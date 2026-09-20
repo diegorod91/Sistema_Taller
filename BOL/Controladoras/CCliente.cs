@@ -11,10 +11,12 @@ namespace BOL.Controladora
 {
     internal class CCliente
     {
-        internal static List<Cliente> GetClientes()
+        internal static List<Cliente> GetAllClientes()
         {
-            return(from o in  DAO.Current.Cliente
-                   select o).ToList();
+            var response= (from o in  DAO.Current.Cliente
+                            select o).ToList();
+
+            return response;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BOL.Controladora;
+using BOL.Controladoras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace BOL.Entidades
 {
     public partial class Cliente
     {
-        public List<Cliente> GetClientes()
+        public static List<Cliente> GetAllClientes()
         {
-            return CCliente.GetClientes();
+            return CCliente.GetAllClientes();
         }
+
+        
     }
 }

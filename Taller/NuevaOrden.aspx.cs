@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BOL.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,61 +16,44 @@ namespace SolucionBase.Taller
         {
             if (!IsPostBack)
             {
-             CargarClientes();
-                CargarCategorias();
-                CargarTiposOperacion();
-                CargarEstados();
+                //CargarClientes();
+                IniciarInfo();
+
             }
         }
 
-        private void CargarClientes()
+        private void IniciarInfo()
         {
-            
-            //using (var db = new  TallerDbContext())
-            //{
-            //    ddlCliente.DataSource = 
-            //        .Select(c => new { c.Id, NombreCompleto = c.Nombres + " " + c.Apellidos + " (" + c.Documento + ")" })
-            //        .ToList();
-            //    ddlCliente.DataTextField = "NombreCompleto";
-            //    ddlCliente.DataValueField = "Id";
-            //    ddlCliente.DataBind();
-            //    ddlCliente.Items.Insert(0, new ListItem("-- Seleccionar Cliente --", "0"));
-            //}
+            //List<Cliente> ListaCliente= Cliente.GetAllClientes("Id", "Nombre", true);
+            ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "Nombres", true);
+            ddlCategoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
+            ddlMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
+            ddlModelo.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
+            ddlTipoOperacion.Fill(TipoOperacion.GetAllTiposOperacion(), "Id", "Nombre", true);
+            ddlEstado.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
+
         }
 
-        private void CargarCategorias()
-        {
-            //using (var db = new TallerDbContext())
-            //{
-            //    ddlCategoria.DataSource = db.Categorias.ToList();
-            //    ddlCategoria.DataTextField = "Nombre";
-            //    ddlCategoria.DataValueField = "Id";
-            //    ddlCategoria.DataBind();
-            //    ddlCategoria.Items.Insert(0, new ListItem("-- Seleccionar Categoría --", "0"));
-            //}
-        }
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
 
-            //using (var db = new TallerDbContext())
-            //{
-            //    // Obtenemos las marcas con modelos en esta categoría
-            //    var marcas = db.Modelos
-            //        .Where(m => m.IdCategoria == idCategoria)
-            //        .Select(m => m.Marca)
-            //        .Distinct()
-            //        .ToList();
-            //
-            //    ddlMarca.DataSource = marcas;
-            //    ddlMarca.DataTextField = "Nombre";
-            //    ddlMarca.DataValueField = "Id";
-            //    ddlMarca.DataBind();
-            //    ddlMarca.Items.Insert(0, new ListItem("-- Seleccionar Marca --", "0"));
-            //}
+            if (idCategoria > 0)
+            {
+                // Filtra las marcas relacionadas a la categoría elegida
+                var listadodeMarcas = Modelo.MarcasByIdCategoria(idCategoria);
+                ddlMarca.Fill(listadodeMarcas, "Id", "Nombre", true);
+            }
+            else
+            {
+                // Si vuelve a la opción por defecto, recarga todas las marcas
+                ddlMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
+            }
 
+            // Al cambiar la categoría, se resetea el combo de modelos
             ddlModelo.Items.Clear();
+            ddlModelo.Items.Insert(0, new ListItem("Seleccione..", "0"));
         }
 
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,39 +61,20 @@ namespace SolucionBase.Taller
             int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
-            //using (var db = new TallerDbContext())
-            //{
-            //    ddlModelo.DataSource = db.Modelos
-            //        .Where(m => m.IdCategoria == idCategoria && m.IdMarca == idMarca)
-            //        .ToList();
-            //    ddlModelo.DataTextField = "Nombre";
-            //    ddlModelo.DataValueField = "Id";
-            //    ddlModelo.DataBind();
-            //    ddlModelo.Items.Insert(0, new ListItem("-- Seleccionar Modelo --", "0"));
-            //}
+            if (idMarca > 0)
+            {
+                // Trae los modelos filtrados por Marca y Categoría desde tu capa BOL
+                var listadoModelos = Modelo.GetModelosByCategoriaYMarca(idCategoria, idMarca);
+                ddlModelo.Fill(listadoModelos, "Id", "Nombre", true);
+            }
+            else
+            {
+                ddlModelo.Items.Clear();
+                ddlModelo.Items.Insert(0, new ListItem("Seleccione..", "0"));
+            }
         }
 
-        private void CargarTiposOperacion()
-        {
-            //using (var db = new TallerDbContext())
-            //{
-            //    ddlTipoOperacion.DataSource = db.TiposOperacion.ToList();
-            //    ddlTipoOperacion.DataTextField = "Nombre";
-            //    ddlTipoOperacion.DataValueField = "Id";
-            //    ddlTipoOperacion.DataBind();
-            //}
-        }
 
-        private void CargarEstados()
-        {
-           // using (var db = new TallerDbContext())
-           // {
-           //     ddlEstado.DataSource = db.Estados.ToList();
-           //     ddlEstado.DataTextField = "Nombre";
-           //     ddlEstado.DataValueField = "Id";
-           //     ddlEstado.DataBind();
-           // }
-        }
 
         protected void btnGuardarOrden_Click(object sender, EventArgs e)
         {

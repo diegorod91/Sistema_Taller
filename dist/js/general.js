@@ -36,6 +36,13 @@ function mostrarError(mje, id) {
     getElement(id).innerHTML = mje;
 }
 
+function showMensaje(title, mje) {
+    getElement("textoMensaje").innerHTML = mje;
+    getElement("titleMensaje").innerHTML = title;
+    
+    $('#TMensaje').modal('show');
+}
+
 function getAbsoluteElementPosition(element) {
     if (typeof element == "string") element = getElement(element)
     if (!element) return { top: 0, left: 0 };
@@ -956,75 +963,6 @@ function checkCookieDW() {
     if (username != "") {
         wasSubmitted = false;
         $("#TBlock").modal('hide');
-    }
-
-}
-
-function mostrarMsjValidacion(mje) {
-    $('#txtValidar').html(mje);
-    $('#modalValidate').modal();
-}
-
-
-function callJQAJAX(urlajax, params, handler, bloquear) {
-    if (bloquear === undefined)
-    { bloquear = true; }
-
-    $('#modalLoading').modal();
-    $("#modalError").modal('hide');
-    if (bloquear)
-    { $('#modalLoading').modal(); }
-
-    var request = $.ajax({
-        type: "POST",
-        url: urlajax,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        data: parseParams(params)
-    });
-    request.done(function (msg) {
-        if (bloquear)
-        { $("#modalLoading").modal('hide'); }
-        handler(msg.d);
-    });
-    request.fail(function (jqXHR, textStatus) {
-        msjerror = jQuery.parseJSON(jqXHR.responseText);
-        $("#txtError").html(msjerror.Message);
-        $("#modalLoading").modal('hide');
-        $('#modalError').modal();
-    });
-}
-
-function callAJAX(url, params, handler) {
-    // create the request
-    var request;
-    if (window.XMLHttpRequest) {
-        // IE7+, Firefox, Chrome, Opera, Safari
-        request = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        request = new ActiveXObject('Microsoft.XMLHTTP');
-    }
-
-    // set handler for data if async loading
-    request.onreadystatechange = function () {
-
-        if (4 === request.readyState && (404 === request.status || 500 === request.status))
-            handler.call(this, false);
-
-        else if (4 === request.readyState && 200 === request.status)
-            handler.call(this, request.responseText);
-
-    };
-
-    // load the file
-    try {
-        request.open('POST', url, false);
-        request.setRequestHeader("Accept", "application/json, text/javascript, */*; q=0.01");
-        request.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        request.send(parseParams(params));
-    } catch (e) {
-        handler.call(this, false);
     }
 
 }

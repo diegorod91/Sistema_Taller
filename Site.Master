@@ -22,9 +22,32 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" />
 
         <div class="wrapper">
+            <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" EnablePageMethods="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" AllowCustomErrorsRedirect="true">
+                <Scripts>
+                    <%-- jQuery 3 --%>
+                    <asp:ScriptReference Path="~/bower_components/jquery/dist/jquery.min.js" />
+                    <%-- Bootstrap 3.3.7 --%>
+                    <asp:ScriptReference Path="~/bower_components/bootstrap/dist/js/bootstrap.min.js" />
+                    <%-- SlimScroll -->
+<asp:ScriptReference Path="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" />
+<%-- FastClick --%>
+                    <asp:ScriptReference Path="~/bower_components/fastclick/lib/fastclick.js" />
+                    <%-- toastr --%>
+                    <asp:ScriptReference Path="~/bower_components/toastr/toastr.min.js" />
+                    <%-- AdminLTE App --%>
+                    <asp:ScriptReference Path="~/dist/js/adminlte.min.js" />
+                    <%-- AdminLTE for demo purposes --%>
+                    <%--<asp:ScriptReference Path="~/dist/js/demo.js" />--%>
+                    <%-- General --%>
+                    <asp:ScriptReference Path="~/dist/js/general.js" />
+                    <%-- ErrorAjaxHandler --%>
+                    <asp:ScriptReference Path="~/dist/js/ErrorAjaxHandler.js" />
+                    <%-- Cookie --%>
+                    <asp:ScriptReference Path="~/dist/js/jquery.cookie.js" />
+                </Scripts>
+            </asp:ScriptManager>
 
             <!-- Navbar -->
             <!-- Navbar Superior Corregido -->
@@ -180,7 +203,7 @@
                     $('#userDropdown').dropdown();
                 });
             }
-</script>
+        </script>
 
     </form>
 </body>
