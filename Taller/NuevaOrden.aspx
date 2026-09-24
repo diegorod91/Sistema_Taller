@@ -26,32 +26,30 @@
                             <div class="col-md-4 d-flex align-items-center mt-3">
                                 <button type="button" class="btn btn-outline-success btn-block" data-toggle="modal" data-target="#modalCliente">
                                     <i class="fas fa-user-plus mr-1"></i>Registrar Nuevo Cliente
-                               
                                 </button>
                             </div>
                         </div>
 
                         <!-- SECCIÓN 2: DATOS DEL EQUIPO (CATÁLOGO EN CASCADA) -->
-                        <asp:UpdatePanel ID="UP_Combos" runat="server"></asp:UpdatePanel>
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <h5 class="text-primary border-bottom pb-2 mb-3"><i class="fas fa-mobile-alt mr-1"></i>2. Selección del Equipo</h5>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label>Categoría <span class="text-danger">*</span></label>
-                                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"
+                                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control select2"
                                     AutoPostBack="True" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label>Marca <span class="text-danger">*</span></label>
-                                <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-control"
+                                <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-control select2"
                                     AutoPostBack="True" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label>Modelo <span class="text-danger">*</span></label>
-                                <asp:DropDownList ID="ddlModelo" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlModelo" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -63,12 +61,12 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Tipo de Operación</label>
-                                <asp:DropDownList ID="ddlTipoOperacion" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlTipoOperacion" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Estado Inicial</label>
-                                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-12 form-group">
@@ -91,4 +89,5 @@
             </asp:UpdatePanel>
         </div>
     </div>
+
 </asp:Content>

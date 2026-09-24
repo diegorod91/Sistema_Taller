@@ -33,15 +33,6 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
 
         /// <summary>
-        /// Control UP_Combos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UP_Combos;
-
-        /// <summary>
         /// Control ddlCategoria.
         /// </summary>
         /// <remarks>

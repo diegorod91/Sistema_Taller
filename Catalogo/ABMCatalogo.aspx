@@ -61,12 +61,12 @@
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label>Filtrar Categoría:</label>
-                                        <asp:DropDownList ID="DDL_FiltroCategoria" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroCategoria_SelectedIndexChanged">
+                                        <asp:DropDownList ID="DDL_FiltroCategoria" runat="server" CssClass="form-control select2" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroCategoria_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Filtrar Marca:</label>
-                                        <asp:DropDownList ID="DDL_FiltroMarca" runat="server" CssClass="form-select form-control" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroMarca_SelectedIndexChanged">
+                                        <asp:DropDownList ID="DDL_FiltroMarca" runat="server" CssClass="form-control select2" AutoPostBack="true" OnSelectedIndexChanged="DDL_FiltroMarca_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-md-6 text-right d-flex align-items-end justify-content-end">
@@ -168,7 +168,7 @@
     </div>
 
     <!-- MODAL PARA ALTA / EDICIÓN DE MODELO -->
-    <div class="modal fade" id="modalModelo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modalModelo"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <asp:UpdatePanel ID="upModalModelo" runat="server">
@@ -186,11 +186,11 @@
 
                             <div class="form-group">
                                 <label>Categoría</label>
-                                <asp:DropDownList ID="DDL_Categoria" runat="server" CssClass="form-control" />
+                                <asp:DropDownList ID="DDL_Categoria" runat="server" CssClass="form-control select2" />
                             </div>
                             <div class="form-group">
                                 <label>Marca</label>
-                                <asp:DropDownList ID="DDL_Marca" runat="server" CssClass="form-control" />
+                                <asp:DropDownList ID="DDL_Marca" runat="server" CssClass="form-control select2" />
                             </div>
                             <div class="form-group">
                                 <label>Nombre del Modelo</label>
@@ -278,50 +278,74 @@
             </div>
         </div>
     </div>
-    <script src="../bower_components/jquery/dist/jquery.min.js" ></script>
-    <script type="text/javascript" src="Catalogo.js"> </script>
-    <%--<script type="text/javascript" src="Catalogo.js"></script>--%>
-    <script>
-        // Función global para guardar y aplicar el Tab
-        function cambiarYGuardarTab(tabId) {
-            // 1. Guardar en el HiddenField de C#
-            $('#<%= hfTabActiva.ClientID %>').val(tabId);
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="Catalogo.js"></script>
+    <script type="text/javascript">
+    // @ts-nocheck
 
-            // 2. Cambiar clases activas en Bootstrap
-            $('.nav-tabs .nav-link').removeClass('active');
-            $('.tab-pane').removeClass('show active');
+    // --- 1. MANEJO DE TABS ---
+    function activarTab(tabId) {
+        $('#' + tabId).tab('show');
+    }
 
-            $('.nav-tabs a[href="' + tabId + '"]').addClass('active');
-            $(tabId).addClass('show active');
+    function cambiarYGuardarTab(tabId) {
+        $('#<%= hfTabActiva.ClientID %>').val(tabId);
+        $('.nav-tabs .nav-link').removeClass('active');
+        $('.tab-pane').removeClass('show active');
+
+        $('.nav-tabs a[href="' + tabId + '"]').addClass('active');
+        $(tabId).addClass('show active');
+    }
+
+    function restaurarTabActiva() {
+        var tabActiva = $('#<%= hfTabActiva.ClientID %>').val();
+        if (tabActiva && tabActiva !== '') {
+            cambiarYGuardarTab(tabActiva);
+        } else {
+            cambiarYGuardarTab('#tab-modelos');
         }
+    }
 
-        // Función que restaura el tab grabado en el HiddenField
-        function restaurarTabActiva() {
-            var tabActiva = $('#<%= hfTabActiva.ClientID %>').val();
-            if (tabActiva && tabActiva !== '') {
-                cambiarYGuardarTab(tabActiva);
-            } else {
-                // Por defecto si está vacío, activar Modelos
-                cambiarYGuardarTab('#tab-modelos');
+    // --- 2. SOLUCIÓN COMPLETA SELECT2 EN MODAL ---
+    $(document).ready(function () {
+        restaurarTabActiva();
+
+        // Guardar tab al hacer clic
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var targetTab = $(e.target).attr("href");
+            $('#<%= hfTabActiva.ClientID %>').val(targetTab);
+        });
+    });
+
+    // Evento al abrir cualquier Select2 dentro o fuera del modal
+    $(document).on('select2:open', function (e) {
+        // Remover el listener de foco de Bootstrap temporalmente
+        $(document).off('focusin.modal');
+
+        // Forzar el foco dentro de la caja de búsqueda de Select2
+        setTimeout(function () {
+            var searchField = document.querySelector('.select2-container--open .select2-search__field');
+            if (searchField) {
+                searchField.focus();
             }
-        }
+        }, 50);
+    });
 
-        // Escuchar cambios de pestaña hechos con click por el usuario
-        $(document).ready(function () {
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var targetTab = $(e.target).attr("href"); // Obtiene '#tab-marcas', etc.
-                $('#<%= hfTabActiva.ClientID %>').val(targetTab);
-            });
+    // Inicializar Select2 vinculándolo al contenedor del Modal cuando este se abre
+    $(document).on('shown.bs.modal', '.modal', function () {
+        var $modal = $(this);
+        
+        $modal.find('.select2').select2({
+            width: '100%',
+            dropdownParent: $modal
+        });
+    });
 
+    // Re-aplicar tras PostBacks parciales de UpdatePanel (ASP.NET AJAX)
+    if (typeof Sys !== 'undefined' && Sys.WebForms && Sys.WebForms.PageRequestManager) {
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
             restaurarTabActiva();
         });
-
-        // Re-aplicar restauración tras cada respuesta AJAX de UpdatePanel
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (prm) {
-            prm.add_endRequest(function () {
-                restaurarTabActiva();
-            });
-        }
+    }
     </script>
 </asp:Content>

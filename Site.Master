@@ -10,12 +10,41 @@
 
     <!-- AdminLTE y plugins -->
     <link rel="stylesheet" href="<%= ResolveUrl("~/Dist/css/adminlte.min.css") %>" />
+    <link rel="stylesheet" href="<%= ResolveUrl("~/bower_components/select2/dist/css/select2.min.css") %>" />
     <link rel="stylesheet" href="<%= ResolveUrl("~/bower_components/toastr/toastr.min.css") %>" />
-    <link href="<%= ResolveUrl("~/dist/css/spinner.css") %>" rel="stylesheet" />
-
     <!-- CSS Personalizado -->
     <%--<link rel="stylesheet" href="<%= ResolveUrl("~/Dist/css/custom.css") %>" />--%>
     <link href="<%= ResolveUrl("~/SiteMaster.css") %>" rel="stylesheet" />
+
+
+    <!-- Ajuste visual de Select2 para AdminLTE / Bootstrap -->
+    <style type="text/css">
+        /* Iguala la altura y bordes al diseño de Bootstrap / AdminLTE */
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px) !important; /* Altura estándar de form-control */
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #ced4da !important;
+            border-radius: 0.25rem !important;
+        }
+
+        /* Centra el texto verticalmente */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 1.5 !important;
+            padding-left: 0 !important;
+            color: #495057;
+        }
+
+        /* Ubica la flecha desplegable correctamente */
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+            right: 8px !important;
+        }
+
+        /* Asegura que ocupe el 100% del ancho del contenedor */
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
 
     <title><%: Page.Title %></title>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
@@ -188,23 +217,47 @@
         </div>
 
         <script src="<%= ResolveUrl("~/plugins/jquery/jquery.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/bower_components/select2/dist/js/select2.min.js") %>"></script>
+        <!-- 👈 AGREGAR AQUÍ -->
         <script src="<%= ResolveUrl("~/plugins/bootstrap/js/bootstrap.bundle.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/dist/js/adminlte.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/bower_components/toastr/toastr.min.js")%>"></script>
+
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('#userDropdown').dropdown();
-            });
+// @ts-nocheck
+function initSelect2() {
+    if (typeof $.fn.select2 === 'function') {
+        $('.select2').select2({
+            width: '100%'
+        });
 
-            // Re-vincula el evento tras las recargas parciales de ScriptManager/UpdatePanels
-            var prm = Sys.WebForms.PageRequestManager.getInstance();
-            if (prm) {
-                prm.add_endRequest(function () {
-                    $('#userDropdown').dropdown();
-                });
-            }
+        // Evento global para enfocar el buscador al abrir cualquier Select2
+        $(document).off('select2:open').on('select2:open', function (e) {
+            // Se usa setTimeout para esperar a que el DOM dibuje la caja de búsqueda
+            setTimeout(function () {
+                var searchInput = document.querySelector('.select2-container--open .select2-search__field');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }, 50);
+        });
+    }
+}
+
+    $(document).ready(function () {
+        $('#userDropdown').dropdown();
+        initSelect2();
+    });
+
+    // Re-vincula el evento tras las recargas parciales de ScriptManager/UpdatePanels
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    if (prm) {
+        prm.add_endRequest(function () {
+            $('#userDropdown').dropdown();
+            initSelect2();
+        });
+    }
         </script>
-
     </form>
 </body>
 </html>
