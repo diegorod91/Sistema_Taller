@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Utilities;
 
 
 
@@ -106,6 +107,94 @@ namespace SolucionBase.Taller
             //    // Redirigir a la vista de la orden creada o al listado general
             //    Response.Redirect("Default.aspx");
             //}
+        }
+
+        protected void btnGuardarCliente_Click(object sender, EventArgs e)
+        {
+
+            LimpiarFormulario();
+            pnlBoxCliente.Visible = false; // Oculta el Box
+        }
+
+        private void LimpiarFormulario()
+        {
+            // < Mo < deloId.Value = "0";
+            TB_NombreApellido.Text = string.Empty;
+            TB_Direccion.Text = string.Empty;
+            TB_Correo.Text = string.Empty;
+            TB_Telefono.Text = string.Empty;
+            TB_TelefonoSecundario.Text = string.Empty;
+        }
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            pnlBoxCliente.Visible = false; // Oculta el Box
+        }
+
+        protected void btnNuevoCliente_Click(object sender, EventArgs e)
+        {
+            pnlBoxCliente.Visible = true;
+        }
+
+        protected void BTN_GuardarModelo_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtModalNombreModelo.Text))
+            {
+                return;
+            }
+
+            int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
+            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
+
+            Modelo nuevoModelo= new Modelo
+            {
+                Idcategoria = idCategoria,
+                IdMarca = idMarca,
+                Nombre = txtModalNombreModelo.Text.Trim(),
+                NroModeloTecnico = txtModalTecnicoModelo.Text.Trim()
+            };
+            LoginXML usuario = Session["Usuario"] as LoginXML;
+
+            // 1. Guardar modelo en Base de Datos
+            int nuevoModeloId = nuevoModelo.Modelo_Save(usuario); 
+            // 2. Recargar los modelos de la marca en el DropDownList principal
+            CargarGridModelos();
+
+            // 3. Seleccionar el nuevo modelo creado automáticamente
+            ddlModelo.SelectedValue = nuevoModeloId.ToString();
+
+            // 4. Cerrar el modal mediante JavaScript
+            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalModelo", "$('#modalAltaModelo').modal('hide');", true);
+        }
+        private void CargarGridModelos()
+        {
+            int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
+            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
+
+            List<Modelo> modelo = Modelo.GetAllModelos();
+            ddlModelo.DataSource = modelo.ToList();
+            ddlModelo.DataTextField = "Nombre";
+            ddlModelo.DataValueField = "Id";
+            ddlModelo.DataBind();
+        }
+
+        protected void LNK_NuevoModelo_Click(object sender, EventArgs e)
+        {
+            // Validar que primero hayan seleccionado Categoría y Marca afuera
+            if (ddlCategoria.SelectedValue == "0" || string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
+                ddlMarca.SelectedValue == "0" || string.IsNullOrEmpty(ddlMarca.SelectedValue))
+            {
+                // Mostrar advertencia o alert
+                return;
+            }
+
+            // Mostrar categoría y marca en el modal
+            lblContextoCatMarca.Text = $"{ddlCategoria.SelectedItem.Text} > {ddlMarca.SelectedItem.Text}";
+
+            txtModalNombreModelo.Text = string.Empty;
+            txtModalTecnicoModelo.Text = string.Empty;
+
+            // Abrir el modal mediante JavaScript
+            ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
         }
     }
 }

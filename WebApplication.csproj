@@ -2509,6 +2509,7 @@
     <Content Include="Productos.aspx" />
     <Content Include="Stock.aspx" />
     <Content Include="Taller\NuevaOrden.aspx" />
+    <Content Include="Taller\NuevaOrden.js" />
     <Content Include="Ventas.aspx" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
