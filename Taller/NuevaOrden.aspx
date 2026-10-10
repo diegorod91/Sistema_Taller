@@ -120,6 +120,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <!-- Primera fila: Categoría, Marca y Modelo -->
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label>Categoría <span class="text-danger">*</span></label>
@@ -138,10 +139,18 @@
                                 <asp:DropDownList ID="ddlModelo" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
-                            <div class="col-md-2 form-group mb-0">
+                        </div>
+
+                        <!-- Segunda fila: Botón de Nuevo Modelo e IMEI / Serie -->
+                        <div class="row align-items-end">
+                            <div class="col-md-4 form-group mb-0">
                                 <asp:LinkButton ID="LNK_NuevoModelo" runat="server" CssClass="btn btn-outline-success btn-block" OnClick="LNK_NuevoModelo_Click" CausesValidation="false">
                                 <i class="fas fa-plus mr-1"></i>Nuevo Modelo
                                 </asp:LinkButton>
+                            </div>
+                            <div class="col-md-8 form-group mb-0">
+                                <label>IMEI / Número de Serie</label>
+                                <asp:TextBox ID="txtImei" runat="server" CssClass="form-control" Placeholder="Ej: 35298110... o Número de Serie"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -218,6 +227,75 @@
                                 <label>Falla Reportada / Observaciones del Ingreso</label>
                                 <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3"
                                     CssClass="form-control" Placeholder="Ej: Pantalla rota, no enciende, mojado..."></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: PRESUPUESTO, ANTICIPO Y ESTADO FÍSICO -->
+                <div class="card card-default card-outline border-left-primary shadow-sm mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title text-primary font-weight-bold">
+                            <i class="fas fa-file-invoice-dollar mr-2"></i>4. Presupuesto, Anticipo y Estado del Equipo
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Columna Izquierda: Checklist de Estado Físico y Contraseña -->
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Contraseña / PIN de Desbloqueo</label>
+                                    <asp:TextBox ID="txtPasswordEquipo" runat="server" CssClass="form-control" Placeholder="Ej: 1234, Patrón L"></asp:TextBox>
+                                </div>
+
+                                <label class="text-secondary font-weight-bold mb-2">Estado al Recibir (Checklist)</label>
+                                <div class="row ml-1 mb-3">
+                                    <div class="col-4 form-check mb-2">
+                                        <asp:CheckBox ID="chkEncendido" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblEncendido" runat="server" AssociatedControlID="chkEncendido" CssClass="form-check-label ml-1">Encendido</asp:Label>
+                                    </div>
+                                    <div class="col-4 form-check mb-2">
+                                        <asp:CheckBox ID="chkApagado" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblApagado" runat="server" AssociatedControlID="chkApagado" CssClass="form-check-label ml-1">Apagado</asp:Label>
+                                    </div>
+                                    <div class="col-4 form-check mb-2">
+                                        <asp:CheckBox ID="chkGolpes" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblGolpes" runat="server" AssociatedControlID="chkGolpes" CssClass="form-check-label ml-1">Golpes</asp:Label>
+                                    </div>
+                                    <div class="col-4 form-check">
+                                        <asp:CheckBox ID="chkHumedad" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblHumedad" runat="server" AssociatedControlID="chkHumedad" CssClass="form-check-label ml-1">Humedad</asp:Label>
+                                    </div>
+                                    <div class="col-4 form-check">
+                                        <asp:CheckBox ID="chkSinSim" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblSinSim" runat="server" AssociatedControlID="chkSinSim" CssClass="form-check-label ml-1">Sin SIM</asp:Label>
+                                    </div>
+                                    <div class="col-4 form-check">
+                                        <asp:CheckBox ID="chkAccesorios" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="lblAccesorios" runat="server" AssociatedControlID="chkAccesorios" CssClass="form-check-label ml-1">Con Funda</asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha: Costos, Anticipo y Observaciones Físicas -->
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Presupuesto Estimado ($)</label>
+                                    <asp:TextBox ID="txtPresupuesto" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Seña / Anticipo ($)</label>
+                                    <asp:TextBox ID="txtSenia" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label>Detalles / Daños Estéticos Adicionales</label>
+                                    <asp:TextBox ID="txtDetallesFisicos" runat="server" CssClass="form-control" Placeholder="Ej: Rayones profundos en pantalla, tapa trasera astillada"></asp:TextBox>
+                                </div>
                             </div>
                         </div>
                     </div>
