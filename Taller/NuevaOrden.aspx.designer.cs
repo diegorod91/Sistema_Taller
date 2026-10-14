@@ -195,13 +195,13 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.LinkButton LNK_NuevoModelo;
 
         /// <summary>
-        /// Control txtImei.
+        /// Control TB_Imei.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtImei;
+        protected global::System.Web.UI.WebControls.TextBox TB_Imei;
 
         /// <summary>
         /// Control upModalModelo.
@@ -213,31 +213,31 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.UpdatePanel upModalModelo;
 
         /// <summary>
-        /// Control lblContextoCatMarca.
+        /// Control LBL_CategMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContextoCatMarca;
+        protected global::System.Web.UI.WebControls.Label LBL_CategMarca;
 
         /// <summary>
-        /// Control txtModalNombreModelo.
+        /// Control TB_NombreModelo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtModalNombreModelo;
+        protected global::System.Web.UI.WebControls.TextBox TB_NombreModelo;
 
         /// <summary>
-        /// Control txtModalTecnicoModelo.
+        /// Control TB_ModeloTecnico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtModalTecnicoModelo;
+        protected global::System.Web.UI.WebControls.TextBox TB_ModeloTecnico;
 
         /// <summary>
         /// Control BTN_GuardarModelo.
@@ -249,175 +249,193 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.Button BTN_GuardarModelo;
 
         /// <summary>
-        /// Control ddlTipoOperacion.
+        /// Control DDL_TipoOperacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoOperacion;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_TipoOperacion;
 
         /// <summary>
-        /// Control ddlEstado.
+        /// Control DDL_Estado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
+        protected global::System.Web.UI.WebControls.DropDownList DDL_Estado;
 
         /// <summary>
-        /// Control txtObservaciones.
+        /// Control TB_Observaciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtObservaciones;
+        protected global::System.Web.UI.WebControls.TextBox TB_Observaciones;
 
         /// <summary>
-        /// Control txtPasswordEquipo.
+        /// Control TB_ClaveEquipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPasswordEquipo;
+        protected global::System.Web.UI.WebControls.TextBox TB_ClaveEquipo;
 
         /// <summary>
-        /// Control chkEncendido.
+        /// Control CHK_Encendido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkEncendido;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_Encendido;
 
         /// <summary>
-        /// Control lblEncendido.
+        /// Control LBL_Encendido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEncendido;
+        protected global::System.Web.UI.WebControls.Label LBL_Encendido;
 
         /// <summary>
-        /// Control chkApagado.
+        /// Control CHK_Apagado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkApagado;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_Apagado;
 
         /// <summary>
-        /// Control lblApagado.
+        /// Control LBL_Apagado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblApagado;
+        protected global::System.Web.UI.WebControls.Label LBL_Apagado;
 
         /// <summary>
-        /// Control chkGolpes.
+        /// Control CHK_Golpes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkGolpes;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_Golpes;
 
         /// <summary>
-        /// Control lblGolpes.
+        /// Control LBL_Golpes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGolpes;
+        protected global::System.Web.UI.WebControls.Label LBL_Golpes;
 
         /// <summary>
-        /// Control chkHumedad.
+        /// Control CHK_Humedad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkHumedad;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_Humedad;
 
         /// <summary>
-        /// Control lblHumedad.
+        /// Control LBL_Humedad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHumedad;
+        protected global::System.Web.UI.WebControls.Label LBL_Humedad;
 
         /// <summary>
-        /// Control chkSinSim.
+        /// Control CHK_SinSim.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkSinSim;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_SinSim;
 
         /// <summary>
-        /// Control lblSinSim.
+        /// Control LBL_SinSim.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSinSim;
+        protected global::System.Web.UI.WebControls.Label LBL_SinSim;
 
         /// <summary>
-        /// Control chkAccesorios.
+        /// Control CHK_Accesorios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAccesorios;
+        protected global::System.Web.UI.WebControls.CheckBox CHK_Accesorios;
 
         /// <summary>
-        /// Control lblAccesorios.
+        /// Control LBL_Accesorios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccesorios;
+        protected global::System.Web.UI.WebControls.Label LBL_Accesorios;
 
         /// <summary>
-        /// Control txtPresupuesto.
+        /// Control TB_Presupuesto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPresupuesto;
+        protected global::System.Web.UI.WebControls.TextBox TB_Presupuesto;
 
         /// <summary>
-        /// Control txtSenia.
+        /// Control TB_Anticipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSenia;
+        protected global::System.Web.UI.WebControls.TextBox TB_Anticipo;
 
         /// <summary>
-        /// Control txtDetallesFisicos.
+        /// Control TB_FechaEntrega.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDetallesFisicos;
+        protected global::System.Web.UI.WebControls.TextBox TB_FechaEntrega;
+
+        /// <summary>
+        /// Control CHK_AvisoWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CHK_AvisoWhatsapp;
+
+        /// <summary>
+        /// Control LBL_AvisoWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_AvisoWhatsapp;
 
         /// <summary>
         /// Control btnGuardarOrden.

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Auditoria">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,13 +29,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombres" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Apellidos" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apeynom" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Domicilio" Type="nvarchar" MaxLength="100" />
           <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
           <Property Name="Telefono_Alternativo" Type="nvarchar" MaxLength="20" />
           <Property Name="Documento" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="DetalleMovimiento">
           <Key>
@@ -196,17 +196,14 @@
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-
-        <Function Name="Marca_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="XML" Type="xml" Mode="In" />
-          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
-        </Function>
-
         <Function Name="Marca_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-
+        <Function Name="Marca_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
         <Function Name="Modelo_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
@@ -256,8 +253,7 @@
             <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -286,14 +282,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Telefono_Alternativo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Documento" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Registro_Movimientos" Relationship="Self.FK_Registro_Movimientos_Cliente" FromRole="Cliente" ToRole="Registro_Movimientos" />
+          <Property Name="Apeynom" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DetalleMovimiento">
           <Key>
@@ -554,9 +550,9 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="Model.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Apeynom" ColumnName="Apeynom" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Telefono_Alternativo" ColumnName="Telefono_Alternativo" />

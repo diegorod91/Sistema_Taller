@@ -150,7 +150,7 @@
                             </div>
                             <div class="col-md-8 form-group mb-0">
                                 <label>IMEI / Número de Serie</label>
-                                <asp:TextBox ID="txtImei" runat="server" CssClass="form-control" Placeholder="Ej: 35298110... o Número de Serie"></asp:TextBox>
+                                <asp:TextBox ID="TB_Imei" runat="server" CssClass="form-control" Placeholder="Ej: 35298110... o Número de Serie"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -175,16 +175,16 @@
                                         <div class="alert alert-info py-2 mb-3 small">
                                             <i class="fas fa-info-circle mr-1"></i>
                                             Asignando a: <strong>
-                                                <asp:Label ID="lblContextoCatMarca" runat="server" Text=""></asp:Label></strong>
+                                                <asp:Label ID="LBL_CategMarca" runat="server" Text=""></asp:Label></strong>
                                         </div>
 
                                         <div class="form-group mb-3">
                                             <label>Nombre del Modelo <span class="text-danger">*</span></label>
-                                            <asp:TextBox ID="txtModalNombreModelo" runat="server" CssClass="form-control" Placeholder="Ej: Galaxy S21, iPhone 13"></asp:TextBox>
+                                            <asp:TextBox ID="TB_NombreModelo" runat="server" CssClass="form-control" Placeholder="Ej: Galaxy S21, iPhone 13"></asp:TextBox>
                                         </div>
                                         <div class="form-group mb-0">
                                             <label>Número Técnico / Código OEM (Opcional)</label>
-                                            <asp:TextBox ID="txtModalTecnicoModelo" runat="server" CssClass="form-control" Placeholder="Ej: SM-G991B, A2633"></asp:TextBox>
+                                            <asp:TextBox ID="TB_ModeloTecnico" runat="server" CssClass="form-control" Placeholder="Ej: SM-G991B, A2633"></asp:TextBox>
                                         </div>
                                     </div>
 
@@ -215,17 +215,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
                                 <label>Tipo de Operación</label>
-                                <asp:DropDownList ID="ddlTipoOperacion" runat="server" CssClass="form-control select2">
+                                <asp:DropDownList ID="DDL_TipoOperacion" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-6 form-group mb-3">
                                 <label>Estado Inicial</label>
-                                <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control select2">
+                                <asp:DropDownList ID="DDL_Estado" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-12 form-group mb-0">
                                 <label>Falla Reportada / Observaciones del Ingreso</label>
-                                <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3"
+                                <asp:TextBox ID="TB_Observaciones" runat="server" TextMode="MultiLine" Rows="3"
                                     CssClass="form-control" Placeholder="Ej: Pantalla rota, no enciende, mojado..."></asp:TextBox>
                             </div>
                         </div>
@@ -250,51 +250,57 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Contraseña / PIN de Desbloqueo</label>
-                                    <asp:TextBox ID="txtPasswordEquipo" runat="server" CssClass="form-control" Placeholder="Ej: 1234, Patrón L"></asp:TextBox>
+                                    <asp:TextBox ID="TB_ClaveEquipo" runat="server" CssClass="form-control" Placeholder="Ej: 1234, Patrón L"></asp:TextBox>
                                 </div>
 
                                 <label class="text-secondary font-weight-bold mb-2">Estado al Recibir (Checklist)</label>
                                 <div class="row ml-1 mb-3">
                                     <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="chkEncendido" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblEncendido" runat="server" AssociatedControlID="chkEncendido" CssClass="form-check-label ml-1">Encendido</asp:Label>
+                                        <asp:CheckBox ID="CHK_Encendido" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_Encendido" runat="server" AssociatedControlID="CHK_Encendido" CssClass="form-check-label ml-1">Encendido</asp:Label>
                                     </div>
                                     <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="chkApagado" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblApagado" runat="server" AssociatedControlID="chkApagado" CssClass="form-check-label ml-1">Apagado</asp:Label>
+                                        <asp:CheckBox ID="CHK_Apagado" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_Apagado" runat="server" AssociatedControlID="CHK_Apagado" CssClass="form-check-label ml-1">Apagado</asp:Label>
                                     </div>
                                     <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="chkGolpes" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblGolpes" runat="server" AssociatedControlID="chkGolpes" CssClass="form-check-label ml-1">Golpes</asp:Label>
+                                        <asp:CheckBox ID="CHK_Golpes" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_Golpes" runat="server" AssociatedControlID="CHK_Golpes" CssClass="form-check-label ml-1">Golpes</asp:Label>
                                     </div>
                                     <div class="col-4 form-check">
-                                        <asp:CheckBox ID="chkHumedad" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblHumedad" runat="server" AssociatedControlID="chkHumedad" CssClass="form-check-label ml-1">Humedad</asp:Label>
+                                        <asp:CheckBox ID="CHK_Humedad" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_Humedad" runat="server" AssociatedControlID="CHK_Humedad" CssClass="form-check-label ml-1">Humedad</asp:Label>
                                     </div>
                                     <div class="col-4 form-check">
-                                        <asp:CheckBox ID="chkSinSim" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblSinSim" runat="server" AssociatedControlID="chkSinSim" CssClass="form-check-label ml-1">Sin SIM</asp:Label>
+                                        <asp:CheckBox ID="CHK_SinSim" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_SinSim" runat="server" AssociatedControlID="CHK_SinSim" CssClass="form-check-label ml-1">Sin SIM</asp:Label>
                                     </div>
                                     <div class="col-4 form-check">
-                                        <asp:CheckBox ID="chkAccesorios" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="lblAccesorios" runat="server" AssociatedControlID="chkAccesorios" CssClass="form-check-label ml-1">Con Funda</asp:Label>
+                                        <asp:CheckBox ID="CHK_Accesorios" runat="server" CssClass="form-check-input" />
+                                        <asp:Label ID="LBL_Accesorios" runat="server" AssociatedControlID="CHK_Accesorios" CssClass="form-check-label ml-1">Con Funda</asp:Label>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Columna Derecha: Costos, Anticipo y Observaciones Físicas -->
+                            <!-- Columna Derecha: Costos, Anticipo y Plazos -->
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Presupuesto Estimado ($)</label>
-                                    <asp:TextBox ID="txtPresupuesto" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
+                                    <asp:TextBox ID="TB_Presupuesto" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label>Seña / Anticipo ($)</label>
-                                    <asp:TextBox ID="txtSenia" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
+                                    <asp:TextBox ID="TB_Anticipo" runat="server" CssClass="form-control" TextMode="Number" min="0" step="0.01" Placeholder="0.00"></asp:TextBox>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Fecha Estimada de Entrega</label>
+                                    <asp:TextBox ID="TB_FechaEntrega" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <label>Detalles / Daños Estéticos Adicionales</label>
-                                    <asp:TextBox ID="txtDetallesFisicos" runat="server" CssClass="form-control" Placeholder="Ej: Rayones profundos en pantalla, tapa trasera astillada"></asp:TextBox>
+                                    <div class="form-group mb-0 form-check">
+                                    <asp:CheckBox ID="CHK_AvisoWhatsapp" runat="server" CssClass="form-check-input" Checked="true" />
+                                    <asp:Label ID="LBL_AvisoWhatsapp" runat="server" AssociatedControlID="CHK_AvisoWhatsapp" CssClass="form-check-label ml-1">Avisar recepción y presupuesto por WhatsApp</asp:Label>
+                                </div>
                                 </div>
                             </div>
                         </div>

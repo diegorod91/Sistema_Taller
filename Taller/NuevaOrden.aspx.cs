@@ -30,8 +30,8 @@ namespace SolucionBase.Taller
             ddlCategoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
             ddlMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
             ddlModelo.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
-            ddlTipoOperacion.Fill(TipoOperacion.GetAllTiposOperacion(), "Id", "Nombre", true);
-            ddlEstado.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
+            DDL_TipoOperacion.Fill(TipoOperacion.GetAllTiposOperacion(), "Id", "Nombre", true);
+            DDL_Estado.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
 
         }
 
@@ -112,10 +112,24 @@ namespace SolucionBase.Taller
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
         {
 
+
             LimpiarFormulario();
             pnlBoxCliente.Visible = false; // Oculta el Box
         }
 
+
+        private Cliente NuevoCliente()
+        {
+            Cliente newclient = new Cliente();
+            newclient.Apeynom = TB_NombreApellido.Text;
+            //newclient.Apellidos = TB_Apellido.Text;
+            newclient.Documento = TB_DNI.Text;
+            newclient.Domicilio = TB_Direccion.Text;
+            newclient.Telefono = TB_Telefono.Text;
+            newclient.Telefono_Alternativo = TB_TelefonoSecundario.Text;
+            //newclient. = TB_Correo.Text;
+            return newclient;
+        }
         private void LimpiarFormulario()
         {
             // < Mo < deloId.Value = "0";
@@ -137,7 +151,7 @@ namespace SolucionBase.Taller
 
         protected void BTN_GuardarModelo_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtModalNombreModelo.Text))
+            if (string.IsNullOrWhiteSpace(TB_NombreModelo.Text))
             {
                 return;
             }
@@ -149,8 +163,8 @@ namespace SolucionBase.Taller
             {
                 Idcategoria = idCategoria,
                 IdMarca = idMarca,
-                Nombre = txtModalNombreModelo.Text.Trim(),
-                NroModeloTecnico = txtModalTecnicoModelo.Text.Trim()
+                Nombre = TB_NombreModelo.Text.Trim(),
+                NroModeloTecnico = TB_ModeloTecnico.Text.Trim()
             };
             LoginXML usuario = Session["Usuario"] as LoginXML;
 
@@ -188,13 +202,18 @@ namespace SolucionBase.Taller
             }
 
             // Mostrar categoría y marca en el modal
-            lblContextoCatMarca.Text = $"{ddlCategoria.SelectedItem.Text} > {ddlMarca.SelectedItem.Text}";
+            LBL_CategMarca.Text = $"{ddlCategoria.SelectedItem.Text} > {ddlMarca.SelectedItem.Text}";
 
-            txtModalNombreModelo.Text = string.Empty;
-            txtModalTecnicoModelo.Text = string.Empty;
+            TB_NombreModelo.Text = string.Empty;
+            TB_ModeloTecnico.Text = string.Empty;
 
             // Abrir el modal mediante JavaScript
             ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
         }
+
+        //private bool ValidarCliente()
+        //{  
+        
+        //}
     }
 }

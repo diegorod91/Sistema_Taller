@@ -21,13 +21,13 @@ namespace BOL.Entidades
         }
     
         public int Id { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
         public string Domicilio { get; set; }
         public string Telefono { get; set; }
         public string Telefono_Alternativo { get; set; }
         public string Documento { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public string Apeynom { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registro_Movimientos> Registro_Movimientos { get; set; }
