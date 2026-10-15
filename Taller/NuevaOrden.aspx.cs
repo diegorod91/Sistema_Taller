@@ -212,10 +212,10 @@ namespace SolucionBase.Taller
         protected void LNK_NuevoModelo_Click(object sender, EventArgs e)
         {
             // Validar que primero hayan seleccionado Categoría y Marca afuera
-            if (ddlCategoria.SelectedValue == "0" || string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
-                ddlMarca.SelectedValue == "0" || string.IsNullOrEmpty(ddlMarca.SelectedValue))
+            if (ddlCategoria.SelectedValue == "-1" || string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
+                ddlMarca.SelectedValue == "-1" || string.IsNullOrEmpty(ddlMarca.SelectedValue))
             {
-                // Mostrar advertencia o alert
+                this.MostrarMensajeValidacion("Debe seleccionar categoría y marca");
                 return;
             }
 
@@ -229,10 +229,10 @@ namespace SolucionBase.Taller
             ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
         }
 
-        private string  ValidarCliente()
+        private string  ValidarClienteSeleccionado()
         {
             string msj = "";
-            if (ddlCliente.SelectedItem.Value == "0")
+            if (ddlCliente.SelectedItem.Value == "-1")
             {
                 msj += "Debe seleccionar un cliente valido.";
                 return msj;

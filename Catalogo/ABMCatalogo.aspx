@@ -202,7 +202,7 @@
                             </div>
                         </div>
                         <!-- CONTENEDOR DE ERROR / ALERTA INTERNO -->
-                        <asp:Panel ID="pnlErrorModal" runat="server" Visible="false" CssClass="alert alert-danger alert-dismissible fade show py-2 mb-3" role="alert">
+                        <asp:Panel ID="pnlErrorModal" runat="server" Visible="false" CssClass="alert alert-warning alert-dismissible fade show py-2 mb-3" role="alert">
                             <i class="fas fa-exclamation-circle mr-1"></i>
                             <asp:Literal ID="ltrMensajeModalError" runat="server"></asp:Literal>
                         </asp:Panel>
