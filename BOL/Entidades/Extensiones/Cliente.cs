@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace BOL.Entidades
 {
@@ -15,6 +16,9 @@ namespace BOL.Entidades
             return CCliente.GetAllClientes();
         }
 
-        
+        public int Cliente_Save(LoginXML usuario)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

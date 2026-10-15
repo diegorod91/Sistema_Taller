@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Utilities;
+using Utilities.UI;
 
 
 
@@ -26,7 +27,7 @@ namespace SolucionBase.Taller
         private void IniciarInfo()
         {
             //List<Cliente> ListaCliente= Cliente.GetAllClientes("Id", "Nombre", true);
-            ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "Nombres", true);
+            ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
             ddlCategoria.Fill(Categoria.GetAllCategorias(), "Id", "Nombre", true);
             ddlMarca.Fill(Marca.GetAllMarcas(), "Id", "Nombre", true);
             ddlModelo.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
@@ -111,7 +112,24 @@ namespace SolucionBase.Taller
 
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
         {
+            string msj = ValidarInfoCliente();
+            if(msj != "")
+            {
+                // Mostrar mensaje de error
+                this.MostrarMensajeValidacion(msj);
 
+                return;
+            }
+            else
+            {
+                Cliente newclient = NuevoCliente();
+                LoginXML usuario = Session["Usuario"] as LoginXML;
+                int idCliente = newclient.Cliente_Save(usuario);
+                // Recargar el DropDownList de clientes
+                ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
+                // Seleccionar el cliente recién agregado
+                ddlCliente.SelectedItem.Text = newclient.Apeynom;
+            }
 
             LimpiarFormulario();
             pnlBoxCliente.Visible = false; // Oculta el Box
@@ -127,7 +145,7 @@ namespace SolucionBase.Taller
             newclient.Domicilio = TB_Direccion.Text;
             newclient.Telefono = TB_Telefono.Text;
             newclient.Telefono_Alternativo = TB_TelefonoSecundario.Text;
-            //newclient. = TB_Correo.Text;
+            newclient.Email = TB_Correo.Text;
             return newclient;
         }
         private void LimpiarFormulario()
@@ -159,7 +177,7 @@ namespace SolucionBase.Taller
             int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
-            Modelo nuevoModelo= new Modelo
+            Modelo nuevoModelo = new Modelo
             {
                 Idcategoria = idCategoria,
                 IdMarca = idMarca,
@@ -169,7 +187,7 @@ namespace SolucionBase.Taller
             LoginXML usuario = Session["Usuario"] as LoginXML;
 
             // 1. Guardar modelo en Base de Datos
-            int nuevoModeloId = nuevoModelo.Modelo_Save(usuario); 
+            int nuevoModeloId = nuevoModelo.Modelo_Save(usuario);
             // 2. Recargar los modelos de la marca en el DropDownList principal
             CargarGridModelos();
 
@@ -211,9 +229,44 @@ namespace SolucionBase.Taller
             ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
         }
 
-        //private bool ValidarCliente()
-        //{  
+        private string  ValidarCliente()
+        {
+            string msj = "";
+            if (ddlCliente.SelectedItem.Value == "0")
+            {
+                msj += "Debe seleccionar un cliente valido.";
+                return msj;
+            }
+            else
+            {
+                return msj;
+            }
+        }
         
-        //}
+        private string ValidarInfoCliente()
+        {
+            string msj = "";
+
+            msj += ControlExtensions.VerificarCadena(TB_NombreApellido, "Nombre y Apellido", true);
+            // Expresión regular flexible para DNI (argentino o extranjero)
+            // o Pasaporte (entre 5 y 20 caracteres alfanuméricos)
+            string patronDocumento = @"^[a-zA-Z0-9\.\-]{5,20}$";
+
+            string docLimpio = TB_DNI.Text.Trim();
+
+            if (!string.IsNullOrEmpty(docLimpio))
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(docLimpio, patronDocumento))
+                {
+                    msj += "El formato del documento no es válido. Debe tener entre 5 y 20 caracteres alfanuméricos.<br/>";
+                }
+            }
+            msj += ControlExtensions.VerificarCadena(TB_Telefono, "Teléfono principal", true);
+            msj += ControlExtensions.VerificarCadena(TB_TelefonoSecundario, "Teléfono secundario", true);
+            msj += ControlExtensions.VerificarCadena(TB_Direccion, "Dirección", true);
+            msj += ControlExtensions.VerificarCadena(TB_Correo, "Correo Electrónico", false);
+
+            return msj;
+        }
     }
 }

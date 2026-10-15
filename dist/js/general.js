@@ -32,6 +32,15 @@ function getElement(name) {
     return document.getElementById(name);
 }
 
+function mostrarMsjValidacion(mensaje) {
+    // Inyectamos el texto (puede contener etiquetas HTML como <br/>)
+    var contenedor = document.getElementById('lblContenidoModalError');
+    if (contenedor) {
+        contenedor.innerHTML = mensaje;
+    }
+    // Mostramos el modal usando Bootstrap 4
+    $('#modalErrorValidacion').modal('show');
+}
 function mostrarError(mje, id) {
     getElement(id).innerHTML = mje;
 }

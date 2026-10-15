@@ -122,32 +122,54 @@ namespace SolucionBase.Catalogo
 
         #region Acciones_Botones
 
+        private void MostrarErrorModal(string mensaje)
+        {
+            ltrMensajeModalError.Text = mensaje;
+            pnlErrorModal.Visible = true;
+        }
+
+        private void OcultarErrorModal()
+        {
+            ltrMensajeModalError.Text = "";
+            pnlErrorModal.Visible = false;
+        }
+
         protected void btnGuardarModelo_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(string.IsNullOrEmpty(hfModeloId.Value) ? "0" : hfModeloId.Value);
-            string nombre = txtModalNombre.Text.Trim();
-            string tecnico = txtModalTecnico.Text.Trim();
-            int idCategoria = Convert.ToInt32(DDL_Categoria.SelectedValue);
-            int idMarca = Convert.ToInt32(DDL_Marca.SelectedValue);
-
-            Modelo model = id == 0 ? new BOL.Entidades.Modelo() : Modelo.GetAllModelos().FirstOrDefault(m => m.Id == id);
-            model.Nombre = nombre;
-            model.NroModeloTecnico = tecnico;
-            model.Idcategoria = idCategoria;
-            model.IdMarca = idMarca;
-            LoginXML usuario = Session["Usuario"] as LoginXML;
-
-            if (id == 0)
+            string mensajeValidacion = ValidarAltaModelo();
+            if (mensajeValidacion != "")
             {
-                model.Modelo_Save(usuario);
+                MostrarErrorModal(mensajeValidacion);
+                return;
             }
             else
             {
-                model.Update_Save(usuario);
-            }
+                OcultarErrorModal();
+                int id = Convert.ToInt32(string.IsNullOrEmpty(hfModeloId.Value) ? "0" : hfModeloId.Value);
+                string nombre = txtModalNombre.Text.Trim();
+                string tecnico = txtModalTecnico.Text.Trim();
+                int idCategoria = Convert.ToInt32(DDL_Categoria.SelectedValue);
+                int idMarca = Convert.ToInt32(DDL_Marca.SelectedValue);
 
-            CargarGridModelos();
-            ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalModelo();", true);
+                Modelo model = id == 0 ? new BOL.Entidades.Modelo() : Modelo.GetAllModelos().FirstOrDefault(m => m.Id == id);
+                model.Nombre = nombre;
+                model.NroModeloTecnico = tecnico;
+                model.Idcategoria = idCategoria;
+                model.IdMarca = idMarca;
+                LoginXML usuario = Session["Usuario"] as LoginXML;
+
+                if (id == 0)
+                {
+                    model.Modelo_Save(usuario);
+                }
+                else
+                {
+                    model.Update_Save(usuario);
+                }
+
+                CargarGridModelos();
+                ScriptManager.RegisterStartupScript(this, GetType(), "PopClose", "cerrarModalModelo();", true);
+            }
         }
 
         protected void btnNuevoModelo_Click(object sender, EventArgs e)
@@ -161,6 +183,28 @@ namespace SolucionBase.Catalogo
             ScriptManager.RegisterStartupScript(this, GetType(), "Pop", "abrirModalModelo();", true);
         }
 
+        private string ValidarAltaModelo()
+        {
+            string mensaje = string.Empty;
+            if (DDL_Categoria.SelectedValue == "-1")
+            {
+                mensaje += "Debe seleccionar una categoría válida.<br> ";
+            }
+
+            if (DDL_Marca.SelectedValue == "-1")
+            {
+                mensaje += "Debe seleccionar una marca válida.<br> ";
+            }
+            if (string.IsNullOrWhiteSpace(txtModalNombre.Text))
+            {
+                mensaje += "El nombre del modelo no puede estar vacío. <br>";
+            }
+            if (string.IsNullOrWhiteSpace(txtModalTecnico.Text))
+            {
+                mensaje += "El número de modelo técnico no puede estar vacío.<br> ";
+            }
+            return mensaje;
+        }
         protected void btnNuevaMarca_Click(object sender, EventArgs e)
         {
             hfTabActiva.Value = "#tab-marcas";

@@ -168,6 +168,24 @@ namespace SolucionBase.Catalogo
         protected global::System.Web.UI.WebControls.TextBox txtModalTecnico;
 
         /// <summary>
+        /// Control pnlErrorModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlErrorModal;
+
+        /// <summary>
+        /// Control ltrMensajeModalError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrMensajeModalError;
+
+        /// <summary>
         /// Control btnGuardarModelo.
         /// </summary>
         /// <remarks>

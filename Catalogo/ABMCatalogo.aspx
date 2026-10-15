@@ -168,7 +168,7 @@
     </div>
 
     <!-- MODAL PARA ALTA / EDICIÓN DE MODELO -->
-    <div class="modal fade" id="modalModelo"  role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modalModelo" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <asp:UpdatePanel ID="upModalModelo" runat="server">
@@ -201,6 +201,11 @@
                                 <asp:TextBox ID="txtModalTecnico" runat="server" CssClass="form-control" Placeholder="Ej: SM-G991B, A2633"></asp:TextBox>
                             </div>
                         </div>
+                        <!-- CONTENEDOR DE ERROR / ALERTA INTERNO -->
+                        <asp:Panel ID="pnlErrorModal" runat="server" Visible="false" CssClass="alert alert-danger alert-dismissible fade show py-2 mb-3" role="alert">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <asp:Literal ID="ltrMensajeModalError" runat="server"></asp:Literal>
+                        </asp:Panel>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <asp:Button ID="btnGuardarModelo" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardarModelo_Click" />

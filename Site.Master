@@ -52,6 +52,32 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <form id="form1" runat="server">
 
+        <!-- MODAL GLOBAL DE ERRORES / VALIDACIONES -->
+        <div class="modal fade" id="modalErrorValidacion" tabindex="-1" role="dialog" aria-labelledby="modalErrorLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content border-danger">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="modalErrorLabel">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Atención / Errores de Validación
+                        </h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Aquí se inyectará dinámicamente el mensaje de error -->
+                        <div id="lblContenidoModalError" class="text-dark">
+                            <!-- Mensaje -->
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="wrapper">
             <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" EnablePageMethods="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" AllowCustomErrorsRedirect="true">
                 <Scripts>
@@ -256,8 +282,20 @@ function initSelect2() {
             $('#userDropdown').dropdown();
             initSelect2();
         });
-    }
+}
+
         </script>
+        <!-- Script de validación global directo en la Master -->
+        <script type="text/javascript">
+        window.mostrarMsjValidacion = function (mensaje) {
+            var contenedor = document.getElementById('lblContenidoModalError');
+            if (contenedor) {
+                contenedor.innerHTML = mensaje;
+            }
+            $('#modalErrorValidacion').modal('show');
+        };
+        </script>
+
     </form>
 </body>
 </html>
