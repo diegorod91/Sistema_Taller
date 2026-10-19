@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Transaccion" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Usuario" Type="xml" Nullable="false" />
+          <Property Name="Tabla" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdAfectado" Type="int" />
+          <Property Name="Original" Type="xml" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Apeynom" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Domicilio" Type="nvarchar" MaxLength="100" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telefono_Alternativo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Documento" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="DetalleMovimiento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRegistroMovimiento" Type="int" Nullable="false" />
+          <Property Name="IdServicioProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioAplicado" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMarca" Type="int" Nullable="false" />
+          <Property Name="Idcategoria" Type="int" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="NroModeloTecnico" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Registro_Movimientos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdModelo" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdTipoOperacion" Type="int" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
+          <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Servicio_Repuesto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tipo" Type="bit" />
+          <Property Name="PrecioSugerido" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TipoOperacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Detalle_Registro">
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DetalleMovimiento" Type="Self.DetalleMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro_Movimientos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleMovimiento">
+              <PropertyRef Name="IdRegistroMovimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detalle_ServicioProducto">
+          <End Role="Servicio_Repuesto" Type="Self.Servicio_Repuesto" Multiplicity="1" />
+          <End Role="DetalleMovimiento" Type="Self.DetalleMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio_Repuesto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleMovimiento">
+              <PropertyRef Name="IdServicioProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="Idcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Marca">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Movimientos_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Movimientos_TipoOperacion">
+          <End Role="TipoOperacion" Type="Self.TipoOperacion" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoOperacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdTipoOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Categoria_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Marca_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Marca_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Modelo_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XMLModelo" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Modelo_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XMLModelo" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="RethrowError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleMovimiento" EntityType="Self.DetalleMovimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registro_Movimientos" EntityType="Self.Registro_Movimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servicio_Repuesto" EntityType="Self.Servicio_Repuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoOperacion" EntityType="Self.TipoOperacion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Detalle_Registro" Association="Self.FK_Detalle_Registro">
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+            <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detalle_ServicioProducto" Association="Self.FK_Detalle_ServicioProducto">
+            <End Role="Servicio_Repuesto" EntitySet="Servicio_Repuesto" />
+            <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Categoria" Association="Self.FK_Modelo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Estado" Association="Self.FK_Registro_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Movimientos_Cliente" Association="Self.FK_Registro_Movimientos_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Movimientos_TipoOperacion" Association="Self.FK_Registro_Movimientos_TipoOperacion">
+            <End Role="TipoOperacion" EntitySet="TipoOperacion" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Transaccion" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Usuario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tabla" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdAfectado" Type="Int32" />
+          <Property Name="Original" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Modelo" Relationship="Model.FK_Modelo_Categoria" FromRole="Categoria" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono_Alternativo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Documento" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Registro_Movimientos" Relationship="Self.FK_Registro_Movimientos_Cliente" FromRole="Cliente" ToRole="Registro_Movimientos" />
+          <Property Name="Apeynom" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DetalleMovimiento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRegistroMovimiento" Type="Int32" Nullable="false" />
+          <Property Name="IdServicioProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioAplicado" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Registro_Movimientos" Relationship="Self.FK_Detalle_Registro" FromRole="DetalleMovimiento" ToRole="Registro_Movimientos" />
+          <NavigationProperty Name="Servicio_Repuesto" Relationship="Self.FK_Detalle_ServicioProducto" FromRole="DetalleMovimiento" ToRole="Servicio_Repuesto" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Registro_Movimientos" Relationship="Self.FK_Registro_Estado" FromRole="Estado" ToRole="Registro_Movimientos" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK_Modelo_Marca" FromRole="Marca" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMarca" Type="Int32" Nullable="false" />
+          <Property Name="Idcategoria" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NroModeloTecnico" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK_Modelo_Marca" FromRole="Modelo" ToRole="Marca" />
+          <NavigationProperty Name="Categoria" Relationship="Model.FK_Modelo_Categoria" FromRole="Modelo" ToRole="Categoria" />
+        </EntityType>
+        <EntityType Name="Registro_Movimientos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdModelo" Type="Int32" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdTipoOperacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Registro_Movimientos_Cliente" FromRole="Registro_Movimientos" ToRole="Cliente" />
+          <NavigationProperty Name="DetalleMovimiento" Relationship="Self.FK_Detalle_Registro" FromRole="Registro_Movimientos" ToRole="DetalleMovimiento" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Registro_Estado" FromRole="Registro_Movimientos" ToRole="Estado" />
+          <NavigationProperty Name="TipoOperacion" Relationship="Self.FK_Registro_Movimientos_TipoOperacion" FromRole="Registro_Movimientos" ToRole="TipoOperacion" />
+        </EntityType>
+        <EntityType Name="Servicio_Repuesto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="Boolean" />
+          <Property Name="PrecioSugerido" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="DetalleMovimiento" Relationship="Self.FK_Detalle_ServicioProducto" FromRole="Servicio_Repuesto" ToRole="DetalleMovimiento" />
+        </EntityType>
+        <EntityType Name="TipoOperacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Registro_Movimientos" Relationship="Self.FK_Registro_Movimientos_TipoOperacion" FromRole="TipoOperacion" ToRole="Registro_Movimientos" />
+        </EntityType>
+        <Association Name="FK_Registro_Movimientos_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detalle_Registro">
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DetalleMovimiento" Type="Self.DetalleMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro_Movimientos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleMovimiento">
+              <PropertyRef Name="IdRegistroMovimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Detalle_ServicioProducto">
+          <End Role="Servicio_Repuesto" Type="Self.Servicio_Repuesto" Multiplicity="1" />
+          <End Role="DetalleMovimiento" Type="Self.DetalleMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio_Repuesto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleMovimiento">
+              <PropertyRef Name="IdServicioProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modelo_Marca">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Movimientos_TipoOperacion">
+          <End Role="TipoOperacion" Type="Self.TipoOperacion" Multiplicity="1" />
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoOperacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Movimientos">
+              <PropertyRef Name="IdTipoOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EDM" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Auditoria" EntityType="Self.Auditoria" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="DetalleMovimiento" EntityType="Self.DetalleMovimiento" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+          <EntitySet Name="Registro_Movimientos" EntityType="Self.Registro_Movimientos" />
+          <EntitySet Name="Servicio_Repuesto" EntityType="Self.Servicio_Repuesto" />
+          <EntitySet Name="TipoOperacion" EntityType="Self.TipoOperacion" />
+          <AssociationSet Name="FK_Registro_Movimientos_Cliente" Association="Self.FK_Registro_Movimientos_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detalle_Registro" Association="Self.FK_Detalle_Registro">
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+            <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Detalle_ServicioProducto" Association="Self.FK_Detalle_ServicioProducto">
+            <End Role="Servicio_Repuesto" EntitySet="Servicio_Repuesto" />
+            <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Estado" Association="Self.FK_Registro_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modelo_Marca" Association="Self.FK_Modelo_Marca">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Movimientos_TipoOperacion" Association="Self.FK_Registro_Movimientos_TipoOperacion">
+            <End Role="TipoOperacion" EntitySet="TipoOperacion" />
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+          </AssociationSet>
+          <FunctionImport Name="Modelo_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XMLModelo" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Modelo_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XMLModelo" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Marca_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Categoria_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+
+          <FunctionImport Name="RethrowError" />
+          <AssociationSet Name="FK_Modelo_Categoria" Association="Model.FK_Modelo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <FunctionImport Name="Categoria_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Marca_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <Association Name="FK_Modelo_Categoria">
+          <End Type="Model.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="Model.Modelo" Role="Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="Idcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EDM">
+          <EntitySetMapping Name="Auditoria">
+            <EntityTypeMapping TypeName="Model.Auditoria">
+              <MappingFragment StoreEntitySet="Auditoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Transaccion" ColumnName="Transaccion" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Tabla" ColumnName="Tabla" />
+                <ScalarProperty Name="IdAfectado" ColumnName="IdAfectado" />
+                <ScalarProperty Name="Original" ColumnName="Original" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="Model.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="Model.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Apeynom" ColumnName="Apeynom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Telefono_Alternativo" ColumnName="Telefono_Alternativo" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleMovimiento">
+            <EntityTypeMapping TypeName="Model.DetalleMovimiento">
+              <MappingFragment StoreEntitySet="DetalleMovimiento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdRegistroMovimiento" ColumnName="IdRegistroMovimiento" />
+                <ScalarProperty Name="IdServicioProducto" ColumnName="IdServicioProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioAplicado" ColumnName="PrecioAplicado" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="Model.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marca">
+            <EntityTypeMapping TypeName="Model.Marca">
+              <MappingFragment StoreEntitySet="Marca">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modelo">
+            <EntityTypeMapping TypeName="Model.Modelo">
+              <MappingFragment StoreEntitySet="Modelo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="Idcategoria" ColumnName="Idcategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NroModeloTecnico" ColumnName="NroModeloTecnico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registro_Movimientos">
+            <EntityTypeMapping TypeName="Model.Registro_Movimientos">
+              <MappingFragment StoreEntitySet="Registro_Movimientos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="IdTipoOperacion" ColumnName="IdTipoOperacion" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servicio_Repuesto">
+            <EntityTypeMapping TypeName="Model.Servicio_Repuesto">
+              <MappingFragment StoreEntitySet="Servicio_Repuesto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="PrecioSugerido" ColumnName="PrecioSugerido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoOperacion">
+            <EntityTypeMapping TypeName="Model.TipoOperacion">
+              <MappingFragment StoreEntitySet="TipoOperacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Modelo_Save" FunctionName="Model.Store.Modelo_Save" />
+          <FunctionImportMapping FunctionImportName="Modelo_Update" FunctionName="Model.Store.Modelo_Update" />
+          <FunctionImportMapping FunctionImportName="RethrowError" FunctionName="Model.Store.RethrowError" />
+          <FunctionImportMapping FunctionImportName="Categoria_Save" FunctionName="Model.Store.Categoria_Save" />
+          <FunctionImportMapping FunctionImportName="Marca_Save" FunctionName="Model.Store.Marca_Save" />
+          <FunctionImportMapping FunctionImportName="Categoria_Update" FunctionName="Model.Store.Categoria_Update" />
+          <FunctionImportMapping FunctionImportName="Marca_Update" FunctionName="Model.Store.Marca_Update" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Auditoria" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Categoria" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Cliente" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DetalleMovimiento" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Estado" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Marca" Width="1.5" PointX="5.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Modelo" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Registro_Movimientos" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Servicio_Repuesto" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TipoOperacion" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Registro_Movimientos_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Detalle_Registro" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Detalle_ServicioProducto" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Registro_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Modelo_Marca" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Registro_Movimientos_TipoOperacion" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Modelo_Categoria" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

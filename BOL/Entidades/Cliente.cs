@@ -30,6 +30,7 @@ namespace BOL.Entidades
         public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [System.Xml.Serialization.XmlIgnore]
         public virtual ICollection<Registro_Movimientos> Registro_Movimientos { get; set; }
     }
 }

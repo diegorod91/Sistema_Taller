@@ -78,16 +78,30 @@ namespace SolucionBase.Taller
 
 
 
-        protected void btnGuardarOrden_Click(object sender, EventArgs e)
+        protected async void btnGuardarOrden_Click(object sender, EventArgs e)
         {
             int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
             int idModelo = Convert.ToInt32(ddlModelo.SelectedValue);
 
-            if (idCliente == 0 || idModelo == 0)
+            if (idCliente == -1 || idModelo == -1)
             {
-                // Mostrar alerta / notificación Toastr
+                this.MostrarMensajeValidacion("Debe seleccionar cliente y/o modelo para guardar la orden correspondiente");
                 return;
             }
+
+            int idOrden = 1;
+            //RegistroMovimiento.RegistroMovimiento_Save(idCliente, idModelo, Convert.ToInt32(DDL_TipoOperacion.SelectedValue), Convert.ToInt32(DDL_Estado.SelectedValue), txtObservaciones.Text.Trim(), 0);
+
+            if (idOrden > 0 && CHK_AvisoWhatsapp.Checked)
+            {
+                string telefono = TB_Telefono.Text.Trim();
+                string texto = $"¡Hola! Desde RD solution's te confirmamos que tu equipo ingresó al taller. " +
+                               $"Tu número de orden es la #{idOrden}. Te avisaremos cuando esté listo.";
+
+                // Envío automatizado en segundo plano
+                await WhatsAppService.EnviarMensajeAsync(telefono, texto);
+            }
+
 
             //using (var db = new TallerDbContext())
             //{
@@ -113,7 +127,7 @@ namespace SolucionBase.Taller
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
         {
             string msj = ValidarInfoCliente();
-            if(msj != "")
+            if (msj != "")
             {
                 // Mostrar mensaje de error
                 this.MostrarMensajeValidacion(msj);
@@ -123,12 +137,23 @@ namespace SolucionBase.Taller
             else
             {
                 Cliente newclient = NuevoCliente();
+                newclient.Registro_Movimientos = new List<Registro_Movimientos>(); //<- no hay movimientos aun
+                
                 LoginXML usuario = Session["Usuario"] as LoginXML;
                 int idCliente = newclient.Cliente_Save(usuario);
-                // Recargar el DropDownList de clientes
-                ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
-                // Seleccionar el cliente recién agregado
-                ddlCliente.SelectedItem.Text = newclient.Apeynom;
+                if (idCliente != 0)
+                {
+                    this.Notificar(Notification.SUCCESS, "", "Cliente agregado correctamente");
+                    ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
+                    // Seleccionar el cliente recién agregado
+                    ddlCliente.SelectedIndex = ddlCliente.Items.IndexOf(ddlCliente.Items.FindByText(newclient.Apeynom));
+                    // Recargar el DropDownList de clientes
+                }
+                else
+                {
+                    this.MostrarMensajeValidacion("Error al guardar el cliente. Intente nuevamente.");
+                }
+
             }
 
             LimpiarFormulario();
@@ -229,7 +254,7 @@ namespace SolucionBase.Taller
             ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
         }
 
-        private string  ValidarClienteSeleccionado()
+        private string ValidarClienteSeleccionado()
         {
             string msj = "";
             if (ddlCliente.SelectedItem.Value == "-1")
@@ -242,7 +267,7 @@ namespace SolucionBase.Taller
                 return msj;
             }
         }
-        
+
         private string ValidarInfoCliente()
         {
             string msj = "";

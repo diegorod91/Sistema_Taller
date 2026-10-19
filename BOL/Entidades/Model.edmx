@@ -196,6 +196,14 @@
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
+        <Function Name="Cliente_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Cliente_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
         <Function Name="Marca_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
@@ -485,6 +493,14 @@
             <Parameter Name="XMLModelo" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="Cliente_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Cliente_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="Marca_Update" ReturnType="Collection(Int32)">
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
@@ -640,6 +656,8 @@
           <FunctionImportMapping FunctionImportName="Marca_Save" FunctionName="Model.Store.Marca_Save" />
           <FunctionImportMapping FunctionImportName="Categoria_Update" FunctionName="Model.Store.Categoria_Update" />
           <FunctionImportMapping FunctionImportName="Marca_Update" FunctionName="Model.Store.Marca_Update" />
+          <FunctionImportMapping FunctionImportName="Cliente_Save" FunctionName="Model.Store.Cliente_Save" />
+          <FunctionImportMapping FunctionImportName="Cliente_Update" FunctionName="Model.Store.Cliente_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

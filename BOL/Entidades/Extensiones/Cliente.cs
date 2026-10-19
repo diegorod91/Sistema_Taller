@@ -18,7 +18,11 @@ namespace BOL.Entidades
 
         public int Cliente_Save(LoginXML usuario)
         {
-            throw new NotImplementedException();
+            return CCliente.Cliente_Save(this, usuario);
+        }
+        public int Cliente_Update(LoginXML usuario)
+        {
+            return CCliente.Cliente_Update(this, usuario);
         }
     }
 }
