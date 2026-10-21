@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace System.Web.UI.WebControls
 {
@@ -94,7 +95,7 @@ namespace System.Web.UI.WebControls
             }
             return lic;
         }
-        public static void SetSelectedItems(this ListControl input,IEnumerable values)
+        public static void SetSelectedItems(this ListControl input, IEnumerable values)
         {
             foreach (object obj in values)
             {
@@ -107,9 +108,9 @@ namespace System.Web.UI.WebControls
             foreach (ListItem li in input.Items)
             {
                 if (li.Selected)
-                    aux += li.Value+",";
+                    aux += li.Value + ",";
             }
-            return aux.Length.Equals(0)?"()":"("+aux.Substring(0,aux.Length-1)+")" ;
+            return aux.Length.Equals(0) ? "()" : "(" + aux.Substring(0, aux.Length - 1) + ")";
         }
 
         #endregion ListControl
@@ -183,6 +184,41 @@ namespace System.Web.UI.WebControls
                 }
             }
             return "";
+        }
+        public static string VerificarTelefono(TextBox txt, string nombreCampo, bool requerido)
+        {
+            string valor = txt.Text.Trim();
+
+            if (requerido && string.IsNullOrWhiteSpace(valor))
+            {
+                return $"El campo {nombreCampo} es obligatorio.<br/>";
+            }
+
+            // Si no es requerido y está vacío, pasa la validación
+            if (!requerido && string.IsNullOrWhiteSpace(valor))
+            {
+                return string.Empty;
+            }
+
+            // Expresión regular que acepta:
+            // - Opcional signo + al inicio
+            // - Dígitos, espacios, guiones, paréntesis
+            // - Longitud total entre 7 y 20 caracteres válidos
+            string patron = @"^[+]?[\d\s\-\(\)]{7,20}$";
+
+            if (!Regex.IsMatch(valor, patron))
+            {
+                return $"El formato del campo {nombreCampo} no es válido (ej: 221 456-7890).<br/>";
+            }
+
+            // Validación extra opcional: Contar cuántos dígitos reales tiene (mínimo 7)
+            int cantidadDigitos = Regex.Matches(valor, @"\d").Count;
+            if (cantidadDigitos < 7)
+            {
+                return $"El campo {nombreCampo} debe tener al menos 7 dígitos numéricos.<br/>";
+            }
+
+            return string.Empty;
         }
         public static string VerificarMail(this TextBox textBox, string campo, bool obligatorio)
         {
@@ -335,6 +371,29 @@ namespace System.Web.UI.WebControls
                 return " - El campo " + campo + " esta mal formado.<br />";
             }
             return "";
+        }
+        public static string VerificarCheckbox(this CheckBox checkBox, string campo, bool obligatorio)
+        {
+            if (obligatorio && !checkBox.Checked)
+            {
+                return " - Debe marcar la casilla " + campo + ".<br />";
+            }
+            return "";
+        }
+        // Extensión para extraer el estado del Checklist de la orden de ingreso
+        // Recorre los controles o puedes pasarle directamente un contenedor o lista de checkboxes
+        public static string ObtenerResumenChecklist(params (string Nombre, CheckBox Check)[] items)
+        {
+            var checklistResultado = new System.Text.StringBuilder();
+            foreach (var item in items)
+            {
+                string estado = item.Check.Checked ? "Sí" : "No";
+                checklistResultado.Append($"{item.Nombre}: {estado}, ");
+            }
+
+            // Retorna una cadena limpia (ej: "Encendido: Sí, Apagado: No, Golpes: Sí...")
+            string resultado = checklistResultado.ToString();
+            return resultado.EndsWith(", ") ? resultado.Substring(0, resultado.Length - 2) : resultado;
         }
         #endregion Validadores
     }

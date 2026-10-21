@@ -16,6 +16,11 @@ namespace BOL.Entidades
             return CCliente.GetAllClientes();
         }
 
+        public static Cliente ObtenerPorId(int idCliente)
+        {
+            return CCliente.ObtenerPorId(idCliente);
+        }
+
         public int Cliente_Save(LoginXML usuario)
         {
             return CCliente.Cliente_Save(this, usuario);

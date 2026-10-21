@@ -79,7 +79,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCliente" Type="int" Nullable="false" />
           <Property Name="IdModelo" Type="int" Nullable="false" />
-          <Property Name="Observaciones" Type="nvarchar" MaxLength="150" />
+          <Property Name="Observaciones" Type="nvarchar(max)" />
           <Property Name="IdTipoOperacion" Type="int" Nullable="false" />
           <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
           <Property Name="FechaEntrega" Type="datetime" />
@@ -220,6 +220,10 @@
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
+         <Function Name="RegistroMovimiento_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+         </Function>
         <Function Name="RethrowError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
@@ -347,7 +351,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdCliente" Type="Int32" Nullable="false" />
           <Property Name="IdModelo" Type="Int32" Nullable="false" />
-          <Property Name="Observaciones" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IdTipoOperacion" Type="Int32" Nullable="false" />
           <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
@@ -491,6 +495,10 @@
           </FunctionImport>
           <FunctionImport Name="Modelo_Update" ReturnType="Collection(Int32)">
             <Parameter Name="XMLModelo" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RegistroMovimiento_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Cliente_Save" ReturnType="Collection(Int32)">
@@ -658,6 +666,7 @@
           <FunctionImportMapping FunctionImportName="Marca_Update" FunctionName="Model.Store.Marca_Update" />
           <FunctionImportMapping FunctionImportName="Cliente_Save" FunctionName="Model.Store.Cliente_Save" />
           <FunctionImportMapping FunctionImportName="Cliente_Update" FunctionName="Model.Store.Cliente_Update" />
+          <FunctionImportMapping FunctionImportName="RegistroMovimiento_Save" FunctionName="Model.Store.RegistroMovimiento_Save" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

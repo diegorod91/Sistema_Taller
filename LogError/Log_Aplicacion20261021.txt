@@ -1,0 +1,286 @@
+Código :20261021021806
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021810
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021815
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021835
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021837
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021837
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021838
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021838
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021838
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021840
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+
+Código :20261021021851
+IP Cliente:::1
+ Dns Cliente:DESKTOP-KMTVQUV
+ URL: https://localhost:44337/Taller/NuevaOrden
+ Descripción:
+ <ArrayOfCustomExcepcion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CustomExcepcion>
+    <Message>Una operación asincrónica no se puede comenzar en este momento. Solo se pueden comenzar operaciones asincrónicas dentro de un controlador o módulo asincrónico o durante ciertos eventos en el ciclo de vida de la página. Si esta excepción se produjo mientras se ejecutaba una página, asegúrese de que la página esté marcada con &lt;%@ Page Async="true" %&gt;. Esta excepción puede también indicar que se intentó llamar a un método "async void" que generalmente no es compatible con el procesamiento de solicitudes de ASP.NET. En su lugar, el método asincrónico debería devolver una Tarea y el llamador debería esperarla.</Message>
+    <Source>System.Web</Source>
+    <StackTrace>   en System.Web.AspNetSynchronizationContext.OperationStarted()
+   en System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create()
+   en SolucionBase.Taller.NuevaOrden.btnGuardarOrden_Click(Object sender, EventArgs e)
+   en System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   en System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   en System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)</StackTrace>
+    <StackFrame>OperationStarted at offset 4789059 in file:line:column &lt;filename unknown&gt;:0:0
+Create at offset 57 in file:line:column &lt;filename unknown&gt;:0:0
+btnGuardarOrden_Click at offset 117 in file:line:column &lt;filename unknown&gt;:0:0
+OnClick at offset 11633424 in file:line:column &lt;filename unknown&gt;:0:0
+RaisePostBackEvent at offset 274 in file:line:column &lt;filename unknown&gt;:0:0
+ProcessRequestMain at offset 1959 in file:line:column &lt;filename unknown&gt;:0:0
+</StackFrame>
+    <Line>0</Line>
+  </CustomExcepcion>
+</ArrayOfCustomExcepcion>
+

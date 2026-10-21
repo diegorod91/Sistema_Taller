@@ -1,7 +1,9 @@
-﻿using BOL.Entidades;
+using BOL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,10 +16,13 @@ namespace SolucionBase.Taller
 {
     public partial class NuevaOrden : System.Web.UI.Page
     {
+        public string EstadoFisicoGlobal { get; private set; } = string.Empty;
+        LoginXML usuario;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                usuario = Session["Usuario"] as LoginXML;
                 //CargarClientes();
                 IniciarInfo();
 
@@ -78,50 +83,104 @@ namespace SolucionBase.Taller
 
 
 
-        protected async void btnGuardarOrden_Click(object sender, EventArgs e)
+        protected void btnGuardarOrden_Click(object sender, EventArgs e)
         {
-            int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
-            int idModelo = Convert.ToInt32(ddlModelo.SelectedValue);
+            string msj = "";
+            msj += ValidarClienteSeleccionado();
+            msj += ValidarModeloSeleccionado();
+            msj += ValidarDiagnosticoInicial();
+            msj += ValidarPresupuesto_AnticipoEstado();
 
-            if (idCliente == -1 || idModelo == -1)
+            if (msj != "")
             {
-                this.MostrarMensajeValidacion("Debe seleccionar cliente y/o modelo para guardar la orden correspondiente");
+                this.MostrarMensajeValidacion(msj);
                 return;
             }
 
-            int idOrden = 1;
-            //RegistroMovimiento.RegistroMovimiento_Save(idCliente, idModelo, Convert.ToInt32(DDL_TipoOperacion.SelectedValue), Convert.ToInt32(DDL_Estado.SelectedValue), txtObservaciones.Text.Trim(), 0);
-
-            if (idOrden > 0 && CHK_AvisoWhatsapp.Checked)
+            try
             {
-                string telefono = TB_Telefono.Text.Trim();
-                string texto = $"¡Hola! Desde RD solution's te confirmamos que tu equipo ingresó al taller. " +
-                               $"Tu número de orden es la #{idOrden}. Te avisaremos cuando esté listo.";
+                // 1. Capturar valores de los controles
+                int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
+                int idModelo = Convert.ToInt32(ddlModelo.SelectedValue);
+                int tipoOperacion = Convert.ToInt32(DDL_TipoOperacion.SelectedValue);
+                int estadoInicial = Convert.ToInt32(DDL_Estado.SelectedValue);
 
-                // Envío automatizado en segundo plano
-                await WhatsAppService.EnviarMensajeAsync(telefono, texto);
+                DateTime fechaIngreso = DateTime.Now;
+                DateTime fechaEntrega = Convert.ToDateTime(TB_FechaEntrega.Text);
+                decimal totalPresupuesto = Convert.ToDecimal(TB_Presupuesto.Text.Replace('.', ','));
+                decimal anticipo = string.IsNullOrEmpty(TB_Anticipo.Text) ? 0 : Convert.ToDecimal(TB_Anticipo.Text.Replace('.', ','));
+
+                // 2. Consolidar toda la info de recepción en el campo Observaciones
+                string falla = TB_Observaciones.Text.Trim();
+                string clave = TB_ClaveEquipo.Text.Trim();
+                //string observacionesExtras = txtObservaciones?.Text.Trim() ?? ""; // Por si tienes un cuadro de notas extra
+                string nombreTecnico = Session["Usuario"]?.ToString() ?? "Administrador";
+                string observacionesCompletas = $"[Falla]: {falla} | " +
+                                                $"[Clave/PIN]: {(string.IsNullOrEmpty(clave) ? "Ninguna" : clave)} | " +
+                                                $"[Estado Físico]: {EstadoFisicoGlobal} | " +
+                                                $"[Seña/Anticipo]: ${anticipo} |" +
+                                                $"[Recibió/Técnico]: ${nombreTecnico}";
+                //$"[Notas]: {observacionesExtras}";
+                Registro_Movimientos nuevoMovimiento = new Registro_Movimientos();
+                nuevoMovimiento.IdCliente = idCliente;
+                nuevoMovimiento.IdModelo = idModelo;
+                nuevoMovimiento.Observaciones = observacionesCompletas;
+                nuevoMovimiento.FechaEntrega = fechaEntrega;
+                nuevoMovimiento.IdEstado = estadoInicial;
+                nuevoMovimiento.IdTipoOperacion = tipoOperacion;
+                nuevoMovimiento.Total = totalPresupuesto;
+                nuevoMovimiento.FechaIngreso = DateTime.Today;
+
+                usuario = Session["Usuario"] as LoginXML;
+                int idOrden = nuevoMovimiento.RegistroMovimiento_Save(usuario);
+
+
+
+                // 4. Envío automático por WhatsApp si corresponde
+                if (idOrden > 0 && CHK_AvisoWhatsapp.Checked)
+                {
+                    //int idCliente = Convert.ToInt32(ddlCliente.SelectedValue); // O hfIdCliente.Value
+
+                    // Traemos los datos del cliente desde tu lógica de negocio
+                    Cliente cliente = Cliente.ObtenerPorId(idCliente);
+
+                    if (cliente != null)
+                    {
+                       // string telefono = cliente.Telefono;
+                        string nombreCliente = cliente.Apeynom;
+
+                        // ... aquí usas el teléfono para armar la URL de WhatsApp ...
+                    }
+
+                    string telefono = cliente.Telefono_Alternativo;
+                    string mensaje = $"Hola {cliente.Apeynom}, tu equipo {ddlModelo.SelectedItem.Text} ingresó al taller de RD solution's.";
+                    // ==========================================
+                    // OPCIÓN A: Enlace directo wa.me (Activo)
+                    // ==========================================
+                    string telefonoLimpios = telefono.Replace(" ", "").Replace("-", "").Replace("+", "");
+                    string urlWhatsApp = $"https://wa.me/{telefonoLimpios}?text={Uri.EscapeDataString(mensaje)}";
+
+                    // Abre WhatsApp Web / Desktop automáticamente en el navegador
+                    string script = $"window.open('{urlWhatsApp}', '_blank');";
+                    ClientScript.RegisterStartupScript(this.GetType(), "OpenWhatsApp", script, true);
+                
+                    // ==========================================
+                    // OPCIÓN B: API Local en segundo plano (Comentada para el futuro)
+                    // ==========================================
+                    /*
+                    // Para usar esta opción asíncrona, asegúrate de que el método contenedor sea async o usa .Wait() / .Result
+                    bool enviado = WhatsAppService.EnviarMensajeAsync(telefono, mensaje).Result;
+                    */
+                }
+
+                // 5. Redireccionar con éxito
+                Response.Redirect("ListadoOrdenes.aspx?exito=1");
+            }
+            catch (Exception ex)
+            {
+                this.MostrarMensajeValidacion("Ocurrió un error al guardar la orden: " + ex.Message);
             }
 
-
-            //using (var db = new TallerDbContext())
-            //{
-            //    var nuevaOrden = new RegistroMovimiento
-            //    {
-            //        IdCliente = idCliente,
-            //        IdModelo = idModelo,
-            //        IdTipoOperacion = Convert.ToInt32(ddlTipoOperacion.SelectedValue),
-            //        IdEstado = Convert.ToInt32(ddlEstado.SelectedValue),
-            //        Observaciones = txtObservaciones.Text.Trim(),
-            //        FechaIngreso = DateTime.Now,
-            //        Total = 0
-            //    };
-            //
-            //    db.RegistroMovimientos.Add(nuevaOrden);
-            //    db.SaveChanges();
-            //
-            //    // Redirigir a la vista de la orden creada o al listado general
-            //    Response.Redirect("Default.aspx");
-            //}
         }
 
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
@@ -137,8 +196,8 @@ namespace SolucionBase.Taller
             else
             {
                 Cliente newclient = NuevoCliente();
-                newclient.Registro_Movimientos = new List<Registro_Movimientos>(); //<- no hay movimientos aun
-                
+                //newclient.Registro_Movimientos = new List<Registro_Movimientos>(); //<- no hay movimientos aun
+
                 LoginXML usuario = Session["Usuario"] as LoginXML;
                 int idCliente = newclient.Cliente_Save(usuario);
                 if (idCliente != 0)
@@ -146,8 +205,17 @@ namespace SolucionBase.Taller
                     this.Notificar(Notification.SUCCESS, "", "Cliente agregado correctamente");
                     ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
                     // Seleccionar el cliente recién agregado
-                    ddlCliente.SelectedIndex = ddlCliente.Items.IndexOf(ddlCliente.Items.FindByText(newclient.Apeynom));
-                    // Recargar el DropDownList de clientes
+                    ListItem item = ddlCliente.Items.FindByText(newclient.Apeynom);
+                    if (item != null)
+                    {
+                        ddlCliente.SelectedIndex = ddlCliente.Items.IndexOf(item);
+
+                        // 3. Guardar el ID real obtenido del Value del DropDownList en el HiddenField
+                        hfClienteId.Value = ddlCliente.SelectedValue;
+                    }// Recargar el DropDownList de clientes
+                    LimpiarFormulario();
+                    pnlBoxCliente.Visible = false; // Oculta el Box
+
                 }
                 else
                 {
@@ -156,11 +224,22 @@ namespace SolucionBase.Taller
 
             }
 
-            LimpiarFormulario();
-            pnlBoxCliente.Visible = false; // Oculta el Box
         }
 
+        public string GenerarEnlaceWhatsApp(string telefonoCliente, string nombreCliente, string modeloEquipo)
+        {
+            // Limpiamos el teléfono por si tiene espacios o guiones, asegurando el formato internacional (ej: 549...)
+            string telefonoLimpios = telefonoCliente.Replace(" ", "").Replace("-", "").Replace("+", "");
 
+            // Armamos el mensaje personalizado
+            string mensaje = $"Hola {nombreCliente}, tu equipo {modeloEquipo} ingresó al taller de RD solution's.";
+
+            // Codificamos el mensaje para que soporte espacios (%20) y tildes correctamente en la URL
+            string mensajeCodificado = Uri.EscapeDataString(mensaje);
+
+            // Retornamos el link listo para usar
+            return $"https://wa.me/{telefonoLimpios}?text={mensajeCodificado}";
+        }
         private Cliente NuevoCliente()
         {
             Cliente newclient = new Cliente();
@@ -218,17 +297,27 @@ namespace SolucionBase.Taller
 
             // 3. Seleccionar el nuevo modelo creado automáticamente
             ddlModelo.SelectedValue = nuevoModeloId.ToString();
+            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));
+
 
             // 4. Cerrar el modal mediante JavaScript
-            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalModelo", "$('#modalAltaModelo').modal('hide');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalModelo", @"
+               $('#modalAltaModelo').modal('hide');
+               $('body').removeClass('modal-open');
+               $('.modal-backdrop').remove();
+               $('body').css('padding-right', ''); // Por si queda el padding aplicado
+           ", true);
         }
         private void CargarGridModelos()
         {
             int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
-            List<Modelo> modelo = Modelo.GetAllModelos();
-            ddlModelo.DataSource = modelo.ToList();
+            //List<Modelo> modelo = Modelo.GetAllModelos();
+            List<Modelo> modelosFiltrados = Modelo.GetAllModelos()
+        .Where(m => m.Idcategoria == idCat && m.IdMarca == idMarca)
+        .ToList();
+            ddlModelo.DataSource = modelosFiltrados.ToList();
             ddlModelo.DataTextField = "Nombre";
             ddlModelo.DataValueField = "Id";
             ddlModelo.DataBind();
@@ -267,7 +356,46 @@ namespace SolucionBase.Taller
                 return msj;
             }
         }
+        private string ValidarModeloSeleccionado()
+        {
+            string msj = "";
+            if (ddlModelo.SelectedItem.Value == "-1")
+            {
+                msj += "Debe seleccionar un modelo válido.";
+                return msj;
+            }
+            else
+            {
+                return msj;
+            }
+        }
 
+        private string ValidarDiagnosticoInicial()
+        {
+            string msj = "";
+            msj += ControlExtensions.VerificarSelect(DDL_TipoOperacion, "Tipo de operación");
+            msj += ControlExtensions.VerificarSelect(DDL_Estado, "Estado");
+            msj += ControlExtensions.VerificarCadena(TB_Observaciones, "Observaciones", true);
+            return msj;
+        }
+        private string ValidarPresupuesto_AnticipoEstado()
+        {
+
+            string msj = "";
+            msj += ControlExtensions.VerificarCadena(TB_ClaveEquipo, "Contraseña", false);
+            msj += ControlExtensions.VerificarDecimal(TB_Presupuesto, "Presupuesto", true);
+            msj += ControlExtensions.VerificarDecimal(TB_Anticipo, "Seña/Anticipo", false);
+            EstadoFisicoGlobal = ControlExtensions.ObtenerResumenChecklist(
+                  ("Encendido", CHK_Encendido), ("Apagado", CHK_Apagado),
+                  ("Golpes", CHK_Golpes), ("Humedad", CHK_Humedad),
+                  ("Sin SIM", CHK_SinSim), ("Con Funda", CHK_Accesorios)
+            );
+            msj += ControlExtensions.VerificarFecha(TB_FechaEntrega, "Fecha entrega", true);
+            msj += ControlExtensions.VerificarCheckbox(CHK_AvisoWhatsapp, "Aviso por Wsp", false);
+
+
+            return msj;
+        }
         private string ValidarInfoCliente()
         {
             string msj = "";
@@ -286,10 +414,10 @@ namespace SolucionBase.Taller
                     msj += "El formato del documento no es válido. Debe tener entre 5 y 20 caracteres alfanuméricos.<br/>";
                 }
             }
-            msj += ControlExtensions.VerificarCadena(TB_Telefono, "Teléfono principal", true);
-            msj += ControlExtensions.VerificarCadena(TB_TelefonoSecundario, "Teléfono secundario", true);
+            msj += ControlExtensions.VerificarTelefono(TB_Telefono, "Teléfono principal", true);
+            msj += ControlExtensions.VerificarTelefono(TB_TelefonoSecundario, "Teléfono secundario", true);
             msj += ControlExtensions.VerificarCadena(TB_Direccion, "Dirección", true);
-            msj += ControlExtensions.VerificarCadena(TB_Correo, "Correo Electrónico", false);
+            msj += ControlExtensions.VerificarMail(TB_Correo, "Correo Electrónico", false);
 
             return msj;
         }

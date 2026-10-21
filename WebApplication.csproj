@@ -2544,6 +2544,7 @@
     <Content Include="bower_components\summernote\summernote.min.js.map" />
     <Content Include="Productos.aspx" />
     <Content Include="Stock.aspx" />
+    <Content Include="Taller\ListadoOrdenes.aspx" />
     <Content Include="Taller\NuevaOrden.aspx" />
     <Content Include="Taller\NuevaOrden.js" />
     <Content Include="Ventas.aspx" />
@@ -4810,6 +4811,13 @@
     </Compile>
     <Compile Include="Stock.aspx.designer.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Taller\ListadoOrdenes.aspx.cs">
+      <DependentUpon>ListadoOrdenes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Taller\ListadoOrdenes.aspx.designer.cs">
+      <DependentUpon>ListadoOrdenes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Taller\NuevaOrden.aspx.cs">
       <DependentUpon>NuevaOrden.aspx</DependentUpon>

@@ -33,5 +33,13 @@ namespace BOL.Controladora
 
             return response;
         }
+
+        internal static Cliente ObtenerPorId(int idCliente)
+        {
+            var response = (from o in DAO.Current.Cliente
+                            where o.Id == idCliente
+                            select o).FirstOrDefault();
+            return response;
+        }
     }
 }
