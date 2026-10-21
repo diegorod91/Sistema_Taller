@@ -320,4 +320,26 @@
         </asp:UpdatePanel>
 
     </div>
+
+    <!-- Modal de Éxito / WhatsApp -->
+<div id="modalExito" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h4 class="modal-title">¡Orden Registrada!</h4>
+      </div>
+      <div class="modal-body text-center">
+        <p>La orden se guardó correctamente en el taller.</p>
+        <p>¿Deseas enviarle el comprobante al cliente por WhatsApp?</p>
+        
+        <!-- Enlace directo: al ser un clic real del usuario, el navegador JAMÁS lo bloquea -->
+        <a id="lnkWhatsAppModal" runat="server" href="#" target="_blank" class="btn btn-success btn-lg" style="margin-right: 10px;">
+            <i class="fa fa-whatsapp"></i> Enviar WhatsApp
+        </a>
+        
+        <asp:Button ID="btnCerrarModal" runat="server" Cssclass="btn btn-secondary btn-lg" Text="Continuar sin WhatsApp" OnClick="btnCerrarModal_Click" />
+      </div>
+    </div>
+  </div>
+</div>
 </asp:Content>

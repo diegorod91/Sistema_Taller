@@ -3,6 +3,7 @@
     <page title="Inicio" icon="fas fa-home" href="~/Default.aspx" />
     <page title="Catalogo" icon="fas fa-cog"  href="~/Catalogo/ABMCatalogo.aspx" />
     <page title="Taller" icon="fas fa-tools"  href="~/Taller/NuevaOrden.aspx" />
+    <page title="Ordenes de reparación" icon="fas fa-tools"  href="~/Taller/ListadoOrdenes.aspx" />
     <page title="Stock" icon="fas fa-store" href="~/Stock.aspx" />
 
     <pages title="Ejemplos" icon="fas fa-list-ul">

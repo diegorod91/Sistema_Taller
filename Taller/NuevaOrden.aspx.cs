@@ -17,12 +17,11 @@ namespace SolucionBase.Taller
     public partial class NuevaOrden : System.Web.UI.Page
     {
         public string EstadoFisicoGlobal { get; private set; } = string.Empty;
-        LoginXML usuario;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
-                usuario = Session["Usuario"] as LoginXML;
                 //CargarClientes();
                 IniciarInfo();
 
@@ -113,13 +112,14 @@ namespace SolucionBase.Taller
                 // 2. Consolidar toda la info de recepción en el campo Observaciones
                 string falla = TB_Observaciones.Text.Trim();
                 string clave = TB_ClaveEquipo.Text.Trim();
+                LoginXML usuario = Session["Usuario"] as LoginXML;
                 //string observacionesExtras = txtObservaciones?.Text.Trim() ?? ""; // Por si tienes un cuadro de notas extra
-                string nombreTecnico = Session["Usuario"]?.ToString() ?? "Administrador";
+                string nombreTecnico = usuario.Nomyape;
                 string observacionesCompletas = $"[Falla]: {falla} | " +
                                                 $"[Clave/PIN]: {(string.IsNullOrEmpty(clave) ? "Ninguna" : clave)} | " +
                                                 $"[Estado Físico]: {EstadoFisicoGlobal} | " +
                                                 $"[Seña/Anticipo]: ${anticipo} |" +
-                                                $"[Recibió/Técnico]: ${nombreTecnico}";
+                                                $"[Recibió/Técnico]: {nombreTecnico}";
                 //$"[Notas]: {observacionesExtras}";
                 Registro_Movimientos nuevoMovimiento = new Registro_Movimientos();
                 nuevoMovimiento.IdCliente = idCliente;
@@ -146,26 +146,32 @@ namespace SolucionBase.Taller
 
                     if (cliente != null)
                     {
-                       // string telefono = cliente.Telefono;
+                        // string telefono = cliente.Telefono;
                         string nombreCliente = cliente.Apeynom;
 
                         // ... aquí usas el teléfono para armar la URL de WhatsApp ...
                     }
+                    string numeroOrdenFormateado = idOrden.ToString("D6");
+                    string telefonoLimpios = cliente.Telefono_Alternativo.Replace(" ", "").Replace("-", "").Replace("+", "");
+                    //string mensaje = $"Hola {cliente.Apeynom}, tu equipo {ddlModelo.SelectedItem.Text} ingresó al taller de RD solution's.";
+                    string mensaje = $"¡Hola {cliente.Apeynom}! Te escribimos de RD solution's. " +
+                          $"Te confirmamos que ingresó tu equipo ({ddlModelo.SelectedItem.Text}) con la orden N° {numeroOrdenFormateado}. " +
+                          $"Motivo: {falla}. " +
+                          $"En breve te estaremos contactando para informarte el presupuesto. ¡Gracias por confiar en nosotros!";
 
-                    string telefono = cliente.Telefono_Alternativo;
-                    string mensaje = $"Hola {cliente.Apeynom}, tu equipo {ddlModelo.SelectedItem.Text} ingresó al taller de RD solution's.";
                     // ==========================================
                     // OPCIÓN A: Enlace directo wa.me (Activo)
                     // ==========================================
-                    string telefonoLimpios = telefono.Replace(" ", "").Replace("-", "").Replace("+", "");
+                    // Guardas la orden...
                     string urlWhatsApp = $"https://wa.me/{telefonoLimpios}?text={Uri.EscapeDataString(mensaje)}";
 
-                    // Abre WhatsApp Web / Desktop automáticamente en el navegador
-                    string script = $"window.open('{urlWhatsApp}', '_blank');";
-                    ClientScript.RegisterStartupScript(this.GetType(), "OpenWhatsApp", script, true);
-                
-                    // ==========================================
-                    // OPCIÓN B: API Local en segundo plano (Comentada para el futuro)
+                    // Asignamos el link al botón del modal
+                    lnkWhatsAppModal.HRef = urlWhatsApp;
+
+                    // Inyectamos el link directamente en el elemento mediante JavaScript y abrimos el modal
+                    string script = $"document.getElementById('{lnkWhatsAppModal.ClientID}').href = '{urlWhatsApp}'; $('#modalExito').modal('show');";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "MostrarModalWsp", script, true);
+
                     // ==========================================
                     /*
                     // Para usar esta opción asíncrona, asegúrate de que el método contenedor sea async o usa .Wait() / .Result
@@ -173,8 +179,6 @@ namespace SolucionBase.Taller
                     */
                 }
 
-                // 5. Redireccionar con éxito
-                Response.Redirect("ListadoOrdenes.aspx?exito=1");
             }
             catch (Exception ex)
             {
@@ -348,7 +352,7 @@ namespace SolucionBase.Taller
             string msj = "";
             if (ddlCliente.SelectedItem.Value == "-1")
             {
-                msj += "Debe seleccionar un cliente valido.";
+                msj += "Debe seleccionar un cliente valido.<br>";
                 return msj;
             }
             else
@@ -361,7 +365,7 @@ namespace SolucionBase.Taller
             string msj = "";
             if (ddlModelo.SelectedItem.Value == "-1")
             {
-                msj += "Debe seleccionar un modelo válido.";
+                msj += "Debe seleccionar un modelo válido.<br>";
                 return msj;
             }
             else
@@ -420,6 +424,12 @@ namespace SolucionBase.Taller
             msj += ControlExtensions.VerificarMail(TB_Correo, "Correo Electrónico", false);
 
             return msj;
+        }
+
+        protected void btnCerrarModal_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ListadoOrdenes.aspx?exito=1", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }
