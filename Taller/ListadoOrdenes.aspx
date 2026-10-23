@@ -17,7 +17,7 @@
                 AutoGenerateColumns="false" UseAccessibleHeader="true" GridLines="None">
                 <Columns>
                     <asp:BoundField DataField="IdOrden" HeaderText="N° Orden" DataFormatString="{0:D6}" />
-                    <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                    <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                     <asp:BoundField DataField="NombreCliente" HeaderText="Cliente" />
                     <asp:BoundField DataField="ModeloEquipo" HeaderText="Equipo / Modelo" />
 
@@ -31,13 +31,20 @@
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEditar" runat="server" CssClass="btn btn-warning btn-sm"
                                 CommandArgument='<%# Eval("IdOrden") %>' OnClick="btnEditar_Click" ToolTip="Editar / Ver Detalle">
-                <i class="fa fa-pencil"></i>
+                <i class="fas fa-pencil-alt"></i>
                             </asp:LinkButton>
 
                             <a href='<%# "https://wa.me/" + Eval("TelefonoLimpio") + "?text=Hola%20" + Eval("NombreCliente") + ",%20te%20escribimos%20de%20RD%20solution's%20por%20tu%20orden%20N°%20" + Eval("IdOrden") %>'
                                 target="_blank" class="btn btn-success btn-sm" title="Enviar WhatsApp">
-                                <i class="fa fa-whatsapp"></i>
+                                <i class="fab fa-whatsapp"></i>
                             </a>
+                            <!-- Botón con imagen para Cambiar Estado -->
+                            <asp:ImageButton ID="btnCambiarEstadoImg" runat="server"
+                                ImageUrl="~/Images/icono-estado.png"
+                                CommandName="CambiarEstado"
+                                CommandArgument='<%# Eval("IdOrden") %>'
+                                ToolTip="Cambiar Estado"
+                                Width="20px" Height="20px" CssClass="action-icon" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

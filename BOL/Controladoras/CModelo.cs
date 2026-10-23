@@ -23,7 +23,7 @@ namespace BOL.Controladoras
 
         internal static Modelo GetModeloById(int idmodelo)
         {
-            return (from o in DAO.Current.Modelo
+            return (from o in DAO.Current.Modelo.Include("Marca").Include("Categoria")
                     where o.Id == idmodelo
                     select o).FirstOrDefault();
         }

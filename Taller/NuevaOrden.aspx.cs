@@ -129,7 +129,7 @@ namespace SolucionBase.Taller
                 nuevoMovimiento.IdEstado = estadoInicial;
                 nuevoMovimiento.IdTipoOperacion = tipoOperacion;
                 nuevoMovimiento.Total = totalPresupuesto;
-                nuevoMovimiento.FechaIngreso = DateTime.Today;
+                nuevoMovimiento.FechaIngreso = DateTime.Now;
 
                 usuario = Session["Usuario"] as LoginXML;
                 int idOrden = nuevoMovimiento.RegistroMovimiento_Save(usuario);

@@ -14,5 +14,9 @@ namespace BOL.Entidades
         {
             return  CRegistro_Movimientos.RegistroMovimiento_Save(this, usuario);
         }
+        public static List<Registro_Movimientos> GetListadoOrdenes()
+        {
+            return CRegistro_Movimientos.GetListadoOrdenes();
+        }
     }
 }
