@@ -31,7 +31,7 @@
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEditar" runat="server" CssClass="btn btn-warning btn-sm"
                                 CommandArgument='<%# Eval("IdOrden") %>' OnClick="btnEditar_Click" ToolTip="Editar / Ver Detalle">
-                <i class="fas fa-pencil-alt"></i>
+                                  <i class="fas fa-pencil-alt"></i>
                             </asp:LinkButton>
 
                             <a href='<%# "https://wa.me/" + Eval("TelefonoLimpio") + "?text=Hola%20" + Eval("NombreCliente") + ",%20te%20escribimos%20de%20RD%20solution's%20por%20tu%20orden%20N°%20" + Eval("IdOrden") %>'
@@ -39,16 +39,102 @@
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                             <!-- Botón con imagen para Cambiar Estado -->
-                            <asp:ImageButton ID="btnCambiarEstadoImg" runat="server"
-                                ImageUrl="~/Images/icono-estado.png"
-                                CommandName="CambiarEstado"
-                                CommandArgument='<%# Eval("IdOrden") %>'
-                                ToolTip="Cambiar Estado"
-                                Width="20px" Height="20px" CssClass="action-icon" />
+                            <asp:ImageButton ID="btnCambiarEstado" runat="server" ImageUrl="~/dist/img/Estado_Conexion1.png"
+                                CommandName="CambiarEstado" CommandArgument='<%# Eval("IdOrden") %>'
+                                OnCommand="btnCambiarEstado_Command" ToolTip="Cambiar Estado"
+                                Width="24px" Height="24px" Style="vertical-align: middle; display: inline-block; margin-bottom: 2px;" />
+
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
     </div>
+
+    <!-- Modal Cambiar Estado -->
+    <div class="modal fade" id="modalCambiarEstado" tabindex="-1" role="dialog" aria-labelledby="modalCambiarEstadoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalCambiarEstadoLabel">
+                        <i class="fas fa-sync-alt"></i>Modificar Estado de la Orden
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- HiddenField para retener el ID de la orden que se está modificando -->
+                    <asp:HiddenField ID="hfIdOrdenModal" runat="server" />
+
+                    <div class="form-group">
+                        <label for="ddlEstadosModal">Seleccione el nuevo estado:</label>
+                        <asp:DropDownList ID="ddlEstadosModal" runat="server" CssClass="form-control select2">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Botón Cancelar -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times"></i>Cancelar
+                    </button>
+                    <!-- Botón Modificar / Guardar -->
+                    <asp:Button ID="btnModificarEstado" runat="server" CssClass="btn btn-primary"
+                        Text="Modificar" OnClick="btnModificarEstado_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Editar Orden -->
+    <div class="modal fade" id="modalEditarOrden" tabindex="-1" role="dialog" aria-labelledby="modalEditarOrdenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <!-- modal-lg por si necesitas más espacio para los campos -->
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title" id="modalEditarOrdenLabel">
+                        <i class="fas fa-pencil-alt"></i>Editar Orden de Trabajo
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- HiddenField para retener el ID de la orden que se está editando -->
+                    <asp:HiddenField ID="hfIdOrdenEditar" runat="server" />
+
+                    <!-- Aquí colocas los controles (TextBox, DropDownList, etc.) según los datos que quieras editar -->
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Cliente:</label>
+                            <asp:TextBox ID="txtClienteEditar" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Equipo / Modelo:</label>
+                            <asp:TextBox ID="txtEquipoEditar" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:DropDownList ID="ddlModeloEditar" runat="server" CssClass="form-control"
+                                DataTextField="Nombre" DataValueField="Id">
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Falla / Observaciones:</label>
+                            <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Botón Cancelar -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times"></i>Cancelar
+                    </button>
+                    <!-- Botón Guardar Cambios -->
+                    <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primary"
+                        Text="Guardar Cambios" OnClick="btnGuardarEdicion_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>

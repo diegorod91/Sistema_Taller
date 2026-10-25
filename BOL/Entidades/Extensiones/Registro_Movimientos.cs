@@ -12,11 +12,25 @@ namespace BOL.Entidades
     {
         public int RegistroMovimiento_Save(LoginXML usuario)
         {
-            return  CRegistro_Movimientos.RegistroMovimiento_Save(this, usuario);
+            return  CRegistro_Movimientos.RegistroMovimiento_Update(this, usuario);
+        }
+        public int RegistroMovimiento_Update(LoginXML usuario)
+        {
+            return  CRegistro_Movimientos.RegistroMovimiento_Update(this, usuario);
         }
         public static List<Registro_Movimientos> GetListadoOrdenes()
         {
             return CRegistro_Movimientos.GetListadoOrdenes();
+        }
+
+        public static Registro_Movimientos GetById(int idOrden)
+        {
+            return CRegistro_Movimientos.GetById(idOrden);
+        }
+
+        public static void ActualizarEstado(int idOrden, int nuevoIdEstado)
+        {
+            CRegistro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
         }
     }
 }

@@ -220,10 +220,11 @@
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-         <Function Name="RegistroMovimiento_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        
+        <Function Name="RegistroMovimiento_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
-         </Function>
+        </Function>
         <Function Name="RethrowError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />

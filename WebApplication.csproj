@@ -1963,6 +1963,9 @@
     <Content Include="dist\img\credit\paypal2.png" />
     <Content Include="dist\img\credit\visa.png" />
     <Content Include="dist\img\default-50x50.gif" />
+    <Content Include="dist\img\Estado.png" />
+    <Content Include="dist\img\Estado_conexion.png" />
+    <Content Include="dist\img\Estado_Conexion1.png" />
     <Content Include="dist\img\grid_arrow_bidirectional.png" />
     <Content Include="dist\img\grid_arrow_left.png" />
     <Content Include="dist\img\grid_arrow_right.png" />

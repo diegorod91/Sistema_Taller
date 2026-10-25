@@ -20,24 +20,60 @@ namespace SolucionBase.Taller
                 {
                     // Muestras tu notificación de éxito (por ejemplo, con tu método Notificar)
                     this.Notificar(Notification.SUCCESS, "", "La orden se registró correctamente.");
-                    CargarListadoOrdenes();
+                    CargarGrillaOrdenes();
                 }
-                CargarListadoOrdenes();
+                CargarGrillaOrdenes();
             }
 
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
+            LinkButton btn = (LinkButton)sender;
+            int idOrden = Convert.ToInt32(btn.CommandArgument);
 
+            // 2. Guardamos el ID en el HiddenField del modal de edición
+            hfIdOrdenEditar.Value = idOrden.ToString();
+
+            // 3. Buscamos la orden en la base de datos para cargar los datos actuales en los controles del modal
+            var orden = Registro_Movimientos.GetById(idOrden); // O tu método correspondiente
+            if (orden != null)
+            {
+                txtClienteEditar.Text = orden.Cliente.Apeynom; // Ajusta según las propiedades de tu objeto
+                var mod = Modelo.GetModeloById(orden.IdModelo);
+                string marca = mod?.Marca.Nombre ?? "";
+               // string nombreMod = mod?.Nombre ?? "Sin modelo";
+                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca}" :"";
+
+                // 2. Llenamos el DropDownList de modelos con tu método personalizado
+                // (Asegúrate de pasarle la lista de modelos correspondiente)
+                ddlModeloEditar.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
+
+                // 3. Seleccionamos el modelo actual que posee la orden
+                if (ddlModeloEditar.Items.FindByValue(orden.IdModelo.ToString()) != null)
+                {
+                    ddlModeloEditar.SelectedValue = orden.IdModelo.ToString();
+                }
+
+                txtEquipoEditar.Text = equipoCompleto;
+                txtFallaEditar.Text = orden.Observaciones;
+            }
+
+            // 4. Mostramos el modal de edición mediante ScriptManager
+            string script = "$('#modalEditarOrden').modal('show');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "AbrirModalEditar", script, true);
         }
 
-        private void CargarListadoOrdenes()
+
+        
+
+        private void CargarGrillaOrdenes()
         {
             List<Registro_Movimientos> ListadoOrdenes = Registro_Movimientos.GetListadoOrdenes();
 
 
-            var dataSource = ListadoOrdenes.Select(o => {
+            var dataSource = ListadoOrdenes.Select(o =>
+            {
                 var mod = Modelo.GetModeloById(o.IdModelo);
                 string marca = mod?.Marca.Nombre ?? "";
                 string nombreMod = mod?.Nombre ?? "Sin modelo";
@@ -59,5 +95,69 @@ namespace SolucionBase.Taller
             gvOrdenes.DataBind();
 
         }
-}
+
+        protected void btnCambiarEstado_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "CambiarEstado")
+            {
+                int idOrden = Convert.ToInt32(e.CommandArgument);
+                hfIdOrdenModal.Value = idOrden.ToString();
+
+                // Buscamos la orden para obtener su estado actual directamente
+                var orden = Registro_Movimientos.GetById(idOrden);
+                int estadoActual = orden != null ? orden.IdEstado : 0;
+
+                // Llenamos el DDL y seleccionamos el estado actual
+                ddlEstadosModal.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
+
+                if (ddlEstadosModal.Items.FindByValue(estadoActual.ToString()) != null)
+                {
+                    ddlEstadosModal.SelectedValue = estadoActual.ToString();
+                }
+
+                // Mostramos el modal
+                string script = "$('#modalCambiarEstado').modal('show');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "AbrirModalEstado", script, true);
+            }
+        }
+
+        protected void btnModificarEstado_Click(object sender, EventArgs e)
+        {
+            int idOrden = Convert.ToInt32(hfIdOrdenModal.Value);
+
+            int nuevoIdEstado = Convert.ToInt32(ddlEstadosModal.SelectedValue);
+
+            Registro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
+
+            string script = "$('#modalCambiarEstado').modal('hide');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEstado", script, true);
+
+            CargarGrillaOrdenes();
+        }
+
+        protected void btnGuardarEdicion_Click(object sender, EventArgs e)
+        {
+            int idOrden = Convert.ToInt32(hfIdOrdenEditar.Value);
+
+            // Recoges los nuevos valores de los TextBox del modal
+            string nuevoEquipo = txtEquipoEditar.Text.Trim();
+            string nuevaFalla = txtFallaEditar.Text.Trim();
+
+            Registro_Movimientos updateOrden = Registro_Movimientos.GetById(idOrden);
+
+            updateOrden.IdModelo = Convert.ToInt32(ddlModeloEditar.SelectedValue);
+            updateOrden.Observaciones = nuevaFalla;
+            // Llamas a tu método de actualización en la capa de negocio/datos
+            //int rta=updateOrden.RegistroMovimiento_Update(idOrden, nuevoEquipo, nuevaFalla);
+
+            // Cerramos el modal
+            string script = "$('#modalEditarOrden').modal('hide');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEditar", script, true);
+
+            // Refrescamos la grilla para ver los cambios reflejados
+            CargarGrillaOrdenes();
+        }
+
+        
+    }
 }

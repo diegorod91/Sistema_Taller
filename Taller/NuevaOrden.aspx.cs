@@ -37,6 +37,7 @@ namespace SolucionBase.Taller
             ddlModelo.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
             DDL_TipoOperacion.Fill(TipoOperacion.GetAllTiposOperacion(), "Id", "Nombre", true);
             DDL_Estado.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
+            
 
         }
 
