@@ -431,5 +431,10 @@ namespace SolucionBase.Taller
             Response.Redirect("ListadoOrdenes.aspx?exito=1", false);
             Context.ApplicationInstance.CompleteRequest();
         }
+
+        protected void LNK_EditarCliente_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

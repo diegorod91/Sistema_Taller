@@ -93,14 +93,19 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-8 form-group mb-0">
+                            <div class="col-md-4 form-group mb-0">
                                 <label>Cliente <span class="text-danger">*</span></label>
                                 <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-4 form-group mb-0 d-flex align-items-end">
-                                <asp:LinkButton ID="btnNuevoCliente" runat="server" CssClass="btn btn-outline-success btn-block mt-2" OnClick="btnNuevoCliente_Click" CausesValidation="false">
+                                <asp:LinkButton ID="btnNuevoCliente" runat="server" CssClass="btn btn-success btn-block mt-2" OnClick="btnNuevoCliente_Click" CausesValidation="false">
                                     <i class="fas fa-user-plus mr-1"></i>Nuevo Cliente
+                                </asp:LinkButton>
+                            </div>
+                            <div class="col-md-4 form-group mb-0 d-flex align-items-end">
+                                <asp:LinkButton ID="LNK_EditarCliente" runat="server" CssClass="btn btn-warning btn-block mt-2" OnClick="LNK_EditarCliente_Click" CausesValidation="false">
+                                    <i class="fas fa-pencil-alt"></i> Editar Cliente
                                 </asp:LinkButton>
                             </div>
                         </div>

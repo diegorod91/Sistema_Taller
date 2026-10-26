@@ -159,6 +159,15 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.LinkButton btnNuevoCliente;
 
         /// <summary>
+        /// Control LNK_EditarCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LNK_EditarCliente;
+
+        /// <summary>
         /// Control ddlCategoria.
         /// </summary>
         /// <remarks>
