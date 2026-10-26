@@ -57,7 +57,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
                     <h5 class="modal-title" id="modalCambiarEstadoLabel">
-                        <i class="fas fa-sync-alt"></i>Modificar Estado de la Orden
+                        <i class="fas fa-sync-alt"></i>&nbsp;Modificar Estado de la Orden
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -69,14 +69,14 @@
 
                     <div class="form-group">
                         <label for="ddlEstadosModal">Seleccione el nuevo estado:</label>
-                        <asp:DropDownList ID="ddlEstadosModal" runat="server" CssClass="form-control select2">
+                        <asp:DropDownList ID="ddlEstadosModal" runat="server" CssClass="form-control select2-modal">
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fas fa-times"></i>Cancelar
+                        Cancelar
                     </button>
                     <!-- Botón Modificar / Guardar -->
                     <asp:Button ID="btnModificarEstado" runat="server" CssClass="btn btn-primary"
@@ -92,17 +92,14 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning text-dark">
                     <h5 class="modal-title" id="modalEditarOrdenLabel">
-                        <i class="fas fa-pencil-alt"></i>Editar Orden de Trabajo
+                        <i class="fas fa-pencil-alt"></i>&nbsp;Editar Orden de Trabajo
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- HiddenField para retener el ID de la orden que se está editando -->
                     <asp:HiddenField ID="hfIdOrdenEditar" runat="server" />
-
-                    <!-- Aquí colocas los controles (TextBox, DropDownList, etc.) según los datos que quieras editar -->
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Cliente:</label>
@@ -110,14 +107,46 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Equipo / Modelo:</label>
-                            <asp:TextBox ID="txtEquipoEditar" runat="server" CssClass="form-control"></asp:TextBox>
-                            <asp:DropDownList ID="ddlModeloEditar" runat="server" CssClass="form-control"
+                            <br />
+                            <asp:Label ID="LBL_EquipoEditar" Text="" runat="server" />
+                            <%--<asp:TextBox ID="txtEquipoEditar" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Cambiar Equipo:</label>
+                            <asp:DropDownList ID="ddlModeloEditar" runat="server" CssClass="form-control select2-modal"
                                 DataTextField="Nombre" DataValueField="Id">
                             </asp:DropDownList>
                         </div>
                     </div>
 
                     <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>DNI / Documento</label>
+                            <asp:TextBox ID="TB_DNI" runat="server" CssClass="form-control" Placeholder="Ej: 12345678"></asp:TextBox>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Dirección</label>
+                            <asp:TextBox ID="TB_Direccion" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Telefono Principal</label>
+                            <asp:TextBox ID="TB_Principal" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Telefono Secundario</label>
+                            <asp:TextBox ID="TB_Secundario" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group mb-0">
+                            <label>Correo Electrónico (Opcional)</label>
+                            <asp:TextBox ID="TB_Correo" runat="server" CssClass="form-control" Placeholder="Ej: juan.perez@example.com"></asp:TextBox>
+                        </div>
+
                         <div class="col-md-12 form-group">
                             <label>Falla / Observaciones:</label>
                             <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
@@ -127,7 +156,7 @@
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="fas fa-times"></i>Cancelar
+                        Cancelar
                     </button>
                     <!-- Botón Guardar Cambios -->
                     <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primary"
@@ -136,5 +165,6 @@
             </div>
         </div>
     </div>
+    <script src="ListadoOrdenes.js"></script>
 
 </asp:Content>

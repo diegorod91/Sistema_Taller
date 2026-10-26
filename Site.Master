@@ -82,9 +82,9 @@
             <asp:ScriptManager ID="ScriptManager1" runat="server" ScriptMode="Release" EnablePageMethods="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError" AllowCustomErrorsRedirect="true">
                 <Scripts>
                     <%-- jQuery 3 --%>
-                    <asp:ScriptReference Path="~/bower_components/jquery/dist/jquery.min.js" />
+                    <%--<asp:ScriptReference Path="~/bower_components/jquery/dist/jquery.min.js" />--%>
                     <%-- Bootstrap 3.3.7 --%>
-                    <asp:ScriptReference Path="~/bower_components/bootstrap/dist/js/bootstrap.min.js" />
+                    <%--<asp:ScriptReference Path="~/bower_components/bootstrap/dist/js/bootstrap.min.js" />--%>
                     <%-- SlimScroll -->
 <asp:ScriptReference Path="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js" />
 <%-- FastClick --%>
@@ -242,58 +242,88 @@
             </footer>
         </div>
 
-        <script src="<%= ResolveUrl("~/plugins/jquery/jquery.min.js") %>"></script>
-        <script src="<%= ResolveUrl("~/bower_components/select2/dist/js/select2.min.js") %>"></script>
-        <!-- 👈 AGREGAR AQUÍ -->
+        <!-- Scripts limpios y unificados al final del formulario -->
+        <script src="<%= ResolveUrl("~/bower_components/jquery/dist/jquery.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/plugins/bootstrap/js/bootstrap.bundle.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/bower_components/select2/dist/js/select2.min.js") %>"></script>
         <script src="<%= ResolveUrl("~/dist/js/adminlte.min.js") %>"></script>
-        <script src="<%= ResolveUrl("~/bower_components/toastr/toastr.min.js")%>"></script>
+        <script src="<%= ResolveUrl("~/bower_components/toastr/toastr.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/dist/js/general.js") %>"></script>
+        <script src="<%= ResolveUrl("~/dist/js/ErrorAjaxHandler.js") %>"></script>
+        <script src="<%= ResolveUrl("~/dist/js/jquery.cookie.js") %>"></script>
 
         <script type="text/javascript">
-// @ts-nocheck
-function initSelect2() {
-    if (typeof $.fn.select2 === 'function') {
-        $('.select2').select2({
-            width: '100%'
-        });
+    // @ts-nocheck
 
-        // Evento global para enfocar el buscador al abrir cualquier Select2
-        $(document).off('select2:open').on('select2:open', function (e) {
-            // Se usa setTimeout para esperar a que el DOM dibuje la caja de búsqueda
-            setTimeout(function () {
-                var searchInput = document.querySelector('.select2-container--open .select2-search__field');
-                if (searchInput) {
-                    searchInput.focus();
+    function initSelect2Global() {
+        if (typeof $.fn.select2 === 'function') {
+            $('.select2, .select2-modal').each(function () {
+                var $select = $(this);
+                var $modal = $select.closest('.modal');
+
+                // Si el select no está visible y NO está dentro de un modal abierto, lo ignoramos para que no colapse
+                if (!$select.is(':visible') && $modal.length === 0) {
+                    return;
                 }
-            }, 50);
-        });
+
+                // Si ya estaba inicializado, lo destruimos limpiamente antes de re-crearlo
+                if ($select.hasClass("select2-hidden-accessible")) {
+                    $select.select2('destroy');
+                }
+
+                var options = { width: '100%' };
+                if ($modal.length > 0) {
+                    options.dropdownParent = $modal;
+                }
+
+                $select.select2(options);
+            });
+
+            // Evento global para enfocar el buscador interno al abrir cualquier Select2
+            $(document).off('select2:open.global').on('select2:open.global', function (e) {
+                setTimeout(function () {
+                    var searchInput = document.querySelector('.select2-container--open .select2-search__field');
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                }, 50);
+            });
+        }
     }
-}
+
+   
+// Limpieza al cerrar un modal (sin ocultar los selects de la página principal)
+$(document).on('hidden.bs.modal', '.modal', function () {
+    var $modalActual = $(this);
+    $modalActual.find('.select2-modal, .select2').select2('close');
+});
 
     $(document).ready(function () {
         $('#userDropdown').dropdown();
-        initSelect2();
+        initSelect2Global();
     });
 
-    // Re-vincula el evento tras las recargas parciales de ScriptManager/UpdatePanels
+    // Re-vincula tras recargas parciales de UpdatePanels
     var prm = Sys.WebForms.PageRequestManager.getInstance();
     if (prm) {
         prm.add_endRequest(function () {
             $('#userDropdown').dropdown();
-            initSelect2();
+            // Pequeño respiro para que el DOM termine de renderizar los paneles del UpdatePanel
+            setTimeout(function () {
+                initSelect2Global();
+            }, 50);
         });
-}
+    }
 
-        </script>
-        <!-- Script de validación global directo en la Master -->
-        <script type="text/javascript">
-        window.mostrarMsjValidacion = function (mensaje) {
-            var contenedor = document.getElementById('lblContenidoModalError');
-            if (contenedor) {
-                contenedor.innerHTML = mensaje;
-            }
+    window.mostrarMsjValidacion = function (mensaje) {
+        var contenedor = document.getElementById('lblContenidoModalError');
+        if (contenedor) {
+            contenedor.innerHTML = mensaje;
+        }
+        setTimeout(function () {
             $('#modalErrorValidacion').modal('show');
-        };
+        }, 100);
+    };
         </script>
 
     </form>

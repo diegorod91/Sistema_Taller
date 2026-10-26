@@ -301,8 +301,7 @@ namespace SolucionBase.Taller
             CargarGridModelos();
 
             // 3. Seleccionar el nuevo modelo creado automáticamente
-            ddlModelo.SelectedValue = nuevoModeloId.ToString();
-            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));
+            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));           
 
 
             // 4. Cerrar el modal mediante JavaScript

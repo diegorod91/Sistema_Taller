@@ -42,12 +42,14 @@ namespace SolucionBase.Taller
                 txtClienteEditar.Text = orden.Cliente.Apeynom; // Ajusta según las propiedades de tu objeto
                 var mod = Modelo.GetModeloById(orden.IdModelo);
                 string marca = mod?.Marca.Nombre ?? "";
-               // string nombreMod = mod?.Nombre ?? "Sin modelo";
-                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca}" :"";
+                 string nombreMod = mod?.Nombre ?? "Sin modelo";
+                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} - {nombreMod}" : "nombreMod";
 
-                // 2. Llenamos el DropDownList de modelos con tu método personalizado
-                // (Asegúrate de pasarle la lista de modelos correspondiente)
-                ddlModeloEditar.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
+                var modActual = Modelo.GetModeloById(orden.IdModelo);
+                int idMarcaActual = (modActual != null) ? modActual.IdMarca : 0; // Ajusta según la propiedad de tu objeto Marca
+                var listaModelosFiltrada = Modelo.GetAllModelos().Where(m => m.IdMarca == idMarcaActual).ToList();
+
+                ddlModeloEditar.Fill(listaModelosFiltrada, "Id", "Nombre", true);
 
                 // 3. Seleccionamos el modelo actual que posee la orden
                 if (ddlModeloEditar.Items.FindByValue(orden.IdModelo.ToString()) != null)
@@ -55,8 +57,13 @@ namespace SolucionBase.Taller
                     ddlModeloEditar.SelectedValue = orden.IdModelo.ToString();
                 }
 
-                txtEquipoEditar.Text = equipoCompleto;
+                LBL_EquipoEditar.Text = equipoCompleto;
                 txtFallaEditar.Text = orden.Observaciones;
+                TB_Direccion.Text = orden.Cliente.Domicilio;
+                TB_Principal.Text = orden.Cliente.Telefono;
+                TB_Secundario.Text = orden.Cliente.Telefono_Alternativo;
+                TB_Correo.Text = orden.Cliente.Email;
+                TB_DNI.Text = orden.Cliente.Documento;
             }
 
             // 4. Mostramos el modal de edición mediante ScriptManager
@@ -65,7 +72,7 @@ namespace SolucionBase.Taller
         }
 
 
-        
+
 
         private void CargarGrillaOrdenes()
         {
@@ -140,7 +147,7 @@ namespace SolucionBase.Taller
             int idOrden = Convert.ToInt32(hfIdOrdenEditar.Value);
 
             // Recoges los nuevos valores de los TextBox del modal
-            string nuevoEquipo = txtEquipoEditar.Text.Trim();
+            //string nuevoEquipo = LBL_EquipoEditar.Text.Trim();
             string nuevaFalla = txtFallaEditar.Text.Trim();
 
             Registro_Movimientos updateOrden = Registro_Movimientos.GetById(idOrden);
@@ -158,6 +165,6 @@ namespace SolucionBase.Taller
             CargarGrillaOrdenes();
         }
 
-        
+
     }
 }

@@ -2548,6 +2548,7 @@
     <Content Include="Productos.aspx" />
     <Content Include="Stock.aspx" />
     <Content Include="Taller\ListadoOrdenes.aspx" />
+    <Content Include="Taller\ListadoOrdenes.js" />
     <Content Include="Taller\NuevaOrden.aspx" />
     <Content Include="Taller\NuevaOrden.js" />
     <Content Include="Ventas.aspx" />
