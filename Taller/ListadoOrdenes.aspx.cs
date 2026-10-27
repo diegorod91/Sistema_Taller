@@ -6,14 +6,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BOL.Controladoras;
+using Utilities;
 
 namespace SolucionBase.Taller
 {
     public partial class ListadoOrdenes : System.Web.UI.Page
     {
+        LoginXML Usuario;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Usuario = (LoginXML)Session["Usuario"];
             if (!IsPostBack)
             {
                 if (Request.QueryString["exito"] == "1")
@@ -39,10 +41,10 @@ namespace SolucionBase.Taller
             var orden = Registro_Movimientos.GetById(idOrden); // O tu método correspondiente
             if (orden != null)
             {
-                txtClienteEditar.Text = orden.Cliente.Apeynom; // Ajusta según las propiedades de tu objeto
+                LBL_Cliente.Text = orden.Cliente.Apeynom; // Ajusta según las propiedades de tu objeto
                 var mod = Modelo.GetModeloById(orden.IdModelo);
                 string marca = mod?.Marca.Nombre ?? "";
-                 string nombreMod = mod?.Nombre ?? "Sin modelo";
+                string nombreMod = mod?.Nombre ?? "Sin modelo";
                 string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} - {nombreMod}" : "nombreMod";
 
                 var modActual = Modelo.GetModeloById(orden.IdModelo);
@@ -59,11 +61,11 @@ namespace SolucionBase.Taller
 
                 LBL_EquipoEditar.Text = equipoCompleto;
                 txtFallaEditar.Text = orden.Observaciones;
-                TB_Direccion.Text = orden.Cliente.Domicilio;
-                TB_Principal.Text = orden.Cliente.Telefono;
-                TB_Secundario.Text = orden.Cliente.Telefono_Alternativo;
-                TB_Correo.Text = orden.Cliente.Email;
-                TB_DNI.Text = orden.Cliente.Documento;
+                LBL_Direccion.Text = orden.Cliente.Domicilio;
+                LBL_TelPrincipal.Text = orden.Cliente.Telefono;
+                LBL_TelSecundario.Text = orden.Cliente.Telefono_Alternativo;
+                LBL_Correo.Text = string.IsNullOrEmpty(orden.Cliente.Email) ? "se desconoce" : orden.Cliente.Email;
+                LBL_DNI.Text = orden.Cliente.Documento;
             }
 
             // 4. Mostramos el modal de edición mediante ScriptManager
@@ -151,18 +153,27 @@ namespace SolucionBase.Taller
             string nuevaFalla = txtFallaEditar.Text.Trim();
 
             Registro_Movimientos updateOrden = Registro_Movimientos.GetById(idOrden);
-
+            updateOrden.Id = idOrden;
             updateOrden.IdModelo = Convert.ToInt32(ddlModeloEditar.SelectedValue);
             updateOrden.Observaciones = nuevaFalla;
             // Llamas a tu método de actualización en la capa de negocio/datos
-            //int rta=updateOrden.RegistroMovimiento_Update(idOrden, nuevoEquipo, nuevaFalla);
+            int rta = updateOrden.RegistroMovimiento_Update(Usuario);
+            if (rta != 0)
+            {
+                string script = "$('#modalEditarOrden').modal('hide');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEditar", script, true);
+                CargarGrillaOrdenes();
+                this.Notificar(Notification.SUCCESS, "", "Edicion de orden exitosa");
 
+            }
+            else
+            {
+                this.Notificar(Notification.ERROR, "", "Error al editar la orden.Por favor intente nuevamente");
+                return;
+            }
             // Cerramos el modal
-            string script = "$('#modalEditarOrden').modal('hide');";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEditar", script, true);
 
             // Refrescamos la grilla para ver los cambios reflejados
-            CargarGrillaOrdenes();
         }
 
 

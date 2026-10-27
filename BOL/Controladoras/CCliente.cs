@@ -28,9 +28,17 @@ namespace BOL.Controladora
 
         internal static List<Cliente> GetAllClientes()
         {
-            var response= (from o in  DAO.Current.Cliente
+            var response = (from o in DAO.Current.Cliente
                             select o).ToList();
 
+            return response;
+        }
+
+        internal static Cliente GetClienteById(int idCliente)
+        {
+            var response = (from o in DAO.Current.Cliente
+                            where o.Id == idCliente
+                            select o).SingleOrDefault();
             return response;
         }
 

@@ -37,7 +37,7 @@ namespace SolucionBase.Taller
             ddlModelo.Fill(Modelo.GetAllModelos(), "Id", "Nombre", true);
             DDL_TipoOperacion.Fill(TipoOperacion.GetAllTiposOperacion(), "Id", "Nombre", true);
             DDL_Estado.Fill(Estado.GetAllEstados(), "Id", "Nombre", true);
-            
+
 
         }
 
@@ -190,47 +190,97 @@ namespace SolucionBase.Taller
 
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-            string msj = ValidarInfoCliente();
-            if (msj != "")
+            // 1. Validaciones básicas de campos obligatorios
+            string errorValidacion = ValidarInfoCliente(); // (Usá tu función de validación existente)
+            if (!string.IsNullOrEmpty(errorValidacion))
             {
-                // Mostrar mensaje de error
-                this.MostrarMensajeValidacion(msj);
-
+                this.MostrarMensajeValidacion(errorValidacion);
                 return;
             }
-            else
+
+            LoginXML usuario = Session["Usuario"] as LoginXML;
+            int idCliente = Convert.ToInt32(hfClienteId.Value);
+
+            if (idCliente == 0)
             {
-                Cliente newclient = NuevoCliente();
-                //newclient.Registro_Movimientos = new List<Registro_Movimientos>(); //<- no hay movimientos aun
-
-                LoginXML usuario = Session["Usuario"] as LoginXML;
-                int idCliente = newclient.Cliente_Save(usuario);
-                if (idCliente != 0)
+                // ==========================================
+                // MODO ALTA: Guardar nuevo cliente
+                // ==========================================
+                Cliente nuevoCliente = new Cliente
                 {
-                    this.Notificar(Notification.SUCCESS, "", "Cliente agregado correctamente");
-                    ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
-                    // Seleccionar el cliente recién agregado
-                    ListItem item = ddlCliente.Items.FindByText(newclient.Apeynom);
-                    if (item != null)
-                    {
-                        ddlCliente.SelectedIndex = ddlCliente.Items.IndexOf(item);
+                    Apeynom = TB_NombreApellido.Text.Trim(),
+                    Documento = TB_DNI.Text.Trim(),
+                    Domicilio = TB_Direccion.Text.Trim(),
+                    Telefono = TB_Telefono.Text.Trim(),
+                    Telefono_Alternativo = TB_TelefonoSecundario.Text.Trim(),
+                    Email = TB_Correo.Text.Trim()
+                };
 
-                        // 3. Guardar el ID real obtenido del Value del DropDownList en el HiddenField
-                        hfClienteId.Value = ddlCliente.SelectedValue;
-                    }// Recargar el DropDownList de clientes
-                    LimpiarFormulario();
-                    pnlBoxCliente.Visible = false; // Oculta el Box
+                // Tu método de guardado que inserta y retorna el ID generado
+                int idGenerado = nuevoCliente.Cliente_Save(usuario);
 
+                if (idGenerado > 0)
+                {
+                    this.Notificar(Notification.SUCCESS, "", "Cliente guardado correctamente");
+                    RecargarComboClientesYSeleccionar(idGenerado);
+                    CerrarYLimpiarBoxCliente();
                 }
                 else
                 {
-                    this.MostrarMensajeValidacion("Error al guardar el cliente. Intente nuevamente.");
+                    this.MostrarMensajeValidacion("No se pudo guardar el cliente.");
                 }
+            }
+            else
+            {
+                // ==========================================
+                // MODO EDICIÓN: Actualizar cliente existente
+                // ==========================================
+                Cliente clienteEditar = Cliente.ObtenerPorId(idCliente); // O cargarlo con los datos del form
+                if (clienteEditar != null)
+                {
+                    clienteEditar.Apeynom = TB_NombreApellido.Text.Trim();
+                    clienteEditar.Documento = TB_DNI.Text.Trim();
+                    clienteEditar.Domicilio = TB_Direccion.Text.Trim();
+                    clienteEditar.Telefono = TB_Telefono.Text.Trim();
+                    clienteEditar.Telefono_Alternativo = TB_TelefonoSecundario.Text.Trim();
+                    clienteEditar.Email = TB_Correo.Text.Trim();
 
+                    // Tu método de update que devuelve 1 si tuvo éxito o 0 si falló
+                    int resultado = clienteEditar.Cliente_Update(usuario);
+
+                    if (resultado > 0)
+                    {
+                        this.Notificar(Notification.SUCCESS, "", "Cliente actualizado correctamente");
+                        RecargarComboClientesYSeleccionar(idCliente); 
+                        CerrarYLimpiarBoxCliente();
+                    }
+                    else
+                    {
+                        this.MostrarMensajeValidacion("No se pudo actualizar los datos del cliente.");
+                    }
+                }
             }
 
         }
 
+        private void RecargarComboClientesYSeleccionar(int idSeleccionar)
+        {
+            // Recargas tu DropDownList de clientes y seleccionas automáticamente el ID afectado
+            ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
+            ddlCliente.SelectedValue = idSeleccionar.ToString();
+        }
+
+        private void CerrarYLimpiarBoxCliente()
+        {
+            pnlBoxCliente.Visible = false;
+            hfClienteId.Value = "0";
+            TB_NombreApellido.Text = "";
+            TB_DNI.Text = "";
+            TB_Direccion.Text = "";
+            TB_Telefono.Text = "";
+            TB_TelefonoSecundario.Text = "";
+            TB_Correo.Text = "";
+        }
         public string GenerarEnlaceWhatsApp(string telefonoCliente, string nombreCliente, string modeloEquipo)
         {
             // Limpiamos el teléfono por si tiene espacios o guiones, asegurando el formato internacional (ej: 549...)
@@ -301,7 +351,7 @@ namespace SolucionBase.Taller
             CargarGridModelos();
 
             // 3. Seleccionar el nuevo modelo creado automáticamente
-            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));           
+            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));
 
 
             // 4. Cerrar el modal mediante JavaScript
@@ -434,7 +484,30 @@ namespace SolucionBase.Taller
 
         protected void LNK_EditarCliente_Click(object sender, EventArgs e)
         {
+            if (ddlCliente.SelectedValue == "-1")
+            {
+                this.MostrarMensajeValidacion("Debe seleccionar un cliente válido para editar.");
+                return;
+            }
+            int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
+            Cliente updatecliente = Cliente.GetClienteById(idCliente);
+            TB_NombreApellido.Text = updatecliente.Apeynom;
+            TB_DNI.Text = updatecliente.Documento;
+            TB_Direccion.Text = updatecliente.Domicilio;
+            TB_Telefono.Text = updatecliente.Telefono;
+            TB_TelefonoSecundario.Text = updatecliente.Telefono_Alternativo;
+            TB_Correo.Text = updatecliente.Email is null? "": updatecliente.Email.ToString();
+            DivCardHeader.Attributes["class"] = "card-header bg-warning text-white";
+            pnlBoxCliente.CssClass = "card card-outline card-warning shadow-sm mb-4";
+            iconTitulo.Attributes["class"] = "fas fa-user-edit mr-2";
+            ltrTituloModal.Text = "Editar Datos del Cliente";
+            btnGuardarCliente.Text = "Actualizar Cliente";
+            btnGuardarCliente.CssClass = "btn btn-warning";
+            // Guardamos el ID en un HiddenField para saber después a qué cliente actualizar
+            hfClienteId.Value = idCliente.ToString();
 
+            // 5. Mostrar el panel
+            pnlBoxCliente.Visible = true;
         }
     }
 }

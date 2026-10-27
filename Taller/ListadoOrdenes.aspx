@@ -103,14 +103,45 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Cliente:</label>
-                            <asp:TextBox ID="txtClienteEditar" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
+                            <asp:Label ID="LBL_Cliente" Text="" runat="server" />
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Equipo / Modelo:</label>
-                            <br />
-                            <asp:Label ID="LBL_EquipoEditar" Text="" runat="server" />
-                            <%--<asp:TextBox ID="txtEquipoEditar" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                            <label>DNI / Documento</label>
+                            <asp:Label ID="LBL_DNI" Text="" runat="server" />
+                            <%--<asp:TextBox ID="TB_DNI" runat="server" CssClass="form-control" Placeholder="Ej: 12345678"></asp:TextBox>--%>
                         </div>
+                    </div>
+                    <%--<asp:TextBox ID="txtClienteEditar" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>--%>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Dirección</label>
+                            <asp:Label ID="LBL_Direccion" Text="" runat="server" />
+                            <%--<asp:TextBox ID="TB_Direccion" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Telefono Principal</label>
+                            <asp:Label ID="LBL_TelPrincipal" Text="" runat="server" />
+                            <%--<asp:TextBox ID="TB_Principal" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Telefono Secundario</label>
+                            <asp:Label ID="LBL_TelSecundario" Text="" runat="server" />
+                            <%--<asp:TextBox ID="TB_Secundario" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                        </div>
+                        <div class="col-md-6 form-group mb-0">
+                            <label>Equipo / Modelo:</label>
+                            <asp:Label ID="LBL_EquipoEditar" Text="" runat="server" />
+                            <%--<asp:TextBox ID="TB_Correo" runat="server" CssClass="form-control" Placeholder="Ej: juan.perez@example.com"></asp:TextBox>--%>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Correo Electrónico (Opcional)</label>
+                            <asp:Label ID="LBL_Correo" Text="" runat="server" CssClass="d-block text-muted" />
+                        </div>
+                        <!-- Dejamos el espacio libre o para otro campo si lo necesitas, o lo expandimos a 12 si prefieres -->
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
@@ -120,38 +151,11 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>DNI / Documento</label>
-                            <asp:TextBox ID="TB_DNI" runat="server" CssClass="form-control" Placeholder="Ej: 12345678"></asp:TextBox>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Dirección</label>
-                            <asp:TextBox ID="TB_Direccion" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
+                    <div class="col-md-12 form-group">
+                        <label>Falla / Observaciones:</label>
+                        <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Telefono Principal</label>
-                            <asp:TextBox ID="TB_Principal" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Telefono Secundario</label>
-                            <asp:TextBox ID="TB_Secundario" runat="server" CssClass="form-control"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group mb-0">
-                            <label>Correo Electrónico (Opcional)</label>
-                            <asp:TextBox ID="TB_Correo" runat="server" CssClass="form-control" Placeholder="Ej: juan.perez@example.com"></asp:TextBox>
-                        </div>
-
-                        <div class="col-md-12 form-group">
-                            <label>Falla / Observaciones:</label>
-                            <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
-                        </div>
-                    </div>
+                    <%--</div>--%>
                 </div>
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->

@@ -60,13 +60,49 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.HiddenField hfIdOrdenEditar;
 
         /// <summary>
-        /// Control txtClienteEditar.
+        /// Control LBL_Cliente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClienteEditar;
+        protected global::System.Web.UI.WebControls.Label LBL_Cliente;
+
+        /// <summary>
+        /// Control LBL_DNI.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_DNI;
+
+        /// <summary>
+        /// Control LBL_Direccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_Direccion;
+
+        /// <summary>
+        /// Control LBL_TelPrincipal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_TelPrincipal;
+
+        /// <summary>
+        /// Control LBL_TelSecundario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_TelSecundario;
 
         /// <summary>
         /// Control LBL_EquipoEditar.
@@ -78,6 +114,15 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.Label LBL_EquipoEditar;
 
         /// <summary>
+        /// Control LBL_Correo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_Correo;
+
+        /// <summary>
         /// Control ddlModeloEditar.
         /// </summary>
         /// <remarks>
@@ -85,51 +130,6 @@ namespace SolucionBase.Taller
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlModeloEditar;
-
-        /// <summary>
-        /// Control TB_DNI.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_DNI;
-
-        /// <summary>
-        /// Control TB_Direccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Direccion;
-
-        /// <summary>
-        /// Control TB_Principal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Principal;
-
-        /// <summary>
-        /// Control TB_Secundario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Secundario;
-
-        /// <summary>
-        /// Control TB_Correo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Correo;
 
         /// <summary>
         /// Control txtFallaEditar.

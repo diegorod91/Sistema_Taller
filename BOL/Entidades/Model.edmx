@@ -192,7 +192,12 @@
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-        <Function Name="Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+      <Function Name="RegistroMovimiento_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Parameter Name="XML" Type="xml" Mode="In" />
+        <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+      </Function>
+
+      <Function Name="Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
@@ -502,6 +507,11 @@
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="RegistroMovimiento_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+
           <FunctionImport Name="Cliente_Save" ReturnType="Collection(Int32)">
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
@@ -668,6 +678,7 @@
           <FunctionImportMapping FunctionImportName="Cliente_Save" FunctionName="Model.Store.Cliente_Save" />
           <FunctionImportMapping FunctionImportName="Cliente_Update" FunctionName="Model.Store.Cliente_Update" />
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_Save" FunctionName="Model.Store.RegistroMovimiento_Save" />
+          <FunctionImportMapping FunctionImportName="RegistroMovimiento_Update" FunctionName="Model.Store.RegistroMovimiento_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

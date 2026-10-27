@@ -211,5 +211,9 @@ namespace SolucionBase
             return paginaActual == paginaMenu;
         }
 
+        protected void BtnCerrarSession_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/CerrarSesion.aspx");
+        }
     }
 }

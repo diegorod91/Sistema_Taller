@@ -22,9 +22,9 @@
                 <asp:UpdatePanel ID="upBoxCliente" runat="server">
                     <ContentTemplate>
                         <asp:Panel ID="pnlBoxCliente" runat="server" CssClass="card card-outline card-primary shadow-sm mb-4" Visible="false">
-                            <div class="card-header bg-primary text-white">
+                            <div runat="server" id="DivCardHeader" class="card-header bg-primary text-white">
                                 <h3 class="card-title mb-0 font-weight-bold">
-                                    <i class="fas fa-user-plus mr-2"></i>
+                                    <i id="iconTitulo" runat="server" class="fas fa-user-plus mr-2"></i>
                                     <asp:Literal ID="ltrTituloModal" runat="server" Text="Alta de Nuevo Cliente"></asp:Literal>
                                 </h3>
                                 <div class="card-tools">

@@ -77,6 +77,19 @@ namespace BOL.Entidades
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("RegistroMovimiento_Save", xMLParameter, xmlUsuarioParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> RegistroMovimiento_Update(string xML, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("xmlUsuario", xmlUsuario) :
+                new ObjectParameter("xmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("RegistroMovimiento_Update", xMLParameter, xmlUsuarioParameter);
+        }
+    
         public virtual ObjectResult<Nullable<int>> Cliente_Save(string xML, string xmlUsuario)
         {
             var xMLParameter = xML != null ?

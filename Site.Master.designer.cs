@@ -150,6 +150,15 @@ namespace SolucionBase
         protected global::System.Web.UI.WebControls.Literal LTR_SideNivel;
 
         /// <summary>
+        /// Control BtnCerrarSession.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton BtnCerrarSession;
+
+        /// <summary>
         /// Control LTR_Sidebar.
         /// </summary>
         /// <remarks>

@@ -40,7 +40,7 @@ namespace BOL.Controladoras
 
         internal static int RegistroMovimiento_Update(Registro_Movimientos registro_Movimientos, Utilities.LoginXML usuario)
         {
-            int response = 0;//DAO.Current.RegistroMovimiento_Update(registro_Movimientos.Serialize(), usuario.Serialize()).FirstOrDefault() ?? 0;
+            int response =DAO.Current.RegistroMovimiento_Update(registro_Movimientos.Serialize(), usuario.Serialize()).FirstOrDefault() ?? 0;
             return response;
         }
         internal static int RegistroMovimiento_Save(Registro_Movimientos registro_Movimientos, Utilities.LoginXML usuario)

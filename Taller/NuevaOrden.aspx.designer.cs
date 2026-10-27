@@ -42,6 +42,24 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.Panel pnlBoxCliente;
 
         /// <summary>
+        /// Control DivCardHeader.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivCardHeader;
+
+        /// <summary>
+        /// Control iconTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl iconTitulo;
+
+        /// <summary>
         /// Control ltrTituloModal.
         /// </summary>
         /// <remarks>
