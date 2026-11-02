@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="card-body">
-            <asp:GridView ID="gvOrdenes" runat="server" CssClass="table table-bordered table-striped table-hover"
+            <asp:GridView ID="gvOrdenes" runat="server" EmptyDataText="no posee detalle de diagnostico realizado" CssClass="table table-bordered table-striped table-hover"
                 AutoGenerateColumns="false" UseAccessibleHeader="true" GridLines="None">
                 <Columns>
                     <asp:BoundField DataField="IdOrden" HeaderText="N° Orden" DataFormatString="{0:D6}" />
@@ -69,9 +69,15 @@
 
                     <div class="form-group">
                         <label for="ddlEstadosModal">Seleccione el nuevo estado:</label>
-                        <asp:DropDownList ID="ddlEstadosModal" runat="server" CssClass="form-control select2-modal">
+                        <asp:DropDownList ID="ddlEstadosModal" runat="server" CssClass="form-control select2-modal" ClientIDMode="Static">
                         </asp:DropDownList>
                     </div>
+                    <!-- Contenedor del campo de texto de la tarea (inicialmente oculto con style="display:none;") -->
+                    <div class="form-group" id="divTareaRealizada" style="display: none;">
+                        <label for="txtTareaRealizadaEstado">Tarea Realizada / Diagnóstico Técnico:</label>
+                        <asp:TextBox ID="txtTareaRealizadaEstado" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" placeholder="Describa brevemente lo realizado o diagnosticado..."></asp:TextBox>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->
@@ -151,12 +157,37 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-                    <div class="col-md-12 form-group">
-                        <label>Falla / Observaciones:</label>
-                        <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                    <div class="row">
+
+                        <div class="col-md-12 form-group">
+                            <label>Falla / Observaciones:</label>
+                            <asp:TextBox ID="txtFallaEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                        </div>
                     </div>
                     <%--</div>--%>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label" style="font-weight: bold;">Historial de Tareas (Diagnostico Realizado)</label>
+                            <%--<div class="form-group mb-2">--%>
+                            <!-- Eliminamos el div con borde y dejamos la grilla directamente ocupando el 100% -->
+                            <asp:GridView ID="gvHistorialTareas" runat="server" CssClass="table table-striped table-bordered table-condensed mb-0" Width="100%" AutoGenerateColumns="False">
+                                <HeaderStyle CssClass="active" />
+                                <Columns>
+                                    <asp:BoundField DataField="FechaRegistro" HeaderText="Fecha y hora" DataFormatString="{0:dd/MM/yyyy HH:mm}"></asp:BoundField>
+                                    <asp:BoundField DataField="DescripcionTarea" HeaderText="Tarea / Observación"></asp:BoundField>
+                                    <asp:BoundField DataField="Usuario" HeaderText="Realizado Por"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                            <%--</div>--%>
+                        </div>
+                    </div>
+
                 </div>
+
+
+
+
+
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -170,5 +201,22 @@
         </div>
     </div>
     <script src="ListadoOrdenes.js"></script>
+
+    <script type="text/javascript">
+    // @ts-nocheck
+    document.addEventListener("DOMContentLoaded", function () {
+        $(document).on('change', '#ddlEstadosModal', function () {
+            var estadoSeleccionado = $(this).val();
+            var estadosConNota = ['2', '3', '4']; 
+
+            if (estadosConNota.includes(estadoSeleccionado)) {
+                $('#divTareaRealizada').slideDown('fast');
+            } else {
+                $('#divTareaRealizada').slideUp('fast');   
+                $('#<%= txtTareaRealizadaEstado.ClientID %>').val(''); 
+            }
+        });
+    });
+    </script>
 
 </asp:Content>

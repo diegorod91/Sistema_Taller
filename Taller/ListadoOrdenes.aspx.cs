@@ -41,16 +41,18 @@ namespace SolucionBase.Taller
             var orden = Registro_Movimientos.GetById(idOrden); // O tu método correspondiente
             if (orden != null)
             {
-                LBL_Cliente.Text = orden.Cliente.Apeynom; // Ajusta según las propiedades de tu objeto
+                LBL_Cliente.Text = orden.Cliente.Apeynom;
+
+                // Buscamos el modelo una sola vez
                 var mod = Modelo.GetModeloById(orden.IdModelo);
                 string marca = mod?.Marca.Nombre ?? "";
                 string nombreMod = mod?.Nombre ?? "Sin modelo";
-                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} - {nombreMod}" : "nombreMod";
 
-                var modActual = Modelo.GetModeloById(orden.IdModelo);
-                int idMarcaActual = (modActual != null) ? modActual.IdMarca : 0; // Ajusta según la propiedad de tu objeto Marca
+                // Corregido: se usa la variable nombreMod en lugar del texto literal
+                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} {nombreMod}" : nombreMod;
+
+                int idMarcaActual = (mod != null) ? mod.IdMarca : 0;
                 var listaModelosFiltrada = Modelo.GetAllModelos().Where(m => m.IdMarca == idMarcaActual).ToList();
-
                 ddlModeloEditar.Fill(listaModelosFiltrada, "Id", "Nombre", true);
 
                 // 3. Seleccionamos el modelo actual que posee la orden
@@ -66,6 +68,10 @@ namespace SolucionBase.Taller
                 LBL_TelSecundario.Text = orden.Cliente.Telefono_Alternativo;
                 LBL_Correo.Text = string.IsNullOrEmpty(orden.Cliente.Email) ? "se desconoce" : orden.Cliente.Email;
                 LBL_DNI.Text = orden.Cliente.Documento;
+
+                var historialTareas = Registro_Tareas.GetTareasPorOrden(idOrden); // O tu método correspondiente para traer las tareas
+                gvHistorialTareas.DataSource = historialTareas;
+                gvHistorialTareas.DataBind();
             }
 
             // 4. Mostramos el modal de edición mediante ScriptManager
@@ -133,15 +139,43 @@ namespace SolucionBase.Taller
         protected void btnModificarEstado_Click(object sender, EventArgs e)
         {
             int idOrden = Convert.ToInt32(hfIdOrdenModal.Value);
-
             int nuevoIdEstado = Convert.ToInt32(ddlEstadosModal.SelectedValue);
+            string tareaRealizada = txtTareaRealizadaEstado.Text.Trim(); // El campo de texto que agregues en la UI
+            // Recuperamos el usuario de sesión para la auditoría
+            LoginXML usuario = Session["Usuario"] as LoginXML;
+            // Armamos el XML de datos
+            string xmlDoc = $"<Registro_Movimientos Id=\"{idOrden}\" IdEstado=\"{nuevoIdEstado}\" TareaRealizada=\"{System.Security.SecurityElement.Escape(tareaRealizada)}\" />";
+            // Armamos el XML de usuario para la auditoría
+            string xmlUsr = usuario.Serialize();
+            //string xmlUsr = $"<Usuario><Nombre>{System.Security.SecurityElement.Escape(usuario)}</Nombre></Usuario>";
 
-            Registro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
+            // Llamada a la capa de datos/negocio que ejecuta el SP
+            // Llamada al método DAO
+            int resultado = Registro_Movimientos.ActualizarEstado(xmlDoc, xmlUsr);
+            if (resultado > 0)
+            {
+                // Limpiamos el campo de texto de la tarea
+                txtTareaRealizadaEstado.Text = string.Empty;
 
-            string script = "$('#modalCambiarEstado').modal('hide');";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEstado", script, true);
+                string script = "$('#modalCambiarEstado').modal('hide');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEstado", script, true);
 
-            CargarGrillaOrdenes();
+                CargarGrillaOrdenes();
+            }
+            else
+            {
+                // Manejar error o mostrar mensaje
+            }
+
+
+
+
+            // Registro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
+            //
+            // string script = "$('#modalCambiarEstado').modal('hide');";
+            // ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEstado", script, true);
+            //
+            // CargarGrillaOrdenes();
         }
 
         protected void btnGuardarEdicion_Click(object sender, EventArgs e)

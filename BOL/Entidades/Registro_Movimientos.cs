@@ -18,6 +18,7 @@ namespace BOL.Entidades
         public Registro_Movimientos()
         {
             this.DetalleMovimiento = new HashSet<DetalleMovimiento>();
+            this.Registro_Tareas = new HashSet<Registro_Tareas>();
         }
     
         public int Id { get; set; }
@@ -29,6 +30,9 @@ namespace BOL.Entidades
         public Nullable<System.DateTime> FechaEntrega { get; set; }
         public Nullable<decimal> Total { get; set; }
         public int IdEstado { get; set; }
+        public Nullable<decimal> PresupuestoInicial { get; set; }
+        public Nullable<decimal> AnticipoCliente { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
     
         public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -36,5 +40,8 @@ namespace BOL.Entidades
         public virtual ICollection<DetalleMovimiento> DetalleMovimiento { get; set; }
         public virtual Estado Estado { get; set; }
         public virtual TipoOperacion TipoOperacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [System.Xml.Serialization.XmlIgnore]
+        public virtual ICollection<Registro_Tareas> Registro_Tareas { get; set; }
     }
 }

@@ -10,14 +10,12 @@ namespace BOL.Controladoras
 {
     internal class CRegistro_Movimientos
     {
-        internal static void ActualizarEstado(int idOrden, int nuevoIdEstado)
+        internal static int ActualizarEstado(string xmlDoc, string xmlUsr)
         {
-            // Usando parámetros SQL para evitar inyecciones y asegurar el tipo de dato
-            var paramId = new System.Data.SqlClient.SqlParameter("@Id", idOrden);
-            var paramEstado = new System.Data.SqlClient.SqlParameter("@IdEstado", nuevoIdEstado);
+            // Ejecuta el procedimiento almacenado pasando los XMLs mapeados en el EDMX
+            int respuesta = DAO.Current.RegistroMovimiento_CambiarEstado(xmlDoc, xmlUsr).FirstOrDefault() ?? 0;
 
-            // Ejecuta el procedimiento almacenado directamente contra la base de datos del contexto
-            DAO.Current.Database.ExecuteSqlCommand("EXEC RegistroMovimiento_CambiarEstado @Id, @IdEstado", paramId, paramEstado);
+            return respuesta;
         }
 
         internal static Registro_Movimientos GetById(int idOrden)

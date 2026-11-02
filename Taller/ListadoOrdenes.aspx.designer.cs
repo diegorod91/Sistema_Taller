@@ -42,6 +42,15 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.WebControls.DropDownList ddlEstadosModal;
 
         /// <summary>
+        /// Control txtTareaRealizadaEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTareaRealizadaEstado;
+
+        /// <summary>
         /// Control btnModificarEstado.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace SolucionBase.Taller
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFallaEditar;
+
+        /// <summary>
+        /// Control gvHistorialTareas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvHistorialTareas;
 
         /// <summary>
         /// Control btnGuardarEdicion.

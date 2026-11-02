@@ -83,8 +83,22 @@
           <Property Name="IdTipoOperacion" Type="int" Nullable="false" />
           <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
           <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="PresupuestoInicial" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AnticipoCliente" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IdEstado" Type="int" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Registro_Tareas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRegistroMovimiento" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+          <Property Name="DescripcionTarea" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
         </EntityType>
         <EntityType Name="Servicio_Repuesto">
           <Key>
@@ -102,6 +116,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK__Registro___IdReg__1C873BEC">
+          <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="1" />
+          <End Role="Registro_Tareas" Type="Self.Registro_Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro_Movimientos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Tareas">
+              <PropertyRef Name="IdRegistroMovimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Detalle_Registro">
           <End Role="Registro_Movimientos" Type="Self.Registro_Movimientos" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -192,12 +218,7 @@
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-      <Function Name="RegistroMovimiento_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-        <Parameter Name="XML" Type="xml" Mode="In" />
-        <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
-      </Function>
-
-      <Function Name="Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="Categoria_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
@@ -225,8 +246,15 @@
           <Parameter Name="XMLModelo" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
-        
+        <Function Name="RegistroMovimiento_CambiarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
         <Function Name="RegistroMovimiento_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="RegistroMovimiento_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XML" Type="xml" Mode="In" />
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
@@ -240,8 +268,13 @@
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registro_Movimientos" EntityType="Self.Registro_Movimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registro_Tareas" EntityType="Self.Registro_Tareas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicio_Repuesto" EntityType="Self.Servicio_Repuesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoOperacion" EntityType="Self.TipoOperacion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Registro___IdReg__1C873BEC" Association="Self.FK__Registro___IdReg__1C873BEC">
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+            <End Role="Registro_Tareas" EntitySet="Registro_Tareas" />
+          </AssociationSet>
           <AssociationSet Name="FK_Detalle_Registro" Association="Self.FK_Detalle_Registro">
             <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
             <End Role="DetalleMovimiento" EntitySet="DetalleMovimiento" />
@@ -367,6 +400,10 @@
           <NavigationProperty Name="DetalleMovimiento" Relationship="Self.FK_Detalle_Registro" FromRole="Registro_Movimientos" ToRole="DetalleMovimiento" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Registro_Estado" FromRole="Registro_Movimientos" ToRole="Estado" />
           <NavigationProperty Name="TipoOperacion" Relationship="Self.FK_Registro_Movimientos_TipoOperacion" FromRole="Registro_Movimientos" ToRole="TipoOperacion" />
+          <Property Name="PresupuestoInicial" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AnticipoCliente" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Registro_Tareas" Relationship="Model.FK__Registro___IdReg__1C873BEC" FromRole="Registro_Movimientos" ToRole="Registro_Tareas" />
         </EntityType>
         <EntityType Name="Servicio_Repuesto">
           <Key>
@@ -511,7 +548,10 @@
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
-
+          <FunctionImport Name="RegistroMovimiento_CambiarEstado" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="xmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="Cliente_Save" ReturnType="Collection(Int32)">
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
@@ -542,6 +582,11 @@
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Registro_Tareas" EntityType="Model.Registro_Tareas" />
+          <AssociationSet Name="FK__Registro___IdReg__1C873BEC" Association="Model.FK__Registro___IdReg__1C873BEC">
+            <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
+            <End Role="Registro_Tareas" EntitySet="Registro_Tareas" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Modelo_Categoria">
           <End Type="Model.Categoria" Role="Categoria" Multiplicity="0..1" />
@@ -552,6 +597,30 @@
             </Principal>
             <Dependent Role="Modelo">
               <PropertyRef Name="Idcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Registro_Tareas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRegistroMovimiento" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionTarea" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Registro_Movimientos" Relationship="Model.FK__Registro___IdReg__1C873BEC" FromRole="Registro_Tareas" ToRole="Registro_Movimientos" />
+        </EntityType>
+        <Association Name="FK__Registro___IdReg__1C873BEC">
+          <End Type="Model.Registro_Movimientos" Role="Registro_Movimientos" Multiplicity="1" />
+          <End Type="Model.Registro_Tareas" Role="Registro_Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro_Movimientos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro_Tareas">
+              <PropertyRef Name="IdRegistroMovimiento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -638,6 +707,9 @@
           <EntitySetMapping Name="Registro_Movimientos">
             <EntityTypeMapping TypeName="Model.Registro_Movimientos">
               <MappingFragment StoreEntitySet="Registro_Movimientos">
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="AnticipoCliente" ColumnName="AnticipoCliente" />
+                <ScalarProperty Name="PresupuestoInicial" ColumnName="PresupuestoInicial" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
@@ -679,6 +751,20 @@
           <FunctionImportMapping FunctionImportName="Cliente_Update" FunctionName="Model.Store.Cliente_Update" />
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_Save" FunctionName="Model.Store.RegistroMovimiento_Save" />
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_Update" FunctionName="Model.Store.RegistroMovimiento_Update" />
+          <FunctionImportMapping FunctionImportName="RegistroMovimiento_CambiarEstado" FunctionName="Model.Store.RegistroMovimiento_CambiarEstado" />
+          <EntitySetMapping Name="Registro_Tareas">
+            <EntityTypeMapping TypeName="Model.Registro_Tareas">
+              <MappingFragment StoreEntitySet="Registro_Tareas">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="DescripcionTarea" ColumnName="DescripcionTarea" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="IdRegistroMovimiento" ColumnName="IdRegistroMovimiento" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -719,6 +805,8 @@
         <AssociationConnector Association="Model.FK_Modelo_Marca" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Registro_Movimientos_TipoOperacion" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Modelo_Categoria" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Registro_Tareas" Width="1.5" PointX="5.25" PointY="12" />
+        <AssociationConnector Association="Model.FK__Registro___IdReg__1C873BEC" />
       </Diagram>
     </Diagrams>
   </Designer>

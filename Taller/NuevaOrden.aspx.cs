@@ -129,7 +129,9 @@ namespace SolucionBase.Taller
                 nuevoMovimiento.FechaEntrega = fechaEntrega;
                 nuevoMovimiento.IdEstado = estadoInicial;
                 nuevoMovimiento.IdTipoOperacion = tipoOperacion;
-                nuevoMovimiento.Total = totalPresupuesto;
+                nuevoMovimiento.PresupuestoInicial = totalPresupuesto;
+                nuevoMovimiento.AnticipoCliente = anticipo != 0 ? anticipo : 0;
+                nuevoMovimiento.Total = totalPresupuesto - anticipo;
                 nuevoMovimiento.FechaIngreso = DateTime.Now;
 
                 usuario = Session["Usuario"] as LoginXML;
@@ -180,6 +182,11 @@ namespace SolucionBase.Taller
                     */
                 }
 
+                string idordenencriptado = FwkCrypto.EncryptQueryString(idOrden.ToString());
+                string url = "Comprobante.aspx?id="+idordenencriptado;
+                Response.Redirect(url);
+               // Response.Redirect("Comprobante.aspx?id={idordenencriptado}");
+
             }
             catch (Exception ex)
             {
@@ -188,6 +195,8 @@ namespace SolucionBase.Taller
 
         }
 
+
+        #region Acciones_Cliente
         protected void btnGuardarCliente_Click(object sender, EventArgs e)
         {
             // 1. Validaciones básicas de campos obligatorios
@@ -251,7 +260,7 @@ namespace SolucionBase.Taller
                     if (resultado > 0)
                     {
                         this.Notificar(Notification.SUCCESS, "", "Cliente actualizado correctamente");
-                        RecargarComboClientesYSeleccionar(idCliente); 
+                        RecargarComboClientesYSeleccionar(idCliente);
                         CerrarYLimpiarBoxCliente();
                     }
                     else
@@ -260,40 +269,43 @@ namespace SolucionBase.Taller
                     }
                 }
             }
-
         }
-
+        protected void btnNuevoCliente_Click(object sender, EventArgs e)
+        {
+            pnlBoxCliente.Visible = true;
+        }
         private void RecargarComboClientesYSeleccionar(int idSeleccionar)
         {
             // Recargas tu DropDownList de clientes y seleccionas automáticamente el ID afectado
             ddlCliente.Fill(Cliente.GetAllClientes(), "Id", "ApeyNom", true);
             ddlCliente.SelectedValue = idSeleccionar.ToString();
         }
-
-        private void CerrarYLimpiarBoxCliente()
+        protected void LNK_EditarCliente_Click(object sender, EventArgs e)
         {
-            pnlBoxCliente.Visible = false;
-            hfClienteId.Value = "0";
-            TB_NombreApellido.Text = "";
-            TB_DNI.Text = "";
-            TB_Direccion.Text = "";
-            TB_Telefono.Text = "";
-            TB_TelefonoSecundario.Text = "";
-            TB_Correo.Text = "";
-        }
-        public string GenerarEnlaceWhatsApp(string telefonoCliente, string nombreCliente, string modeloEquipo)
-        {
-            // Limpiamos el teléfono por si tiene espacios o guiones, asegurando el formato internacional (ej: 549...)
-            string telefonoLimpios = telefonoCliente.Replace(" ", "").Replace("-", "").Replace("+", "");
+            if (ddlCliente.SelectedValue == "-1")
+            {
+                this.MostrarMensajeValidacion("Debe seleccionar un cliente válido para editar.");
+                return;
+            }
+            int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
+            Cliente updatecliente = Cliente.GetClienteById(idCliente);
+            TB_NombreApellido.Text = updatecliente.Apeynom;
+            TB_DNI.Text = updatecliente.Documento;
+            TB_Direccion.Text = updatecliente.Domicilio;
+            TB_Telefono.Text = updatecliente.Telefono;
+            TB_TelefonoSecundario.Text = updatecliente.Telefono_Alternativo;
+            TB_Correo.Text = updatecliente.Email is null ? "" : updatecliente.Email.ToString();
+            DivCardHeader.Attributes["class"] = "card-header bg-warning text-white";
+            pnlBoxCliente.CssClass = "card card-outline card-warning shadow-sm mb-4";
+            iconTitulo.Attributes["class"] = "fas fa-user-edit mr-2";
+            ltrTituloModal.Text = "Editar Datos del Cliente";
+            btnGuardarCliente.Text = "Actualizar Cliente";
+            btnGuardarCliente.CssClass = "btn btn-warning";
+            // Guardamos el ID en un HiddenField para saber después a qué cliente actualizar
+            hfClienteId.Value = idCliente.ToString();
 
-            // Armamos el mensaje personalizado
-            string mensaje = $"Hola {nombreCliente}, tu equipo {modeloEquipo} ingresó al taller de RD solution's.";
-
-            // Codificamos el mensaje para que soporte espacios (%20) y tildes correctamente en la URL
-            string mensajeCodificado = Uri.EscapeDataString(mensaje);
-
-            // Retornamos el link listo para usar
-            return $"https://wa.me/{telefonoLimpios}?text={mensajeCodificado}";
+            // 5. Mostrar el panel
+            pnlBoxCliente.Visible = true;
         }
         private Cliente NuevoCliente()
         {
@@ -307,95 +319,9 @@ namespace SolucionBase.Taller
             newclient.Email = TB_Correo.Text;
             return newclient;
         }
-        private void LimpiarFormulario()
-        {
-            // < Mo < deloId.Value = "0";
-            TB_NombreApellido.Text = string.Empty;
-            TB_Direccion.Text = string.Empty;
-            TB_Correo.Text = string.Empty;
-            TB_Telefono.Text = string.Empty;
-            TB_TelefonoSecundario.Text = string.Empty;
-        }
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            pnlBoxCliente.Visible = false; // Oculta el Box
-        }
+        #endregion
 
-        protected void btnNuevoCliente_Click(object sender, EventArgs e)
-        {
-            pnlBoxCliente.Visible = true;
-        }
-
-        protected void BTN_GuardarModelo_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TB_NombreModelo.Text))
-            {
-                return;
-            }
-
-            int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
-            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
-
-            Modelo nuevoModelo = new Modelo
-            {
-                Idcategoria = idCategoria,
-                IdMarca = idMarca,
-                Nombre = TB_NombreModelo.Text.Trim(),
-                NroModeloTecnico = TB_ModeloTecnico.Text.Trim()
-            };
-            LoginXML usuario = Session["Usuario"] as LoginXML;
-
-            // 1. Guardar modelo en Base de Datos
-            int nuevoModeloId = nuevoModelo.Modelo_Save(usuario);
-            // 2. Recargar los modelos de la marca en el DropDownList principal
-            CargarGridModelos();
-
-            // 3. Seleccionar el nuevo modelo creado automáticamente
-            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));
-
-
-            // 4. Cerrar el modal mediante JavaScript
-            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalModelo", @"
-               $('#modalAltaModelo').modal('hide');
-               $('body').removeClass('modal-open');
-               $('.modal-backdrop').remove();
-               $('body').css('padding-right', ''); // Por si queda el padding aplicado
-           ", true);
-        }
-        private void CargarGridModelos()
-        {
-            int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
-            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
-
-            //List<Modelo> modelo = Modelo.GetAllModelos();
-            List<Modelo> modelosFiltrados = Modelo.GetAllModelos()
-        .Where(m => m.Idcategoria == idCat && m.IdMarca == idMarca)
-        .ToList();
-            ddlModelo.DataSource = modelosFiltrados.ToList();
-            ddlModelo.DataTextField = "Nombre";
-            ddlModelo.DataValueField = "Id";
-            ddlModelo.DataBind();
-        }
-
-        protected void LNK_NuevoModelo_Click(object sender, EventArgs e)
-        {
-            // Validar que primero hayan seleccionado Categoría y Marca afuera
-            if (ddlCategoria.SelectedValue == "-1" || string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
-                ddlMarca.SelectedValue == "-1" || string.IsNullOrEmpty(ddlMarca.SelectedValue))
-            {
-                this.MostrarMensajeValidacion("Debe seleccionar categoría y marca");
-                return;
-            }
-
-            // Mostrar categoría y marca en el modal
-            LBL_CategMarca.Text = $"{ddlCategoria.SelectedItem.Text} > {ddlMarca.SelectedItem.Text}";
-
-            TB_NombreModelo.Text = string.Empty;
-            TB_ModeloTecnico.Text = string.Empty;
-
-            // Abrir el modal mediante JavaScript
-            ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
-        }
+        #region Validadores
 
         private string ValidarClienteSeleccionado()
         {
@@ -476,38 +402,126 @@ namespace SolucionBase.Taller
             return msj;
         }
 
+        #endregion
+
+        private void CerrarYLimpiarBoxCliente()
+        {
+            pnlBoxCliente.Visible = false;
+            hfClienteId.Value = "0";
+            TB_NombreApellido.Text = "";
+            TB_DNI.Text = "";
+            TB_Direccion.Text = "";
+            TB_Telefono.Text = "";
+            TB_TelefonoSecundario.Text = "";
+            TB_Correo.Text = "";
+        }
+        public string GenerarEnlaceWhatsApp(string telefonoCliente, string nombreCliente, string modeloEquipo)
+        {
+            // Limpiamos el teléfono por si tiene espacios o guiones, asegurando el formato internacional (ej: 549...)
+            string telefonoLimpios = telefonoCliente.Replace(" ", "").Replace("-", "").Replace("+", "");
+
+            // Armamos el mensaje personalizado
+            string mensaje = $"Hola {nombreCliente}, tu equipo {modeloEquipo} ingresó al taller de RD solution's.";
+
+            // Codificamos el mensaje para que soporte espacios (%20) y tildes correctamente en la URL
+            string mensajeCodificado = Uri.EscapeDataString(mensaje);
+
+            // Retornamos el link listo para usar
+            return $"https://wa.me/{telefonoLimpios}?text={mensajeCodificado}";
+        }
+        private void LimpiarFormulario()
+        {
+            // < Mo < deloId.Value = "0";
+            TB_NombreApellido.Text = string.Empty;
+            TB_Direccion.Text = string.Empty;
+            TB_Correo.Text = string.Empty;
+            TB_Telefono.Text = string.Empty;
+            TB_TelefonoSecundario.Text = string.Empty;
+        }
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            pnlBoxCliente.Visible = false; // Oculta el Box
+        }
+
+
+        protected void BTN_GuardarModelo_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TB_NombreModelo.Text))
+            {
+                return;
+            }
+
+            int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
+            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
+
+            Modelo nuevoModelo = new Modelo
+            {
+                Idcategoria = idCategoria,
+                IdMarca = idMarca,
+                Nombre = TB_NombreModelo.Text.Trim(),
+                NroModeloTecnico = TB_ModeloTecnico.Text.Trim()
+            };
+            LoginXML usuario = Session["Usuario"] as LoginXML;
+
+            // 1. Guardar modelo en Base de Datos
+            int nuevoModeloId = nuevoModelo.Modelo_Save(usuario);
+            // 2. Recargar los modelos de la marca en el DropDownList principal
+            CargarGridModelos();
+
+            // 3. Seleccionar el nuevo modelo creado automáticamente
+            ddlModelo.SelectedIndex = ddlModelo.Items.IndexOf(ddlModelo.Items.FindByText(nuevoModelo.Nombre));
+
+
+            // 4. Cerrar el modal mediante JavaScript
+            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModalModelo", @"
+               $('#modalAltaModelo').modal('hide');
+               $('body').removeClass('modal-open');
+               $('.modal-backdrop').remove();
+               $('body').css('padding-right', ''); // Por si queda el padding aplicado
+           ", true);
+        }
+        private void CargarGridModelos()
+        {
+            int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
+            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
+
+            //List<Modelo> modelo = Modelo.GetAllModelos();
+            List<Modelo> modelosFiltrados = Modelo.GetAllModelos()
+        .Where(m => m.Idcategoria == idCat && m.IdMarca == idMarca)
+        .ToList();
+            ddlModelo.DataSource = modelosFiltrados.ToList();
+            ddlModelo.DataTextField = "Nombre";
+            ddlModelo.DataValueField = "Id";
+            ddlModelo.DataBind();
+        }
+
+        protected void LNK_NuevoModelo_Click(object sender, EventArgs e)
+        {
+            // Validar que primero hayan seleccionado Categoría y Marca afuera
+            if (ddlCategoria.SelectedValue == "-1" || string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
+                ddlMarca.SelectedValue == "-1" || string.IsNullOrEmpty(ddlMarca.SelectedValue))
+            {
+                this.MostrarMensajeValidacion("Debe seleccionar categoría y marca");
+                return;
+            }
+
+            // Mostrar categoría y marca en el modal
+            LBL_CategMarca.Text = $"{ddlCategoria.SelectedItem.Text} > {ddlMarca.SelectedItem.Text}";
+
+            TB_NombreModelo.Text = string.Empty;
+            TB_ModeloTecnico.Text = string.Empty;
+
+            // Abrir el modal mediante JavaScript
+            ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalModelo", "$('#modalAltaModelo').modal('show');", true);
+        }
+
+
         protected void btnCerrarModal_Click(object sender, EventArgs e)
         {
             Response.Redirect("ListadoOrdenes.aspx?exito=1", false);
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        protected void LNK_EditarCliente_Click(object sender, EventArgs e)
-        {
-            if (ddlCliente.SelectedValue == "-1")
-            {
-                this.MostrarMensajeValidacion("Debe seleccionar un cliente válido para editar.");
-                return;
-            }
-            int idCliente = Convert.ToInt32(ddlCliente.SelectedValue);
-            Cliente updatecliente = Cliente.GetClienteById(idCliente);
-            TB_NombreApellido.Text = updatecliente.Apeynom;
-            TB_DNI.Text = updatecliente.Documento;
-            TB_Direccion.Text = updatecliente.Domicilio;
-            TB_Telefono.Text = updatecliente.Telefono;
-            TB_TelefonoSecundario.Text = updatecliente.Telefono_Alternativo;
-            TB_Correo.Text = updatecliente.Email is null? "": updatecliente.Email.ToString();
-            DivCardHeader.Attributes["class"] = "card-header bg-warning text-white";
-            pnlBoxCliente.CssClass = "card card-outline card-warning shadow-sm mb-4";
-            iconTitulo.Attributes["class"] = "fas fa-user-edit mr-2";
-            ltrTituloModal.Text = "Editar Datos del Cliente";
-            btnGuardarCliente.Text = "Actualizar Cliente";
-            btnGuardarCliente.CssClass = "btn btn-warning";
-            // Guardamos el ID en un HiddenField para saber después a qué cliente actualizar
-            hfClienteId.Value = idCliente.ToString();
-
-            // 5. Mostrar el panel
-            pnlBoxCliente.Visible = true;
-        }
+       
     }
 }

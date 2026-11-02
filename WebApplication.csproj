@@ -1999,6 +1999,7 @@
     <Content Include="dist\img\grid_notepad.png" />
     <Content Include="dist\img\grid_update.png" />
     <Content Include="dist\img\grid_wait.png" />
+    <Content Include="dist\img\Logo_RdSolution.png" />
     <Content Include="dist\js\adminlte.js" />
     <Content Include="dist\js\adminlte.min.js" />
     <Content Include="dist\js\amcharts.ajax.js" />
@@ -2320,6 +2321,7 @@
     <Content Include="plugins\bs-stepper\css\bs-stepper.min.css.map" />
     <Content Include="plugins\bs-stepper\js\bs-stepper.js.map" />
     <Content Include="plugins\bs-stepper\js\bs-stepper.min.js.map" />
+    <Content Include="Taller\Comprobante.aspx" />
     <Content Include="plugins\dropzone\dropzone.js.map" />
     <Content Include="plugins\ekko-lightbox\ekko-lightbox.js.map" />
     <Content Include="plugins\ekko-lightbox\ekko-lightbox.min.js.map" />
@@ -4786,6 +4788,13 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Taller\Comprobante.aspx.cs">
+      <DependentUpon>Comprobante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Taller\Comprobante.aspx.designer.cs">
+      <DependentUpon>Comprobante.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos.aspx.cs">
       <DependentUpon>Productos.aspx</DependentUpon>

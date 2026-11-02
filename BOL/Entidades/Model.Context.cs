@@ -37,6 +37,7 @@ namespace BOL.Entidades
         public virtual DbSet<Registro_Movimientos> Registro_Movimientos { get; set; }
         public virtual DbSet<Servicio_Repuesto> Servicio_Repuesto { get; set; }
         public virtual DbSet<TipoOperacion> TipoOperacion { get; set; }
+        public virtual DbSet<Registro_Tareas> Registro_Tareas { get; set; }
     
         public virtual ObjectResult<Nullable<int>> Modelo_Save(string xMLModelo, string xmlUsuario)
         {
@@ -88,6 +89,19 @@ namespace BOL.Entidades
                 new ObjectParameter("xmlUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("RegistroMovimiento_Update", xMLParameter, xmlUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> RegistroMovimiento_CambiarEstado(string xML, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("xmlUsuario", xmlUsuario) :
+                new ObjectParameter("xmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("RegistroMovimiento_CambiarEstado", xMLParameter, xmlUsuarioParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> Cliente_Save(string xML, string xmlUsuario)

@@ -28,9 +28,9 @@ namespace BOL.Entidades
             return CRegistro_Movimientos.GetById(idOrden);
         }
 
-        public static void ActualizarEstado(int idOrden, int nuevoIdEstado)
+        public static int ActualizarEstado(string Orden, string  usuario)
         {
-            CRegistro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
+            return CRegistro_Movimientos.ActualizarEstado(Orden, usuario);
         }
     }
 }

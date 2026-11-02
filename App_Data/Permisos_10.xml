@@ -30,5 +30,7 @@
 
   <navigation>
     <page title="CerrarSesion" icon="fas fa-sign-out-alt" href="~/CerrarSesion.aspx" />
+    <page title="Comprobante" icon="fas fa-tools"  href="~/Taller/Comprobante.aspx" />
+
   </navigation>
 </permisos>
