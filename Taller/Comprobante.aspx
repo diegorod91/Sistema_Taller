@@ -8,7 +8,7 @@
         <p style="margin: 2px 0; font-size: 11px;">Servicio Técnico y Reparaciones</p>
         <p style="margin: 2px 0; font-size: 11px;">Tel: 221-654-8564 | La Plata</p>
         --%>
-        <img src="/dist/img/Logo_RdSolution.png" alt="RD SOLUTION'S" style="max-width: 300px; margin-top: 10px;" />
+        <img src="/dist/img/Logo_RdSolution.png" alt="RD SOLUTION'S" style="max-width: 250px; margin-top: 10px;" />
         <br />
         <br />
     </div>
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Sección de Firmas -->
-    <table style="width: 100%; margin-top: 25px; font-size: 11px; text-align: center;">
+    <table style="width: 100%; margin-top: 150px; font-size: 11px; text-align: center;">
         <tr>
             <td style="width: 50%; border-top: 1px solid #333; padding-top: 4px;">Firma Cliente</td>
             <td style="width: 50%; border-top: 1px solid #333; padding-top: 4px;">Recibió (Técnico)</td>

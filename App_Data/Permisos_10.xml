@@ -6,6 +6,14 @@
     <page title="Ordenes de reparación" icon="fas fa-tools"  href="~/Taller/ListadoOrdenes.aspx" />
     <page title="Stock" icon="fas fa-store" href="~/Stock.aspx" />
 
+
+  </navigation>
+
+  <notnavigation>
+    <page title="CerrarSesion" icon="fas fa-sign-out-alt" href="~/CerrarSesion.aspx" />
+    <page title="Comprobante" icon="fas fa-tools"  href="~/Taller/Comprobante.aspx" />
+
+
     <pages title="Ejemplos" icon="fas fa-list-ul">
       <page title="ABM" icon="fas fa-th" href="~/ejemplos/abm/index.aspx" />
 
@@ -26,11 +34,5 @@
       <page title="Consulta Dinamica" icon="fas fa-search" href="~/ejemplos/consulta/consulta.aspx" />
     </pages>
 
-  </navigation>
-
-  <navigation>
-    <page title="CerrarSesion" icon="fas fa-sign-out-alt" href="~/CerrarSesion.aspx" />
-    <page title="Comprobante" icon="fas fa-tools"  href="~/Taller/Comprobante.aspx" />
-
-  </navigation>
+  </notnavigation>
 </permisos>

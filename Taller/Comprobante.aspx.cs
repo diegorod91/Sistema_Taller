@@ -15,12 +15,12 @@ namespace SolucionBase.Taller
         {
             if (!IsPostBack)
             {
-                //if (Request.QueryString["id"] != null)
-                //{
-                    //int IdOrden = Convert.ToInt32(FwkCrypto.DecryptQueryString(Request.QueryString["id"]));
-                    //CargaInfoOrden(IdOrden);
-                //}
-                CargaInfoOrden(6);
+                if (Request.QueryString["Id"] != null)
+                {
+                  int IdOrden = Convert.ToInt32(FwkCrypto.DecryptQueryString(Request.QueryString["id"]));
+                  CargaInfoOrden(IdOrden);
+                }
+                //CargaInfoOrden(6);
             }
         }
 
@@ -42,9 +42,13 @@ namespace SolucionBase.Taller
                 string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} {nombreMod}" : nombreMod;
                 lblEquipo.InnerHtml = equipoCompleto;
                 lblFalla.InnerHtml = DatosOrden.Observaciones;
-
-
+            }
+            else 
+            { 
+             this.MostrarMensajeValidacion("No se encontró la orden solicitada.");
             }
         }
+
+        
     }
 }

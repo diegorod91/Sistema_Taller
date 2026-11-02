@@ -12,7 +12,7 @@ namespace BOL.Entidades
     {
         public int RegistroMovimiento_Save(LoginXML usuario)
         {
-            return  CRegistro_Movimientos.RegistroMovimiento_Update(this, usuario);
+            return  CRegistro_Movimientos.RegistroMovimiento_Save(this, usuario);
         }
         public int RegistroMovimiento_Update(LoginXML usuario)
         {

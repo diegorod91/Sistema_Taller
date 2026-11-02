@@ -176,16 +176,33 @@ namespace SolucionBase.Taller
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "MostrarModalWsp", script, true);
 
                     // ==========================================
+                    // Para generar el reporte de la orden en PDF, puedes redirigir a Comprobante.aspx con el ID encriptado
+                    string idordenencriptado = FwkCrypto.EncryptQueryString(idOrden.ToString());
+                    string urlReporte = "Comprobante.aspx?Id=" + idordenencriptado;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "openReport",
+                     $"setTimeout(function() {{ window.open('{urlReporte}', '_blank'); }}, 100);", true);
+                    // ==========================================
+
                     /*
                     // Para usar esta opción asíncrona, asegúrate de que el método contenedor sea async o usa .Wait() / .Result
                     bool enviado = WhatsAppService.EnviarMensajeAsync(telefono, mensaje).Result;
                     */
                 }
+                else if (idOrden > 0)
+                {
+                    string idordenencriptado = FwkCrypto.EncryptQueryString(idOrden.ToString());
+                    string urlReporte = "Comprobante.aspx?Id=" + idordenencriptado;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "openReport",
+                     $"setTimeout(function() {{ window.open('{urlReporte}', '_blank'); }}, 100);", true);                    
+                    Response.Redirect(Request.RawUrl);
+                }
+                else
+                {
+                    this.MostrarMensajeValidacion("No se pudo crear la orden con los datos ingresados.Intentenuevamente");
+                }
 
-                string idordenencriptado = FwkCrypto.EncryptQueryString(idOrden.ToString());
-                string url = "Comprobante.aspx?id="+idordenencriptado;
-                Response.Redirect(url);
-               // Response.Redirect("Comprobante.aspx?id={idordenencriptado}");
+                //Response.Redirect(url);
+                // Response.Redirect("Comprobante.aspx?id={idordenencriptado}");
 
             }
             catch (Exception ex)
@@ -480,7 +497,18 @@ namespace SolucionBase.Taller
                $('body').css('padding-right', ''); // Por si queda el padding aplicado
            ", true);
         }
-        private void CargarGridModelos()
+        private void LimpiarCamposOrden()
+        {
+            ddlCategoria.SelectItemWithValue(-1);
+            ddlMarca.SelectItemWithValue(-1);
+            ddlCliente.SelectItemWithValue(-1);
+            ddlModelo.SelectItemWithValue(-1);
+            DDL_Estado.SelectItemWithValue(-1);
+            DDL_TipoOperacion.SelectItemWithValue(-1);
+            ddlModelo.SelectItemWithValue(-1);
+        }
+
+        void CargarGridModelos()
         {
             int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
@@ -522,6 +550,6 @@ namespace SolucionBase.Taller
             Context.ApplicationInstance.CompleteRequest();
         }
 
-       
+
     }
 }
