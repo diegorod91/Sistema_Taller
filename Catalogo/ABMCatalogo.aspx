@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="table-responsive">
-                                    <asp:GridView ID="gvModelos" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-striped table-hover" DataKeyNames="Id" OnRowCommand="gvModelos_RowCommand">
+                                    <asp:GridView ID="gvModelos" EmptyDataText="Sin resultado obtenidos " runat="server" AutoGenerateColumns="False" CssClass="table table-bordered table-striped table-hover" DataKeyNames="Id" OnRowCommand="gvModelos_RowCommand">
                                         <Columns>
                                             <asp:BoundField DataField="Id" HeaderText="#" />
                                             <asp:BoundField DataField="Nombre" HeaderText="Modelo" />

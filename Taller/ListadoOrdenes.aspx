@@ -3,6 +3,68 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+        <div class="container-fluid">
+        <div class="row">
+<!-- Ingreso al taller -->
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3 runat="server" id="lblIngresoTaller">0</h3>
+                        <p>Ingreso al Taller</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnóstico -->
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3 runat="server" id="lblDiagnostico">0</h3>
+                        <p>En Diagnóstico</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pendiente de respuesta -->
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3 runat="server" id="lblPendienteRespuesta">0</h3>
+                        <p>A la espera de respuesto</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entregado -->
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3 runat="server" id="lblEntregado">0</h3>
+                        <p>Entregados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <%--=========
+        Inicio de la parte de la grilla
+        ======== --%>
+
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">Listado de Órdenes de Reparación</h3>

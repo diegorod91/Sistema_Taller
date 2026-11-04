@@ -31,11 +31,28 @@ namespace SolucionBase.Catalogo
 
         private void CargarGridModelos()
         {
-            int idCat = Convert.ToInt32(DDL_FiltroCategoria.SelectedValue);
-            int idMarca = Convert.ToInt32(DDL_FiltroMarca.SelectedValue);
+            int idCat = 0;
+            int.TryParse(DDL_FiltroCategoria.SelectedValue, out idCat);
 
-            List<Modelo> modelo = Modelo.GetAllModelos();
-            gvModelos.DataSource = modelo.ToList();
+            int idMarca = 0;
+            int.TryParse(DDL_FiltroMarca.SelectedValue, out idMarca);
+
+            // Traemos todos los modelos
+            var listaModelos = Modelo.GetAllModelos();
+
+            // Aplicamos los filtros condicionales
+            if (idCat > 0)
+            {
+                listaModelos = listaModelos.Where(m => m.Idcategoria == idCat).ToList();
+            }
+
+            if (idMarca > 0)
+            {
+                listaModelos = listaModelos.Where(m => m.IdMarca == idMarca).ToList();
+            }
+
+            // Enlazamos el resultado filtrado a la grilla
+            gvModelos.DataSource = listaModelos;
             gvModelos.DataBind();
         }
 
