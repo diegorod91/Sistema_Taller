@@ -1,6 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NuevaOrden.aspx.cs" Inherits="SolucionBase.Taller.NuevaOrden" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <style>
+        .pattern-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #adb5bd;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2; /* Siempre sobre el trazo del canvas */
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            pointer-events: none;
+        }
+
+            /* Estado prendido / encendido */
+            .pattern-dot.active {
+                background-color: #007bff;
+                transform: scale(1.3);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.7); /* Destello de encendido */
+            }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -22,7 +42,7 @@
                 <asp:UpdatePanel ID="upBoxCliente" runat="server">
                     <ContentTemplate>
                         <asp:Panel ID="pnlBoxCliente" runat="server" CssClass="card card-outline card-primary shadow-sm mb-4" Visible="false">
-                            <div runat="server" id="DivCardHeader" class="card-header bg-primary text-white">
+                            <div runat="server" id="DivCardHeader" class="card-header bg-primary  text-white">
                                 <h3 class="card-title mb-0 font-weight-bold">
                                     <i id="iconTitulo" runat="server" class="fas fa-user-plus mr-2"></i>
                                     <asp:Literal ID="ltrTituloModal" runat="server" Text="Alta de Nuevo Cliente"></asp:Literal>
@@ -251,38 +271,44 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <!-- Columna Izquierda: Checklist de Estado Físico y Contraseña -->
+                            <!-- Columna Izquierda: Contraseña y Checklist de Estado Físico -->
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Contraseña / PIN de Desbloqueo</label>
                                     <asp:TextBox ID="TB_ClaveEquipo" runat="server" CssClass="form-control" Placeholder="Ej: 1234, Patrón L"></asp:TextBox>
+                                    <br />
+                                    <button type="button" class="btn btn-outline-success btn-block py-3 font-weight-bold" onclick="abrirModalPatron()">
+                                        <i class="fas fa-fingerprint mr-2"></i>Solicitar Patrón de Desbloqueo al Cliente
+                                    </button>
                                 </div>
 
-                                <label class="text-secondary font-weight-bold mb-2">Estado al Recibir (Checklist)</label>
-                                <div class="row ml-1 mb-3">
-                                    <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="CHK_Encendido" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_Encendido" runat="server" AssociatedControlID="CHK_Encendido" CssClass="form-check-label ml-1">Encendido</asp:Label>
-                                    </div>
-                                    <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="CHK_Apagado" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_Apagado" runat="server" AssociatedControlID="CHK_Apagado" CssClass="form-check-label ml-1">Apagado</asp:Label>
-                                    </div>
-                                    <div class="col-4 form-check mb-2">
-                                        <asp:CheckBox ID="CHK_Golpes" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_Golpes" runat="server" AssociatedControlID="CHK_Golpes" CssClass="form-check-label ml-1">Golpes</asp:Label>
-                                    </div>
-                                    <div class="col-4 form-check">
-                                        <asp:CheckBox ID="CHK_Humedad" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_Humedad" runat="server" AssociatedControlID="CHK_Humedad" CssClass="form-check-label ml-1">Humedad</asp:Label>
-                                    </div>
-                                    <div class="col-4 form-check">
-                                        <asp:CheckBox ID="CHK_SinSim" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_SinSim" runat="server" AssociatedControlID="CHK_SinSim" CssClass="form-check-label ml-1">Sin SIM</asp:Label>
-                                    </div>
-                                    <div class="col-4 form-check">
-                                        <asp:CheckBox ID="CHK_Accesorios" runat="server" CssClass="form-check-input" />
-                                        <asp:Label ID="LBL_Accesorios" runat="server" AssociatedControlID="CHK_Accesorios" CssClass="form-check-label ml-1">Con Funda</asp:Label>
+                                <div class="form-group mb-3">
+                                    <label class="text-secondary font-weight-bold mb-2">Estado al Recibir (Checklist)</label>
+                                    <div class="row ml-1">
+                                        <div class="col-4 form-check mb-2">
+                                            <asp:CheckBox ID="CHK_Encendido" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_Encendido" runat="server" AssociatedControlID="CHK_Encendido" CssClass="form-check-label ml-1">Encendido</asp:Label>
+                                        </div>
+                                        <div class="col-4 form-check mb-2">
+                                            <asp:CheckBox ID="CHK_Apagado" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_Apagado" runat="server" AssociatedControlID="CHK_Apagado" CssClass="form-check-label ml-1">Apagado</asp:Label>
+                                        </div>
+                                        <div class="col-4 form-check mb-2">
+                                            <asp:CheckBox ID="CHK_Golpes" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_Golpes" runat="server" AssociatedControlID="CHK_Golpes" CssClass="form-check-label ml-1">Golpes</asp:Label>
+                                        </div>
+                                        <div class="col-4 form-check">
+                                            <asp:CheckBox ID="CHK_Humedad" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_Humedad" runat="server" AssociatedControlID="CHK_Humedad" CssClass="form-check-label ml-1">Humedad</asp:Label>
+                                        </div>
+                                        <div class="col-4 form-check">
+                                            <asp:CheckBox ID="CHK_SinSim" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_SinSim" runat="server" AssociatedControlID="CHK_SinSim" CssClass="form-check-label ml-1">Sin SIM</asp:Label>
+                                        </div>
+                                        <div class="col-4 form-check">
+                                            <asp:CheckBox ID="CHK_Accesorios" runat="server" CssClass="form-check-input" />
+                                            <asp:Label ID="LBL_Accesorios" runat="server" AssociatedControlID="CHK_Accesorios" CssClass="form-check-label ml-1">Con Funda</asp:Label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -302,51 +328,100 @@
                                     <asp:TextBox ID="TB_FechaEntrega" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <div class="form-group mb-0 form-check">
-                                    <asp:CheckBox ID="CHK_AvisoWhatsapp" runat="server" CssClass="form-check-input" Checked="true" />
-                                    <asp:Label ID="LBL_AvisoWhatsapp" runat="server" AssociatedControlID="CHK_AvisoWhatsapp" CssClass="form-check-label ml-1">Avisar recepción y presupuesto por WhatsApp</asp:Label>
-                                </div>
+                                    <div class="form-check">
+                                        <asp:CheckBox ID="CHK_AvisoWhatsapp" runat="server" CssClass="form-check-input" Checked="true" />
+                                        <asp:Label ID="LBL_AvisoWhatsapp" runat="server" AssociatedControlID="CHK_AvisoWhatsapp" CssClass="form-check-label ml-1">Avisar recepción y presupuesto por WhatsApp</asp:Label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- BOTONES GLOBALES DE LA ORDEN -->
-                <div class="row mb-4">
-                    <div class="col-12 text-right">
-                        <a href="Default.aspx" class="btn btn-default mr-2">Cancelar</a>
-                        <asp:Button ID="btnGuardarOrden" runat="server" Text="Guardar Orden"
-                            CssClass="btn btn-primary" OnClick="btnGuardarOrden_Click" />
-                    </div>
-                </div>
-
             </ContentTemplate>
         </asp:UpdatePanel>
+        <div class="row mb-4">
+            <div class="col-12 text-right">
+                <a href="Default.aspx" class="btn btn-default mr-2">Cancelar</a>
+                <asp:Button ID="btnGuardarOrden" runat="server" Text="Guardar Orden"
+                    CssClass="btn btn-primary" OnClick="btnGuardarOrden_Click" />
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal Limpio para el Patrón del Cliente (Sin recuadro) -->
+    <div class="modal fade" id="modalPatronCliente" tabindex="-1" role="dialog" aria-labelledby="lblPatronTitulo" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title w-100 font-weight-bold" id="lblPatronTitulo">
+                        <i class="fas fa-lock mr-2"></i>Dibuje el Patrón de Desbloqueo
+                    </h5>
+                </div>
+                <div class="modal-body py-4">
+                    <p class="text-muted mb-3">Deslice el dedo o el mouse para trazar el patrón de seguridad del equipo:</p>
+
+                    <!-- 🎨 GRILLA Y CANVAS LIMPIOS (Sin contenedor con bordes) -->
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <div id="patternLockGrid" style="position: relative; width: 140px; height: 140px; touch-action: none; background: #ffffff; border-radius: 6px; user-select: none;">
+                            <!-- Lienzo transparente para el trazo -->
+                            <canvas id="patternCanvas" width="140" height="140" style="position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;"></canvas>
+                            <!-- Puntos interactivos -->
+                            <div class="pattern-dot" data-id="1" style="top: 15px; left: 15px;"></div>
+                            <div class="pattern-dot" data-id="2" style="top: 15px; left: 60px;"></div>
+                            <div class="pattern-dot" data-id="3" style="top: 15px; left: 105px;"></div>
+                            <div class="pattern-dot" data-id="4" style="top: 60px; left: 15px;"></div>
+                            <div class="pattern-dot" data-id="5" style="top: 60px; left: 60px;"></div>
+                            <div class="pattern-dot" data-id="6" style="top: 60px; left: 105px;"></div>
+                            <div class="pattern-dot" data-id="7" style="top: 105px; left: 15px;"></div>
+                            <div class="pattern-dot" data-id="8" style="top: 105px; left: 60px;"></div>
+                            <div class="pattern-dot" data-id="9" style="top: 105px; left: 105px;"></div>
+                        </div>
+                        <button type="button" id="btnLimpiarPatron" class="btn btn-xs btn-outline-secondary mt-3" style="font-size: 11px; padding: 4px 12px;">
+                            <i class="fas fa-eraser mr-1"></i>Borrar Patrón
+                        </button>
+                    </div>
+
+                    <!-- Input oculto para guardar la secuencia resultante -->
+                    <asp:HiddenField ID="hfPatronResultado" runat="server" />
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <!-- Botón de cancelar con clase o evento que dispara la limpieza -->
+                    <button type="button" class="btn btn-secondary px-4" data-dismiss="modal" onclick="limpiarResultadoPatron()">
+                        <i class="fas fa-times mr-1"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-success px-4" id="btnConfirmarPatron">
+                        <i class="fas fa-check mr-1"></i>Confirmar Patrón
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal de Éxito / WhatsApp -->
-<div id="modalExito" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-success">
-        <h4 class="modal-title">¡Orden Registrada!</h4>
-      </div>
-      <div class="modal-body text-center">
-        <p>La orden se guardó correctamente en el taller.</p>
-        <p>¿Deseas enviarle el comprobante al cliente por WhatsApp?</p>
-        
-        <!-- Enlace directo: al ser un clic real del usuario, el navegador JAMÁS lo bloquea -->
-        <a id="lnkWhatsAppModal" runat="server" href="#" target="_blank" class="btn btn-success btn-lg" style="margin-right: 10px;">
-            <i class="fa fa-whatsapp"></i> Enviar WhatsApp
-        </a>
-        
-        <asp:Button ID="btnCerrarModal" runat="server" Cssclass="btn btn-secondary btn-lg" Text="Continuar sin WhatsApp" OnClick="btnCerrarModal_Click" />
-      </div>
-    </div>
-  </div>
-</div>
+    <div id="modalExito" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h4 class="modal-title">¡Orden Registrada!</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p>La orden se guardó correctamente en el taller.</p>
+                    <p>¿Deseas enviarle el comprobante al cliente por WhatsApp?</p>
 
-    <script src="NuevaOrden.js"></script>
+                    <!-- Enlace directo: al ser un clic real del usuario, el navegador JAMÁS lo bloquea -->
+                    <a id="lnkWhatsAppModal" runat="server" href="#" target="_blank" class="btn btn-success btn-lg" style="margin-right: 10px;">
+                        <i class="fa fa-whatsapp"></i>Enviar WhatsApp
+                    </a>
+
+                    <asp:Button ID="btnCerrarModal" runat="server" CssClass="btn btn-secondary btn-lg" Text="Continuar sin WhatsApp" OnClick="btnCerrarModal_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var idTextBoxClave = '<%= TB_ClaveEquipo.ClientID %>';
+    </script>
+
+    <script src="NuevaOrden.js?v=1"></script>
 </asp:Content>

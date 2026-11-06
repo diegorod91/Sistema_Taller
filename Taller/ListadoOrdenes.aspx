@@ -4,60 +4,76 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-        <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-<!-- Ingreso al taller -->
+            <!-- Ingreso al taller (IdEstado = 1) -->
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3 runat="server" id="lblIngresoTaller">0</h3>
-                        <p>Ingreso al Taller</p>
+                <asp:LinkButton ID="lnkFiltroIngreso" runat="server" OnClick="FiltrarEstado_Click" CommandArgument="1" CssClass="d-block" Style="text-decoration: none;">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 runat="server" id="lblIngresoTaller">0</h3>
+                            <p>Ingreso al Taller</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-box"></i>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fas fa-box"></i>
-                    </div>
-                </div>
+                </asp:LinkButton>
             </div>
 
-            <!-- Diagnóstico -->
+            <!-- Diagnóstico (IdEstado = 2) -->
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3 runat="server" id="lblDiagnostico">0</h3>
-                        <p>En Diagnóstico</p>
+                <asp:LinkButton ID="lnkFiltroDiagnostico" runat="server" OnClick="FiltrarEstado_Click" CommandArgument="2" CssClass="d-block" Style="text-decoration: none;">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3 runat="server" id="lblDiagnostico">0</h3>
+                            <p>En Diagnóstico</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-search"></i>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
+                </asp:LinkButton>
             </div>
 
-            <!-- Pendiente de respuesta -->
+            <!-- Pendiente de respuesta (IdEstado = 3) -->
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3 runat="server" id="lblPendienteRespuesta">0</h3>
-                        <p>A la espera de respuesto</p>
+                <asp:LinkButton ID="lnkFiltroPendiente" runat="server" OnClick="FiltrarEstado_Click" CommandArgument="3" CssClass="d-block" Style="text-decoration: none;">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3 runat="server" id="lblPendienteRespuesto">0</h3>
+                            <p>A la espera de repuesto</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                </div>
+                </asp:LinkButton>
             </div>
 
-            <!-- Entregado -->
+            <!-- Entregado (IdEstado = 4) -->
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3 runat="server" id="lblEntregado">0</h3>
-                        <p>Entregados</p>
+                <asp:LinkButton ID="lnkFiltroEntregado" runat="server" OnClick="FiltrarEstado_Click" CommandArgument="4" CssClass="d-block" Style="text-decoration: none;">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3 runat="server" id="lblEntregado">0</h3>
+                            <p>Entregados</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
+                </asp:LinkButton>
             </div>
+        </div>
 
+        <!-- Botón opcional para quitar el filtro y ver todas las órdenes -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <asp:LinkButton ID="btnLimpiarFiltro" runat="server" OnClick="btnLimpiarFiltro_Click" CssClass="btn btn-secondary btn-sm">
+                <i class="fas fa-sync-alt"></i> Ver todas las órdenes
+                </asp:LinkButton>
+            </div>
         </div>
     </div>
 
@@ -139,7 +155,7 @@
                         <label for="txtTareaRealizadaEstado">Tarea Realizada / Diagnóstico Técnico:</label>
                         <asp:TextBox ID="txtTareaRealizadaEstado" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" placeholder="Describa brevemente lo realizado o diagnosticado..."></asp:TextBox>
                     </div>
-
+                    <asp:Label ID="LBL_Error" Text="" runat="server"  ForeColor="Red"/>
                 </div>
                 <div class="modal-footer">
                     <!-- Botón Cancelar -->
@@ -148,7 +164,7 @@
                     </button>
                     <!-- Botón Modificar / Guardar -->
                     <asp:Button ID="btnModificarEstado" runat="server" CssClass="btn btn-primary"
-                        Text="Modificar" OnClick="btnModificarEstado_Click" />
+                        Text="Modificar" OnClick="btnModificarEstado_Click" OnClientClick="return validarYGuardarCambioEstado();" />
                 </div>
             </div>
         </div>
@@ -256,13 +272,11 @@
                         Cancelar
                     </button>
                     <!-- Botón Guardar Cambios -->
-                    <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primary"
-                        Text="Guardar Cambios" OnClick="btnGuardarEdicion_Click" />
+                    <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-primary" Text="Guardar Cambios" OnClick="btnGuardarEdicion_Click" />
                 </div>
             </div>
         </div>
     </div>
-    <script src="ListadoOrdenes.js"></script>
 
     <script type="text/javascript">
     // @ts-nocheck
@@ -280,5 +294,9 @@
         });
     });
     </script>
-
+    <script type="text/javascript">
+    var idLabelError = '<%= LBL_Error.ClientID %>';
+    </script>
+    <script src="ListadoOrdenes.js?v=1"></script>
+    
 </asp:Content>

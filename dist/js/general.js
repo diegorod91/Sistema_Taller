@@ -774,16 +774,14 @@ function descargar(args, uri) {
         var iframe = document.createElement("iframe");
         var query = "";
         if (args.indexOf("|") != -1) {
-            var arguments = args.split("|");
-            for (var i = 0; i < arguments.length; i++) {
-                query += "arg" + i + "=" + arguments[i];
-                if (i + 1 < arguments.length) {
+            var partes = args.split("|"); // 👈 Cambiamos "arguments" por "partes"
+            for (var i = 0; i < partes.length; i++) {
+                query += "arg" + i + "=" + partes[i];
+                if (i + 1 < partes.length) {
                     query += "&";
                 }
             }
-            iframe.src = uri + "?" + query;
-        }
-        else {
+        }        else {
             iframe.src = uri;
         }
         iframe.style.display = "none";

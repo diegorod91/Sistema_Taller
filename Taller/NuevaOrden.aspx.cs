@@ -345,7 +345,7 @@ namespace SolucionBase.Taller
             string msj = "";
             if (ddlCliente.SelectedItem.Value == "-1")
             {
-                msj += "Debe seleccionar un cliente valido.<br>";
+                msj += "- Debe seleccionar un cliente valido.<br>";
                 return msj;
             }
             else
@@ -358,7 +358,7 @@ namespace SolucionBase.Taller
             string msj = "";
             if (ddlModelo.SelectedItem.Value == "-1")
             {
-                msj += "Debe seleccionar un modelo válido.<br>";
+                msj += "- Debe seleccionar un modelo válido.<br>";
                 return msj;
             }
             else

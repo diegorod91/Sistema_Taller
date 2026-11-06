@@ -59,6 +59,19 @@ namespace SolucionBase
                     string nombreMod = mod?.Nombre ?? "Sin modelo";
                     string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} - {nombreMod}" : nombreMod;
 
+                    var tareasDeOrden = Registro_Tareas.GetTareasPorOrden(o.Id);
+
+                    // Buscamos la última (ordenando por ID o por fecha de registro de forma descendente)
+                    string ultimaObservacion = "Sin observaciones recientes";
+                    if (tareasDeOrden != null && tareasDeOrden.Count > 0)
+                    {
+                        var ultimaTarea = tareasDeOrden.OrderByDescending(t => t.Id).FirstOrDefault(); // O t.FechaRegistro si lo preferís
+                        if (ultimaTarea != null && !string.IsNullOrEmpty(ultimaTarea.DescripcionTarea))
+                        {
+                            ultimaObservacion = ultimaTarea.DescripcionTarea;
+                        }
+                    }
+
                     return new
                     {
                         IdOrden = o.Id,
@@ -69,7 +82,8 @@ namespace SolucionBase
                         EstadoNombre = o.Estado != null ? o.Estado.Nombre : "Sin estado",
                         TelefonoLimpio = o.Cliente != null && !string.IsNullOrEmpty(o.Cliente.Telefono)
                                          ? o.Cliente.Telefono.Replace(" ", "").Replace("-", "").Replace("+", "")
-                                         : ""
+                                         : "",
+                        UltimaObservacion = ultimaObservacion
                     };
                 }).ToList();
 

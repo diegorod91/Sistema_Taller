@@ -82,24 +82,33 @@ namespace SolucionBase.Taller
 
 
 
-        private void CargarGrillaOrdenes()
+        private void CargarGrillaOrdenes(int? idEstadoFiltro = null)
         {
             List<Registro_Movimientos> ListadoOrdenes = Registro_Movimientos.GetListadoOrdenes();
+            lblIngresoTaller.InnerText = ListadoOrdenes.Count(o => o.IdEstado == 1).ToString();
+            lblDiagnostico.InnerText = ListadoOrdenes.Count(o => o.IdEstado == 2).ToString();
+            lblPendienteRespuesto.InnerText = ListadoOrdenes.Count(o => o.IdEstado == 3).ToString();
+            lblEntregado.InnerText = ListadoOrdenes.Count(o => o.IdEstado == 4).ToString();
 
+            var listaFiltrada = ListadoOrdenes;
+            if (idEstadoFiltro.HasValue)
+            {
+                listaFiltrada = ListadoOrdenes.Where(o => o.IdEstado == idEstadoFiltro.Value).ToList();
+            }
 
-            var dataSource = ListadoOrdenes.Select(o =>
+            var dataSource = listaFiltrada.Select(o =>
             {
                 var mod = Modelo.GetModeloById(o.IdModelo);
                 string marca = mod?.Marca.Nombre ?? "";
                 string nombreMod = mod?.Nombre ?? "Sin modelo";
-                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} - {nombreMod}" : nombreMod;
+                string equipoCompleto = !string.IsNullOrEmpty(marca) ? $"{marca} {nombreMod}" : nombreMod;
 
                 return new
                 {
                     IdOrden = o.Id,
                     FechaIngreso = o.FechaIngreso,
                     NombreCliente = o.Cliente != null ? o.Cliente.Apeynom : "Sin cliente",
-                    ModeloEquipo = equipoCompleto, // Muestra por ejemplo: "Samsung - A03"
+                    ModeloEquipo = equipoCompleto,
                     Estado = o.Estado != null ? o.Estado.Nombre : "Sin estado",
                     TelefonoLimpio = o.Cliente != null && !string.IsNullOrEmpty(o.Cliente.Telefono)
                                      ? o.Cliente.Telefono.Replace(" ", "").Replace("-", "").Replace("+", "")
@@ -138,10 +147,16 @@ namespace SolucionBase.Taller
 
         protected void btnModificarEstado_Click(object sender, EventArgs e)
         {
+            LBL_Error.Text = "";                                                           // Recuperamos el usuario de sesión para la auditoría
             int idOrden = Convert.ToInt32(hfIdOrdenModal.Value);
             int nuevoIdEstado = Convert.ToInt32(ddlEstadosModal.SelectedValue);
             string tareaRealizada = txtTareaRealizadaEstado.Text.Trim(); // El campo de texto que agregues en la UI
-            // Recuperamos el usuario de sesión para la auditoría
+
+            if (string.IsNullOrEmpty(tareaRealizada))
+            {
+                LBL_Error.Text = "La descripción es obligatoria para actualizar el estado";
+                return;
+            }
             LoginXML usuario = Session["Usuario"] as LoginXML;
             // Armamos el XML de datos
             string xmlDoc = $"<Registro_Movimientos Id=\"{idOrden}\" IdEstado=\"{nuevoIdEstado}\" TareaRealizada=\"{System.Security.SecurityElement.Escape(tareaRealizada)}\" />";
@@ -167,15 +182,6 @@ namespace SolucionBase.Taller
                 // Manejar error o mostrar mensaje
             }
 
-
-
-
-            // Registro_Movimientos.ActualizarEstado(idOrden, nuevoIdEstado);
-            //
-            // string script = "$('#modalCambiarEstado').modal('hide');";
-            // ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModalEstado", script, true);
-            //
-            // CargarGrillaOrdenes();
         }
 
         protected void btnGuardarEdicion_Click(object sender, EventArgs e)
@@ -211,5 +217,21 @@ namespace SolucionBase.Taller
         }
 
 
+
+        // Evento cuando hacen clic en cualquiera de las 4 cajas de estado
+        protected void FiltrarEstado_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int idEstado = Convert.ToInt32(btn.CommandArgument);
+
+            // Recargamos la grilla aplicando el filtro de ese estado específico
+            CargarGrillaOrdenes(idEstado);
+        }
+
+        // Evento para blanquear el filtro y ver el listado completo
+        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
+        {
+            CargarGrillaOrdenes(null);
+        }
     }
 }

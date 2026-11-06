@@ -15,6 +15,15 @@ namespace SolucionBase.Taller
     {
 
         /// <summary>
+        /// Control lnkFiltroIngreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkFiltroIngreso;
+
+        /// <summary>
         /// Control lblIngresoTaller.
         /// </summary>
         /// <remarks>
@@ -22,6 +31,15 @@ namespace SolucionBase.Taller
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblIngresoTaller;
+
+        /// <summary>
+        /// Control lnkFiltroDiagnostico.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkFiltroDiagnostico;
 
         /// <summary>
         /// Control lblDiagnostico.
@@ -33,13 +51,31 @@ namespace SolucionBase.Taller
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDiagnostico;
 
         /// <summary>
-        /// Control lblPendienteRespuesta.
+        /// Control lnkFiltroPendiente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPendienteRespuesta;
+        protected global::System.Web.UI.WebControls.LinkButton lnkFiltroPendiente;
+
+        /// <summary>
+        /// Control lblPendienteRespuesto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPendienteRespuesto;
+
+        /// <summary>
+        /// Control lnkFiltroEntregado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkFiltroEntregado;
 
         /// <summary>
         /// Control lblEntregado.
@@ -49,6 +85,15 @@ namespace SolucionBase.Taller
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEntregado;
+
+        /// <summary>
+        /// Control btnLimpiarFiltro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnLimpiarFiltro;
 
         /// <summary>
         /// Control gvOrdenes.
@@ -85,6 +130,15 @@ namespace SolucionBase.Taller
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTareaRealizadaEstado;
+
+        /// <summary>
+        /// Control LBL_Error.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBL_Error;
 
         /// <summary>
         /// Control btnModificarEstado.

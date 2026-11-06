@@ -69,10 +69,9 @@
                                         </div>
                                         <p class="mb-1 mt-1 font-weight-bold"><%# Eval("ClienteNombre") %></p>
                                         <p class="mb-2 text-muted" style="font-size: 12px;"><%# Eval("EquipoModelo") %></p>
-                                        <div class="text-right">
-                                            <%--<asp:LinkButton runat="server" CommandName="AvanzarEstado" CommandArgument='<%# Eval("IdOrden") %>' CssClass="btn btn-xs btn-primary" title="Avanzar al siguiente estado">
-                                                Avanzar <i class="fas fa-arrow-right"></i>
-                                            </asp:LinkButton>--%>
+                                        <div class="p-2 mb-2 rounded" style="background-color: #f8f9fa; font-size: 11px; border-left: 3px solid #17a2b8;">
+                                            <i class="fas fa-comment-dots text-info mr-1"></i>
+                                            <span class="text-dark"><%# Eval("UltimaObservacion") %></span>
                                         </div>
                                     </div>
                                 </ItemTemplate>
@@ -85,7 +84,7 @@
                 <div class="col-md-3" style="min-width: 280px;">
                     <div class="card card-outline card-danger">
                         <div class="card-header">
-                            <h3 class="card-title">Pendiente de respuesto</h3>
+                            <h3 class="card-title">A la espera de respuesto</h3>
                             <span class="badge bg-danger float-right" runat="server" id="lblCountPendiente">0</span>
                         </div>
                         <div class="card-body p-2 kanban-column" data-estado="3" style="background-color: #f4f6f9; min-height: 500px; max-height: 700px; overflow-y: auto;">
@@ -98,10 +97,9 @@
                                         </div>
                                         <p class="mb-1 mt-1 font-weight-bold"><%# Eval("ClienteNombre") %></p>
                                         <p class="mb-2 text-muted" style="font-size: 12px;"><%# Eval("EquipoModelo") %></p>
-                                        <div class="text-right">
-                                            <%--<asp:LinkButton runat="server" CommandName="AvanzarEstado" CommandArgument='<%# Eval("IdOrden") %>' CssClass="btn btn-xs btn-primary" title="Avanzar al siguiente estado">
-                                                Avanzar <i class="fas fa-arrow-right"></i>
-                                            </asp:LinkButton>--%>
+                                        <div class="p-2 mb-2 rounded" style="background-color: #f8f9fa; font-size: 11px; border-left: 3px solid #17a2b8;">
+                                            <i class="fas fa-comment-dots text-info mr-1"></i>
+                                            <span class="text-dark"><%# Eval("UltimaObservacion") %></span>
                                         </div>
                                     </div>
                                 </ItemTemplate>
@@ -127,7 +125,10 @@
                                         </div>
                                         <p class="mb-1 mt-1 font-weight-bold"><%# Eval("ClienteNombre") %></p>
                                         <p class="mb-2 text-muted" style="font-size: 12px;"><%# Eval("EquipoModelo") %></p>
-                                        <!-- En entregado ya no hace falta el botón de avanzar -->
+                                        <div class="p-2 mb-2 rounded" style="background-color: #f8f9fa; font-size: 11px; border-left: 3px solid #17a2b8;">
+                                            <i class="fas fa-comment-dots text-info mr-1"></i>
+                                            <span class="text-dark"><%# Eval("UltimaObservacion") %></span>
+                                        </div>
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
@@ -150,10 +151,11 @@
                         <label>Indique la observación o acción inicial:</label>
                         <textarea id="txtTareaRealizadaModal" class="form-control" rows="3" placeholder="Ej: Equipo ingresa con pantalla dañada..."></textarea>
                     </div>
+                    <asp:Label ID="LBL_Error" Text="" runat="server" ForeColor="Red" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload();">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmarCambioConTarea()">Guardar y Avanzar</button>
+                    <button type="button" class="btn btn-primary"  onclick="confirmarCambioConTarea()">Guardar</button>
                 </div>
             </div>
         </div>
@@ -161,7 +163,7 @@
 
     <!-- Incluir SortableJS desde CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-    
-    <script src="dist/js/Kanban.js"></script>
-    
+
+    <script src="dist/js/Kanban.js?v=1"></script>
+
 </asp:Content>
