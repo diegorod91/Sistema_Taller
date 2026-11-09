@@ -38,6 +38,7 @@ namespace BOL.Entidades
         public virtual DbSet<Servicio_Repuesto> Servicio_Repuesto { get; set; }
         public virtual DbSet<TipoOperacion> TipoOperacion { get; set; }
         public virtual DbSet<Registro_Tareas> Registro_Tareas { get; set; }
+        public virtual DbSet<ConfiguracionTaller> ConfiguracionTaller { get; set; }
     
         public virtual ObjectResult<Nullable<int>> Modelo_Save(string xMLModelo, string xmlUsuario)
         {

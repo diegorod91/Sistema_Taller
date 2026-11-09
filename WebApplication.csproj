@@ -1923,6 +1923,7 @@
     <Content Include="Catalogo\ABMCatalogo.aspx" />
     <Content Include="Catalogo\Catalogo.js" />
     <Content Include="CerrarSesion.aspx" />
+    <Content Include="Configuracion\Configuracion.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\adminlte.css" />
@@ -4723,6 +4724,13 @@
     </Compile>
     <Compile Include="CerrarSesion.aspx.designer.cs">
       <DependentUpon>CerrarSesion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\Configuracion.aspx.cs">
+      <DependentUpon>Configuracion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Configuracion\Configuracion.aspx.designer.cs">
+      <DependentUpon>Configuracion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

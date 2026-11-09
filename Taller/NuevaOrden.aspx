@@ -278,7 +278,7 @@
                                     <asp:TextBox ID="TB_ClaveEquipo" runat="server" CssClass="form-control" Placeholder="Ej: 1234, Patrón L"></asp:TextBox>
                                     <br />
                                     <button type="button" class="btn btn-outline-success btn-block py-3 font-weight-bold" onclick="abrirModalPatron()">
-                                        <i class="fas fa-fingerprint mr-2"></i>Solicitar Patrón de Desbloqueo al Cliente
+                                        <i class="fas fa-fingerprint mr-2"></i>Solicitar patrón de desbloqueo al cliente
                                     </button>
                                 </div>
 

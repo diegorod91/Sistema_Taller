@@ -37,6 +37,18 @@
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="ConfiguracionTaller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreTaller" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TelefonoContacto" Type="varchar" MaxLength="30" />
+          <Property Name="Direccion" Type="varchar" MaxLength="150" />
+          <Property Name="MensajePlantillaWsp" Type="text" />
+          <Property Name="ImgLogo" Type="varchar" MaxLength="255" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
         <EntityType Name="DetalleMovimiento">
           <Key>
             <PropertyRef Name="Id" />
@@ -259,10 +271,13 @@
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
         <Function Name="RethrowError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        
+        
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfiguracionTaller" EntityType="Self.ConfiguracionTaller" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleMovimiento" EntityType="Self.DetalleMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
@@ -587,6 +602,7 @@
             <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
             <End Role="Registro_Tareas" EntitySet="Registro_Tareas" />
           </AssociationSet>
+          <EntitySet Name="ConfiguracionTaller" EntityType="Model.ConfiguracionTaller" />
         </EntityContainer>
         <Association Name="FK_Modelo_Categoria">
           <End Type="Model.Categoria" Role="Categoria" Multiplicity="0..1" />
@@ -624,6 +640,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ConfiguracionTaller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreTaller" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TelefonoContacto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MensajePlantillaWsp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImgLogo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -764,6 +792,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ConfiguracionTaller">
+            <EntityTypeMapping TypeName="Model.ConfiguracionTaller">
+              <MappingFragment StoreEntitySet="ConfiguracionTaller">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="ImgLogo" ColumnName="ImgLogo" />
+                <ScalarProperty Name="MensajePlantillaWsp" ColumnName="MensajePlantillaWsp" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+                <ScalarProperty Name="NombreTaller" ColumnName="NombreTaller" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
         </EntityContainerMapping>
       </Mapping>
@@ -787,7 +828,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1">
+      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="Model.Auditoria" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Categoria" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Cliente" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
@@ -807,6 +848,7 @@
         <AssociationConnector Association="Model.FK_Modelo_Categoria" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model.Registro_Tareas" Width="1.5" PointX="5.25" PointY="12" />
         <AssociationConnector Association="Model.FK__Registro___IdReg__1C873BEC" />
+        <EntityTypeShape EntityType="Model.ConfiguracionTaller" Width="1.5" PointX="8.375" PointY="9.75" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const ctx = canvas.getContext("2d");
     const dots = grid.querySelectorAll(".pattern-dot");
-    const txtClave = document.getElementById(window.idTextBoxClave);
     const btnLimpiar = document.getElementById("btnLimpiarPatron");
 
     let drawing = false;
@@ -42,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function checkHit(clientX, clientY) {
         for (let dot of dots) {
             const rect = dot.getBoundingClientRect();
-            // Área de sensibilidad limpia alrededor del punto
             if (clientX >= rect.left - 12 &&
                 clientX <= rect.right + 12 &&
                 clientY >= rect.top - 12 &&
@@ -87,9 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const center = getDotCenter(dot);
             selectedPointsCoords.push(center);
 
-            if (txtClave) {
-                txtClave.value = "Patrón: " + selectedSequence.join("-");
-            }
+            // 💡 NOTA: Ya no escribimos en ningún textbox acá. Todo se guarda internamente en 'selectedSequence'.
         }
     }
 
@@ -153,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedPointsCoords = [];
         currentCursorPos = null;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (txtClave) txtClave.value = "";
     }
 
     // Exponemos las funciones para uso externo
@@ -180,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Lógica al confirmar el patrón trazado
+// Lógica al confirmar el patrón trazado (Único momento donde se escribe en el TextBox)
 document.addEventListener("DOMContentLoaded", function () {
     let btnConfirmar = document.getElementById('btnConfirmarPatron');
     if (btnConfirmar) {
@@ -192,10 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Buscamos el HiddenField de forma segura sin usar etiquetas de servidor <%= %>
-            var hf = document.querySelector("[id$='hfPatronResultado']");
-            if (hf) {
-                hf.value = JSON.stringify(secuenciaPatron);
+            // Formateamos la secuencia solo al confirmar (Ej: "Patrón: 1-2-3-6")
+            var textoPatron = "Patrón: " + secuenciaPatron.join("-");
+
+            // Buscamos el TextBox de la contraseña de forma segura en ASP.NET
+            var txtClave = document.querySelector("[id$='TB_ClaveEquipo']");
+            if (txtClave) {
+                txtClave.value = textoPatron;
             }
 
             // Cerramos el modal de forma limpia
@@ -204,35 +202,21 @@ document.addEventListener("DOMContentLoaded", function () {
             // Indicador visual en la pantalla principal
             let lblEstado = document.getElementById('lblEstadoPatronCargado');
             if (lblEstado) {
-                lblEstado.innerHTML = "✔ Patrón registrado correctamente";
+                lblEstado.innerHTML = "✔ Patrón registrado correctamente: " + textoPatron;
                 lblEstado.className = "text-success font-weight-bold";
             }
         });
     }
 });
+
 // Función para limpiar el resultado si cancela o cierra el modal
 function limpiarResultadoPatron() {
-    // 1. Limpiamos el canvas visualmente usando la función global
     if (typeof window.limpiarCanvasPatron === 'function') {
         window.limpiarCanvasPatron();
     }
 
-    // 2. Vaciamos el HiddenField por si tenía un patrón viejo cargado
-    var hf = document.querySelector("[id$='hfPatronResultado']");
-    if (hf) {
-        hf.value = "";
-    }
-
-    // 3. Limpiamos el texto indicador de la pantalla principal si existía
     let lblEstado = document.getElementById('lblEstadoPatronCargado');
     if (lblEstado) {
         lblEstado.innerHTML = "";
     }
 }
-
-// Evento nativo de Bootstrap para detectar cuando el modal termina de cerrarse (incluso con la tecla Escape o la X)
-$(document).ready(function () {
-    $('#modalPatronCliente').on('hidden.bs.modal', function () {
-        limpiarResultadoPatron();
-    });
-});
