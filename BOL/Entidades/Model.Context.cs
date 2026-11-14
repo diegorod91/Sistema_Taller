@@ -187,5 +187,39 @@ namespace BOL.Entidades
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Marca_Save", xMLParameter, xmlUsuarioParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> TAller_Save(string xML, string imgLogo, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var imgLogoParameter = imgLogo != null ?
+                new ObjectParameter("ImgLogo", imgLogo) :
+                new ObjectParameter("ImgLogo", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("XmlUsuario", xmlUsuario) :
+                new ObjectParameter("XmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("TAller_Save", xMLParameter, imgLogoParameter, xmlUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> Taller_Update(string xML, string imgLogo, string xmlUsuario)
+        {
+            var xMLParameter = xML != null ?
+                new ObjectParameter("XML", xML) :
+                new ObjectParameter("XML", typeof(string));
+    
+            var imgLogoParameter = imgLogo != null ?
+                new ObjectParameter("ImgLogo", imgLogo) :
+                new ObjectParameter("ImgLogo", typeof(string));
+    
+            var xmlUsuarioParameter = xmlUsuario != null ?
+                new ObjectParameter("XmlUsuario", xmlUsuario) :
+                new ObjectParameter("XmlUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Taller_Update", xMLParameter, imgLogoParameter, xmlUsuarioParameter);
+        }
     }
 }

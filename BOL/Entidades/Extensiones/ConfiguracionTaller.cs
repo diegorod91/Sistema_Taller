@@ -15,5 +15,9 @@ namespace BOL.Entidades
         {
             return CConfigTaller.Taller_Save(configuracionTaller,usuario);
         }
+        public static int Taller_Update(ConfiguracionTaller configuracionTaller, LoginXML usuario)
+        {
+            return CConfigTaller.Taller_Update(configuracionTaller,usuario);
+        }
     }
 }

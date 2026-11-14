@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Auditoria">
           <Key>
             <PropertyRef Name="Id" />
@@ -271,8 +271,18 @@
           <Parameter Name="xmlUsuario" Type="xml" Mode="In" />
         </Function>
         <Function Name="RethrowError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        
-        
+        <Function Name="TAller_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="ImgLogo" Type="varchar" Mode="In" />
+          <Parameter Name="XmlUsuario" Type="xml" Mode="In" />
+        </Function>
+
+        <Function Name="Taller_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XML" Type="xml" Mode="In" />
+          <Parameter Name="ImgLogo" Type="varchar" Mode="In" />
+          <Parameter Name="XmlUsuario" Type="xml" Mode="In" />
+        </Function>
+
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
@@ -319,7 +329,8 @@
             <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -597,6 +608,17 @@
             <Parameter Name="XML" Mode="In" Type="String" />
             <Parameter Name="xmlUsuario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="TAller_Save" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="ImgLogo" Mode="In" Type="String" />
+            <Parameter Name="XmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+
+          <FunctionImport Name="Taller_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="ImgLogo" Mode="In" Type="String" />
+            <Parameter Name="XmlUsuario" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Registro_Tareas" EntityType="Model.Registro_Tareas" />
           <AssociationSet Name="FK__Registro___IdReg__1C873BEC" Association="Model.FK__Registro___IdReg__1C873BEC">
             <End Role="Registro_Movimientos" EntitySet="Registro_Movimientos" />
@@ -780,6 +802,8 @@
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_Save" FunctionName="Model.Store.RegistroMovimiento_Save" />
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_Update" FunctionName="Model.Store.RegistroMovimiento_Update" />
           <FunctionImportMapping FunctionImportName="RegistroMovimiento_CambiarEstado" FunctionName="Model.Store.RegistroMovimiento_CambiarEstado" />
+          <FunctionImportMapping FunctionImportName="TAller_Save" FunctionName="Model.Store.TAller_Save" />
+          <FunctionImportMapping FunctionImportName="Taller_Update" FunctionName="Model.Store.Taller_Update" />
           <EntitySetMapping Name="Registro_Tareas">
             <EntityTypeMapping TypeName="Model.Registro_Tareas">
               <MappingFragment StoreEntitySet="Registro_Tareas">
@@ -828,7 +852,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1" ZoomLevel="78">
+      <Diagram DiagramId="899ac59740984157af9c66a5b1f2f181" Name="Diagram1" ZoomLevel="100">
         <EntityTypeShape EntityType="Model.Auditoria" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Categoria" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Cliente" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />

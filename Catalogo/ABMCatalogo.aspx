@@ -116,7 +116,11 @@
                                 <div class="table-responsive">
                                     <asp:GridView ID="gvMarcas" runat="server" AutoGenerateColumns="False" OnRowCommand="gvMarcas_RowCommand" CssClass="table table-bordered table-striped" DataKeyNames="Id">
                                         <Columns>
-                                            <asp:BoundField DataField="Id" HeaderText="#" />
+                                            <asp:TemplateField HeaderText="#" ItemStyle-Width="50px" ItemStyle-CssClass="text-center font-weight-bold">
+                                                <ItemTemplate>
+                                                    <%# Container.DataItemIndex + 1 %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField DataField="Nombre" HeaderText="Marca" />
                                             <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="120px" ItemStyle-CssClass="text-center">
                                                 <ItemTemplate>
