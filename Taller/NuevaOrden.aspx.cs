@@ -193,7 +193,7 @@ namespace SolucionBase.Taller
                     string idordenencriptado = FwkCrypto.EncryptQueryString(idOrden.ToString());
                     string urlReporte = "Comprobante.aspx?Id=" + idordenencriptado;
                     ScriptManager.RegisterStartupScript(this, GetType(), "openReport",
-                     $"setTimeout(function() {{ window.open('{urlReporte}', '_blank'); }}, 100);", true);                    
+                     $"setTimeout(function() {{ window.open('{urlReporte}', '_blank'); }}, 100);", true);
                     Response.Redirect(Request.RawUrl);
                 }
                 else
@@ -463,10 +463,14 @@ namespace SolucionBase.Taller
 
         protected void BTN_GuardarModelo_Click(object sender, EventArgs e)
         {
+
             if (string.IsNullOrWhiteSpace(TB_NombreModelo.Text))
             {
+                LBL_AltaModelo.Visible = true;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "OpenModal", "$('#modalAltaModelo').modal('show');", true);
                 return;
             }
+            LBL_AltaModelo.Visible = false;
 
             int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
@@ -508,15 +512,14 @@ namespace SolucionBase.Taller
             ddlModelo.SelectItemWithValue(-1);
         }
 
-        void CargarGridModelos()
+        private void CargarGridModelos()
         {
             int idCat = Convert.ToInt32(ddlCategoria.SelectedValue);
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
             //List<Modelo> modelo = Modelo.GetAllModelos();
             List<Modelo> modelosFiltrados = Modelo.GetAllModelos()
-        .Where(m => m.Idcategoria == idCat && m.IdMarca == idMarca)
-        .ToList();
+            .Where(m => m.Idcategoria == idCat && m.IdMarca == idMarca).ToList();
             ddlModelo.DataSource = modelosFiltrados.ToList();
             ddlModelo.DataTextField = "Nombre";
             ddlModelo.DataValueField = "Id";
@@ -550,6 +553,25 @@ namespace SolucionBase.Taller
             Context.ApplicationInstance.CompleteRequest();
         }
 
+        protected void BTN_NewMarca_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "AbrirModalMarca", "$('#ModalAltaMarca').modal('show');", true);
+        }
 
+        protected void BTN_GuardarMarca_Click(object sender, EventArgs e)
+        {
+
+            if (TB_NuevaMarca.Text == "")
+            {
+                LBL_AltaMarca.Visible = true;
+
+                // Forzamos a que el modal permanezca abierto ejecutando un script de Bootstrap
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "OpenModal", "$('#ModalAltaMarca').modal('show');", true);
+                return;
+            }
+            LBL_AltaMarca.Visible = false;
+            TB_NuevaMarca.Text = "";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CloseModal", "$('#ModalAltaMarca').modal('hide');", true);
+        }
     }
 }

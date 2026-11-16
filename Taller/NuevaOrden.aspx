@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- Primera fila: Categoría, Marca y Modelo -->
+                        <!-- Primera fila: Categoría, Marca y su botón al lado -->
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label>Categoría <span class="text-danger">*</span></label>
@@ -153,30 +153,68 @@
                                     AutoPostBack="True" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-6 form-group">
                                 <label>Marca <span class="text-danger">*</span></label>
                                 <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-control select2"
                                     AutoPostBack="True" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged">
                                 </asp:DropDownList>
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-2 form-group d-flex align-items-end">
+                                <%--<asp:Button ID="BTN_NewMarca" Text="+" Font-Size="Large" Font-Bold="true" runat="server" ToolTip="Nueva Marca" CssClass="btn btn-outline-dark btn-block" OnClick="BTN_NewMarca_Click" />--%>
+                                <asp:LinkButton ID="LNK_NewMarca" runat="server" CssClass="btn btn-outline-secondary btn-block" OnClick="BTN_NewMarca_Click" CausesValidation="false" ToolTip="Nueva marca">
+                                 <i class="fas fa-plus mr-1"></i>
+                                </asp:LinkButton>
+                            </div>
+                        </div>
+
+                        <!-- Segunda fila: Modelo con su botón al lado y el IMEI/Serie completando los 12 espacios -->
+                        <div class="row">
+                            <div class="col-md-6 form-group">
                                 <label>Modelo <span class="text-danger">*</span></label>
                                 <asp:DropDownList ID="ddlModelo" runat="server" CssClass="form-control select2">
                                 </asp:DropDownList>
                             </div>
-                        </div>
-
-                        <!-- Segunda fila: Botón de Nuevo Modelo e IMEI / Serie -->
-                        <div class="row align-items-end">
-                            <div class="col-md-4 form-group mb-0">
-                                <asp:LinkButton ID="LNK_NuevoModelo" runat="server" CssClass="btn btn-outline-success btn-block" OnClick="LNK_NuevoModelo_Click" CausesValidation="false">
-                                <i class="fas fa-plus mr-1"></i>Nuevo Modelo
+                            <div class="col-md-2 form-group d-flex align-items-end">
+                                <asp:LinkButton ID="LNK_NuevoModelo" runat="server" CssClass="btn btn btn-outline-secondary btn-block" OnClick="LNK_NuevoModelo_Click" CausesValidation="false" ToolTip="Nuevo Modelo">
+                                <i class="fas fa-plus mr-1"></i>
                                 </asp:LinkButton>
                             </div>
-                            <div class="col-md-8 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label>IMEI / Número de Serie</label>
                                 <asp:TextBox ID="TB_Imei" runat="server" CssClass="form-control" Placeholder="Ej: 35298110... o Número de Serie"></asp:TextBox>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%--Modal Para el alta de una nueva marca--%>
+                <div class="modal fade" id="ModalAltaMarca" tabindex="-1" role="dialog" aria-labelledby="ModalAltaMarcaLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                <ContentTemplate>
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title" id="ModalAltaMarcaLabel">
+                                            <i class="fas fa-plus-circle mr-1"></i>Nueva marca
+                                        </h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="form-group mb-3">
+                                            <label>Nombre<span class="text-danger">*</span></label>
+                                            <asp:TextBox ID="TB_NuevaMarca" runat="server" CssClass="form-control" Placeholder="Ej: Motorola,Samsung,Oppo,Etc."></asp:TextBox>
+                                        </div>
+                                        <asp:Label ID="LBL_AltaMarca" Text="Debe ingresar una marca" runat="server" Visible="false" ForeColor="Red" Font-Bold="true" />
+                                    </div>
+                                    <div class="modal-footer bg-light">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <asp:Button ID="BTN_GuardarMarca" runat="server" Text="Guardar Marca" CssClass="btn btn-success" OnClick="BTN_GuardarMarca_Click" />
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
                         </div>
                     </div>
                 </div>
@@ -186,7 +224,7 @@
                         <div class="modal-content">
                             <asp:UpdatePanel ID="upModalModelo" runat="server">
                                 <ContentTemplate>
-                                    <div class="modal-header bg-success text-white">
+                                    <div class="modal-header bg-primary text-white">
                                         <h5 class="modal-title" id="modalAltaModeloLabel">
                                             <i class="fas fa-plus-circle mr-1"></i>Nuevo Modelo
                                         </h5>
@@ -211,11 +249,12 @@
                                             <label>Número Técnico / Código OEM (Opcional)</label>
                                             <asp:TextBox ID="TB_ModeloTecnico" runat="server" CssClass="form-control" Placeholder="Ej: SM-G991B, A2633"></asp:TextBox>
                                         </div>
+                                        <asp:Label ID="LBL_AltaModelo" Text="Debe ingresar la informacion correspondiente" runat="server" Visible="false" ForeColor="Red" Font-Bold="true" />
                                     </div>
 
                                     <div class="modal-footer bg-light">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <asp:Button ID="BTN_GuardarModelo" runat="server" Text="Guardar Modelo" CssClass="btn btn-success" OnClick="BTN_GuardarModelo_Click" />
+                                        <asp:Button ID="BTN_GuardarModelo" runat="server" Text="Guardar Modelo" CssClass="btn btn-primary" OnClick="BTN_GuardarModelo_Click" />
                                     </div>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
@@ -420,7 +459,17 @@
         </div>
     </div>
     <script type="text/javascript">
-    var idTextBoxClave = '<%= TB_ClaveEquipo.ClientID %>';
+var idTextBoxClave = '<%= TB_ClaveEquipo.ClientID %>';
+    
+    // Fuerza la limpieza del fondo oscuro si el modal se cierra
+    $('#ModalAltaMarca').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    });
+$('#modalAltaModelo').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    });
     </script>
 
     <script src="NuevaOrden.js?v=1"></script>
