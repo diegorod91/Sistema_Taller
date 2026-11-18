@@ -195,6 +195,7 @@ namespace SolucionBase.Taller
                     ScriptManager.RegisterStartupScript(this, GetType(), "openReport",
                      $"setTimeout(function() {{ window.open('{urlReporte}', '_blank'); }}, 100);", true);
                     Response.Redirect(Request.RawUrl);
+                    LimpiarCamposOrden();
                 }
                 else
                 {
@@ -232,15 +233,7 @@ namespace SolucionBase.Taller
                 // ==========================================
                 // MODO ALTA: Guardar nuevo cliente
                 // ==========================================
-                Cliente nuevoCliente = new Cliente
-                {
-                    Apeynom = TB_NombreApellido.Text.Trim(),
-                    Documento = TB_DNI.Text.Trim(),
-                    Domicilio = TB_Direccion.Text.Trim(),
-                    Telefono = TB_Telefono.Text.Trim(),
-                    Telefono_Alternativo = TB_TelefonoSecundario.Text.Trim(),
-                    Email = TB_Correo.Text.Trim()
-                };
+                Cliente nuevoCliente = NuevoCliente();
 
                 // Tu método de guardado que inserta y retorna el ID generado
                 int idGenerado = nuevoCliente.Cliente_Save(usuario);
@@ -289,6 +282,7 @@ namespace SolucionBase.Taller
         }
         protected void btnNuevoCliente_Click(object sender, EventArgs e)
         {
+            PrepararPanelParaAlta();
             pnlBoxCliente.Visible = true;
         }
         private void RecargarComboClientesYSeleccionar(int idSeleccionar)
@@ -323,6 +317,28 @@ namespace SolucionBase.Taller
 
             // 5. Mostrar el panel
             pnlBoxCliente.Visible = true;
+        }
+        private void PrepararPanelParaAlta()
+        {
+            ddlCliente.SelectItemWithValue(-1);
+            // 1. Limpiar campos y ID
+            hfClienteId.Value = "0";
+            TB_NombreApellido.Text = "";
+            TB_DNI.Text = "";
+            TB_Direccion.Text = "";
+            TB_Telefono.Text = "";
+            TB_TelefonoSecundario.Text = "";
+            TB_Correo.Text = "";
+
+            // 2. Restaurar estilos visuales originales (Azul / Primary)
+            DivCardHeader.Attributes["class"] = "card-header bg-primary text-white";
+            pnlBoxCliente.CssClass = "card card-outline card-primary shadow-sm mb-4";
+            iconTitulo.Attributes["class"] = "fas fa-user-plus mr-2";
+            ltrTituloModal.Text = "Alta de Nuevo Cliente";
+
+            // 3. Restaurar botones
+            btnGuardarCliente.Text = "Guardar Cliente";
+            btnGuardarCliente.CssClass = "btn btn-primary";
         }
         private Cliente NuevoCliente()
         {
@@ -431,6 +447,7 @@ namespace SolucionBase.Taller
             TB_Telefono.Text = "";
             TB_TelefonoSecundario.Text = "";
             TB_Correo.Text = "";
+            PrepararPanelParaAlta();
         }
         public string GenerarEnlaceWhatsApp(string telefonoCliente, string nombreCliente, string modeloEquipo)
         {

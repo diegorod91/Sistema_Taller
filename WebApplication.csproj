@@ -1923,6 +1923,7 @@
     <Content Include="Catalogo\ABMCatalogo.aspx" />
     <Content Include="Catalogo\Catalogo.js" />
     <Content Include="CerrarSesion.aspx" />
+    <Content Include="Clientes\Cliente.aspx" />
     <Content Include="Configuracion\Configuracion.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Default.aspx" />
@@ -4725,6 +4726,13 @@
     <Compile Include="CerrarSesion.aspx.designer.cs">
       <DependentUpon>CerrarSesion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Clientes\Cliente.aspx.cs">
+      <DependentUpon>Cliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Clientes\Cliente.aspx.designer.cs">
+      <DependentUpon>Cliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Configuracion\Configuracion.aspx.cs">
       <DependentUpon>Configuracion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4864,9 +4872,7 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Clientes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />

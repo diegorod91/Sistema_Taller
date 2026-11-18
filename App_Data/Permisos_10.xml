@@ -5,6 +5,7 @@
     <page title="Taller" icon="fas fa-tools"  href="~/Taller/NuevaOrden.aspx" />
     <page title="Ordenes de reparación" icon="fas fa-tools"  href="~/Taller/ListadoOrdenes.aspx" />
     <page title="Stock" icon="fas fa-store" href="~/Stock.aspx" />
+    <page title="Clientes" icon="fas fa-user" href="~/Cliente.aspx" />
 
 
   </navigation>

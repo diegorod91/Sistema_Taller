@@ -210,8 +210,8 @@
                                         <asp:Label ID="LBL_AltaMarca" Text="Debe ingresar una marca" runat="server" Visible="false" ForeColor="Red" Font-Bold="true" />
                                     </div>
                                     <div class="modal-footer bg-light">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <asp:Button ID="BTN_GuardarMarca" runat="server" Text="Guardar Marca" CssClass="btn btn-success" OnClick="BTN_GuardarMarca_Click" />
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('.modal-backdrop').remove(); $('body').removeClass('modal-open');">Cancelar</button>
+                                        <asp:Button ID="BTN_GuardarMarca" runat="server" Text="Guardar Marca" CssClass="btn btn-primary" OnClick="BTN_GuardarMarca_Click" />
                                     </div>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
@@ -253,7 +253,7 @@
                                     </div>
 
                                     <div class="modal-footer bg-light">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('.modal-backdrop').remove(); $('body').removeClass('modal-open');">Cancelar</button>
                                         <asp:Button ID="BTN_GuardarModelo" runat="server" Text="Guardar Modelo" CssClass="btn btn-primary" OnClick="BTN_GuardarModelo_Click" />
                                     </div>
                                 </ContentTemplate>
@@ -379,13 +379,14 @@
                 <!-- BOTONES GLOBALES DE LA ORDEN -->
             </ContentTemplate>
         </asp:UpdatePanel>
-        <div class="row mb-4">
+        <div class="row mb-4" style="padding:0px 0px 10px 0px">
             <div class="col-12 text-right">
-                <a href="Default.aspx" class="btn btn-default mr-2">Cancelar</a>
+                <a href="../Default.aspx" class="btn btn-default mr-2">Cancelar</a>
                 <asp:Button ID="btnGuardarOrden" runat="server" Text="Guardar Orden"
                     CssClass="btn btn-primary" OnClick="btnGuardarOrden_Click" />
             </div>
         </div>
+
     </div>
 
     <!-- Modal Limpio para el Patrón del Cliente (Sin recuadro) -->
